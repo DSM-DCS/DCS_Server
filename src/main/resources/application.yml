@@ -1,0 +1,28 @@
+spring:
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: update
+
+  servlet:
+    multipart:
+      max-file-size: 512MB
+      max-request-size: 512MB
+
+  datasource:
+    url: jdbc:mysql://${DB_URL}:3306/${DB_NAME}
+    username: ${DB_USER}
+    password: ${DB_PWD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+
+  jwt:
+    secret-key: ${JWT_SECRET:qwer123456}
+    header: ${JWT_HEADER}
+    prefix: ${JWT_PREFIX}
+    exp:
+      access-exp: ${JWT_ACCESS_EXP:12345}
+      refresh-exp: ${JWT_REFRESH_EXP:3456789}
