@@ -1,4 +1,4 @@
-package com.dsm.dcs.global.enums;
+package com.dsm.dcs.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

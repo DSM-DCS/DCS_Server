@@ -1,7 +1,7 @@
 package com.dsm.dcs.entity.user;
 
-import com.dsm.dcs.global.entity.BaseIdEntity;
-import com.dsm.dcs.global.enums.Authority;
+import com.dsm.dcs.entity.BaseIdEntity;
+import com.dsm.dcs.entity.Authority;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

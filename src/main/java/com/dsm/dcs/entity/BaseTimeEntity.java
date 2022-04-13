@@ -1,5 +1,6 @@
-package com.dsm.dcs.global.entity;
+package com.dsm.dcs.entity;
 
+import com.dsm.dcs.entity.BaseIdEntity;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;

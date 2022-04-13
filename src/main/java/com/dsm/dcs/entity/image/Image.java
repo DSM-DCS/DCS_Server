@@ -1,6 +1,6 @@
 package com.dsm.dcs.entity.image;
 
-import com.dsm.dcs.global.entity.BaseIdEntity;
+import com.dsm.dcs.entity.BaseIdEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

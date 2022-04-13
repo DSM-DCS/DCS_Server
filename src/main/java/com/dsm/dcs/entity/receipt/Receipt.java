@@ -1,6 +1,6 @@
 package com.dsm.dcs.entity.receipt;
 
-import com.dsm.dcs.global.entity.BaseTimeEntity;
+import com.dsm.dcs.entity.BaseTimeEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,7 +1,7 @@
 package com.dsm.dcs.entity.delivery;
 
-import com.dsm.dcs.global.entity.BaseTimeEntity;
-import com.dsm.dcs.global.enums.CourierCompany;
+import com.dsm.dcs.entity.BaseTimeEntity;
+import com.dsm.dcs.entity.CourierCompany;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

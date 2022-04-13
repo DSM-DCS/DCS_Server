@@ -1,4 +1,4 @@
-package com.dsm.dcs.global.entity;
+package com.dsm.dcs.entity;
 
 import lombok.Getter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
