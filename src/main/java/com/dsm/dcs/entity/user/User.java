@@ -39,7 +39,7 @@ public class User extends BaseIdEntity {
     @Enumerated(EnumType.STRING)
     private Authority authority;
 
-    @OneToMany(mappedBy = "delivery")
+    @OneToMany(mappedBy = "receiptId")
     private List<Receipt> receipt;
 
     @Builder
