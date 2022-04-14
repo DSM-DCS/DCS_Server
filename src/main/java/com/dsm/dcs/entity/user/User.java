@@ -2,6 +2,7 @@ package com.dsm.dcs.entity.user;
 
 import com.dsm.dcs.entity.BaseIdEntity;
 import com.dsm.dcs.entity.Authority;
+import com.dsm.dcs.entity.receipt.Receipt;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,6 +12,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -35,6 +38,9 @@ public class User extends BaseIdEntity {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Authority authority;
+
+    @OneToMany(mappedBy = "delivery")
+    private List<Receipt> receipt;
 
     @Builder
     public User(String accountId, String password, String name, String email, Integer studentNumber, Authority authority) {
