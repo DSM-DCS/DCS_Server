@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "CourierPickupConfirmation")
+@Table(name = "receipt_confirmation")
 @Entity
 public class Receipt extends BaseTimeEntity {
 
