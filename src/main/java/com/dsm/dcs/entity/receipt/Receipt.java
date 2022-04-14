@@ -2,6 +2,7 @@ package com.dsm.dcs.entity.receipt;
 
 import com.dsm.dcs.entity.BaseTimeEntity;
 import com.dsm.dcs.entity.delivery.Delivery;
+import com.dsm.dcs.entity.image.Image;
 import com.dsm.dcs.entity.user.User;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -32,6 +33,9 @@ public class Receipt extends BaseTimeEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
+
+    @OneToOne(mappedBy = "receipt", fetch = FetchType.LAZY)
+    private Image image;
 
     @Builder
     public Receipt(String product, User user, Delivery delivery) {
