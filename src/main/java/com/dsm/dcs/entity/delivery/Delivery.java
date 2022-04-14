@@ -2,6 +2,7 @@ package com.dsm.dcs.entity.delivery;
 
 import com.dsm.dcs.entity.BaseTimeEntity;
 import com.dsm.dcs.entity.CourierCompany;
+import com.dsm.dcs.entity.receipt.Receipt;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,6 +12,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.OneToOne;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -29,6 +32,9 @@ public class Delivery extends BaseTimeEntity {
 
     @Column(nullable = false, length = 30)
     private String product;
+
+    @OneToOne(mappedBy = "delivery", fetch = FetchType.LAZY)
+    private Receipt receipt;
 
     @Builder
     public Delivery(String recipientName, String recipientPhoneNumber, String product, CourierCompany courierCompany) {
