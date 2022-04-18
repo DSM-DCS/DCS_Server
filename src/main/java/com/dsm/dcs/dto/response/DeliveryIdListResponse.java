@@ -12,7 +12,7 @@ public class DeliveryIdListResponse {
 
     @AllArgsConstructor
     @Builder
-    public class DeliveryIdResponse{
+    public static class DeliveryIdResponse{
 
         private final Long DeliveryId;
 
