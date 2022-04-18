@@ -3,13 +3,12 @@ package com.dsm.dcs.dto.response;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
 public class DeliveryIdListResponse {
 
-    List<DeliveryIdResponse> deliveryIdResponses = new ArrayList<>();
+    private final List<DeliveryIdResponse> deliveryIdResponses;
 
     @AllArgsConstructor
     @Builder

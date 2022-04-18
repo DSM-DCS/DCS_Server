@@ -5,7 +5,6 @@ import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -15,7 +14,7 @@ public class DeliveryListRequest {
     @NotBlank
     private String courierCompany;
 
-    List<DeliveryDto> delivery = new ArrayList<>();
+    private List<DeliveryDto> delivery;
 
     @Getter
     @AllArgsConstructor
