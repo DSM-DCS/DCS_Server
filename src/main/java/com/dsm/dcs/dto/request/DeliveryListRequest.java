@@ -1,7 +1,6 @@
 package com.dsm.dcs.dto.request;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
@@ -10,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-@Builder
 @AllArgsConstructor
 public class DeliveryListRequest {
 
@@ -20,7 +18,6 @@ public class DeliveryListRequest {
     List<DeliveryDto> delivery = new ArrayList<>();
 
     @Getter
-    @Builder
     @AllArgsConstructor
     public class DeliveryDto {
 
