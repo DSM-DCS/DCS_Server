@@ -2,7 +2,6 @@ package com.dsm.dcs.service;
 
 import com.dsm.dcs.dto.request.DeliveryListRequest;
 import com.dsm.dcs.dto.response.DeliveryIdListResponse;
-import com.dsm.dcs.entity.CourierCompany;
 import com.dsm.dcs.entity.delivery.Delivery;
 import com.dsm.dcs.entity.delivery.DeliveryRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,23 +22,19 @@ public class CourierService {
 
         List<DeliveryIdListResponse.DeliveryIdResponse> deliveryIdResponses = new ArrayList<>();
 
-        for (DeliveryListRequest.DeliveryDto delivery : request.getDelivery()) {
-            deliveryIdResponses.add(
-                    DeliveryIdListResponse.DeliveryIdResponse.builder()
-                            .DeliveryId(
-                                    deliveryRepository.save(
+            for (DeliveryListRequest.DeliveryWaybillNumberRequest delivery : request.getDeliverywaybillnumberrequestlist()) {
+                deliveryIdResponses.add(
+                        new DeliveryIdListResponse.DeliveryIdResponse(
+                                deliveryRepository.save(
                                         Delivery.builder()
-                                                .courierCompany(CourierCompany.valueOf(request.getCourierCompany()))
-                                                .recipientName(delivery.getRecipientName())
-                                                .recipientPhoneNumber(delivery.getRecipientPhoneNumber())
-                                                .product(delivery.getProduct())
                                                 .build()
-                                    ).getId())
-                            .build()
-           );
-        }
+                                ).getId()
+                        )
+                );
+            }
 
         return new DeliveryIdListResponse(deliveryIdResponses);
+
     }
 
 
