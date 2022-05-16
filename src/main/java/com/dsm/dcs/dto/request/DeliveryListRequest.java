@@ -2,35 +2,29 @@ package com.dsm.dcs.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotNull;
+import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-@AllArgsConstructor
+@NoArgsConstructor
 public class DeliveryListRequest {
 
-    @NotBlank
-    private String courierCompany;
+    @NotNull
+    private Integer couriercompany;
 
-    private List<DeliveryDto> delivery;
+    private List<DeliveryWaybillNumberRequest> deliverywaybillnumberrequestlist;
 
     @Getter
+    @NoArgsConstructor
     @AllArgsConstructor
-    public class DeliveryDto {
+    public static class DeliveryWaybillNumberRequest {
 
-        @NotBlank
-        @Size(max = 10)
-        private String recipientName;
-
-        @NotBlank
-        @Size(max = 11)
-        private String recipientPhoneNumber;
-
-        @NotBlank
-        @Size(max = 30)
-        private String product;
+        @NotNull
+        private BigInteger waybillnumber;
 
     }
 
