@@ -14,7 +14,7 @@ public class DeliveryIdListResponse {
     @Builder
     public static class DeliveryIdResponse{
 
-        private final Long DeliveryId;
+        private final Long deliveryId;
 
     }
 
