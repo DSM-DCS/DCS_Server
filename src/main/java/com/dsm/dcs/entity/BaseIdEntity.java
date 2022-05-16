@@ -9,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
-
 @Getter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)

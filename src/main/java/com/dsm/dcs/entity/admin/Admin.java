@@ -1,6 +1,5 @@
 package com.dsm.dcs.entity.admin;
 
-import com.dsm.dcs.entity.Authority;
 import com.dsm.dcs.entity.BaseIdEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -9,8 +8,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -23,15 +20,10 @@ public class Admin extends BaseIdEntity {
     @Column(nullable = false, length = 60)
     private String password;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Authority authority;
-
     @Builder
-    public Admin(String adminId, String password, Authority authority) {
+    public Admin(String adminId, String password) {
         this.adminId = adminId;
         this.password = password;
-        this.authority = authority;
     }
 
 }
