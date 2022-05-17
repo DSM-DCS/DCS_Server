@@ -2,6 +2,7 @@ package com.dsm.dcs.entity.delivery;
 
 import com.dsm.dcs.entity.BaseTimeEntity;
 import com.dsm.dcs.entity.receipt.Receipt;
+import com.dsm.dcs.entity.user.User;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,7 +11,10 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import java.math.BigInteger;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -18,23 +22,20 @@ import javax.persistence.OneToOne;
 public class Delivery extends BaseTimeEntity {
 
     @Column(nullable = false)
-    private Integer courierCompany;
-
-    @Column(nullable = false )
-    private Integer waybillNumber;
-
-    @Column(nullable = false)
-    private String product;
+    private BigInteger courierCompany;
 
     @OneToOne(mappedBy = "delivery", fetch = FetchType.LAZY)
     private Receipt receipt;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @Builder
-    public Delivery(Long id, Integer waybillNumber, String product, Integer courierCompany) {
+    public Delivery(Long id, String product, BigInteger courierCompany, User user) {
         this.id = id;
-        this.waybillNumber = waybillNumber;
-        this.product = product;
         this.courierCompany = courierCompany;
+        this.user = user;
     }
 
 }
