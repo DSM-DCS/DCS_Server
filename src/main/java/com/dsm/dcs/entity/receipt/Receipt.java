@@ -12,7 +12,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -25,18 +24,13 @@ public class Receipt extends BaseTimeEntity {
     @Column(nullable = false, length = 30)
     private String product;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
-
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
     @Builder
-    public Receipt(String product, User user, Delivery delivery) {
+    public Receipt(String product, Delivery delivery) {
         this.product = product;
-        this.user = user;
         this.delivery = delivery;
     }
 
