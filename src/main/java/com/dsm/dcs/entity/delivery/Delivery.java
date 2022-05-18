@@ -27,7 +27,7 @@ public class Delivery extends BaseTimeEntity {
     private User user;
 
     @Builder
-    public Delivery(Long id, String product, BigInteger courierCompany, User user) {
+    public Delivery(Long id, BigInteger courierCompany, User user) {
         this.id = id;
         this.courierCompany = courierCompany;
         this.user = user;
