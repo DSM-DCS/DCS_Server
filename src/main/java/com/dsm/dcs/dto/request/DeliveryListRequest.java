@@ -5,8 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
-import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -16,15 +14,15 @@ public class DeliveryListRequest {
     @NotNull
     private Integer couriercompany;
 
-    private List<DeliveryWaybillNumberRequest> deliverywaybillnumberrequestlist;
+    private List<PhoneNumberRequest> phoneNumberRequestList;
 
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class DeliveryWaybillNumberRequest {
+    public static class PhoneNumberRequest {
 
         @NotNull
-        private BigInteger waybillnumber;
+        private String phoneNumber;
 
     }
 

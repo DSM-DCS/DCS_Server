@@ -22,7 +22,7 @@ public class CourierService {
 
         List<DeliveryIdListResponse.DeliveryIdResponse> deliveryIdResponses = new ArrayList<>();
 
-            for (DeliveryListRequest.DeliveryWaybillNumberRequest delivery : request.getDeliverywaybillnumberrequestlist()) {
+            for (DeliveryListRequest.PhoneNumberRequest phoneNumberRequest : request.getPhoneNumberRequestList()) {
                 deliveryIdResponses.add(
                         new DeliveryIdListResponse.DeliveryIdResponse(
                                 deliveryRepository.save(

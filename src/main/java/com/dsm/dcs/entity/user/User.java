@@ -30,6 +30,9 @@ public class User extends BaseIdEntity {
     @Column(nullable = false, unique = true, length = 35)
     private String email;
 
+    @Column(nullable = false, unique = true, length = 11)
+    private String phoneNumber;
+
     @Column(nullable = false, unique = true)
     private Integer studentNumber;
 
@@ -40,11 +43,12 @@ public class User extends BaseIdEntity {
     private List<Delivery> deliveries;
 
     @Builder
-    public User(String accountId, String password, String name, String email, Integer studentNumber) {
+    public User(String accountId, String password, String name, String email, String phoneNumber,Integer studentNumber) {
         this.accountId = accountId;
         this.password = password;
         this.name = name;
         this.email = email;
+        this.phoneNumber = phoneNumber;
         this.studentNumber = studentNumber;
     }
 }
