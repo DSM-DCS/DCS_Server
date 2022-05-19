@@ -4,15 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Getter
 @NoArgsConstructor
 public class DeliveryListRequest {
 
-    @NotNull
-    private Integer couriercompany;
+    @NotBlank
+    private String couriercompany;
 
     private List<PhoneNumberRequest> phoneNumberRequestList;
 
