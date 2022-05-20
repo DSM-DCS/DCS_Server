@@ -29,7 +29,7 @@ public class User extends BaseIdEntity {
     @Column(nullable = false, unique = true, length = 35)
     private String email;
 
-    @Column(nullable = false, unique = true, length = 11)
+    @Column(nullable = false, unique = true, length = 13)
     private String phoneNumber;
 
     @Column(nullable = false, unique = true)
