@@ -2,7 +2,7 @@ package com.dsm.dcs.controller;
 
 import com.dsm.dcs.dto.request.DeliveryListRequest;
 import com.dsm.dcs.dto.response.DeliveryIdListResponse;
-import com.dsm.dcs.service.CourierService;
+import com.dsm.dcs.service.courier.CourierService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
