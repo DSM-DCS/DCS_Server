@@ -23,7 +23,7 @@ public class DeliveryListRequest {
     public static class PhoneNumberRequest {
 
         @NotBlank
-        @Pattern(regexp = "^010 -+\\d{4}-+\\d{4}$")
+        @Pattern(regexp = "^010-+\\d{4}-+\\d{4}$")
         private String phoneNumber;
 
     }
