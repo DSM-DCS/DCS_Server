@@ -1,4 +1,4 @@
-package com.dsm.dcs.comtroller;
+package com.dsm.dcs.controller;
 
 import com.dsm.dcs.dto.request.UserSignUpRequest;
 import com.dsm.dcs.dto.response.UserTokenResponse;
