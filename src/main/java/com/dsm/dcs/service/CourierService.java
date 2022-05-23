@@ -31,6 +31,7 @@ public class CourierService {
                                 deliveryRepository.save(
                                         Delivery.builder()
                                                 .courierCompany(CourierCompany.valueOf(request.getCouriercompany()))
+                                                .phoneNumber(phoneNumberRequest.getPhoneNumber())
                                                 .user(userFacade.getUserByPhoneNumber(phoneNumberRequest.getPhoneNumber()))
                                                 .build()
                                 ).getId()
