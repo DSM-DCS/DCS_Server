@@ -2,7 +2,6 @@ package com.dsm.dcs.entity.user;
 
 import com.dsm.dcs.entity.BaseIdEntity;
 import com.dsm.dcs.entity.delivery.Delivery;
-import com.dsm.dcs.entity.receipt.Receipt;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -35,9 +34,6 @@ public class User extends BaseIdEntity {
 
     @Column(nullable = false, unique = true)
     private Integer studentNumber;
-
-    @OneToMany(mappedBy = "user")
-    private List<Receipt> receipt;
 
     @OneToMany(mappedBy = "user")
     private List<Delivery> deliveries;
