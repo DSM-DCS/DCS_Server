@@ -25,13 +25,17 @@ public class Delivery extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private CourierCompany courierCompany;
 
+    @Column(nullable = false, unique = true, length = 13)
+    private String phoneNumber;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
     @Builder
-    public Delivery(Long id, CourierCompany courierCompany, User user) {
+    public Delivery(Long id, String phoneNumber, CourierCompany courierCompany, User user) {
         this.id = id;
+        this.phoneNumber = phoneNumber;
         this.courierCompany = courierCompany;
         this.user = user;
     }
