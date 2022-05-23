@@ -16,7 +16,7 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 @RequestMapping("/delivery")
 @RestController
-public class CourierController {
+public class DeliveryController {
 
     private final CourierService courierService;
 
