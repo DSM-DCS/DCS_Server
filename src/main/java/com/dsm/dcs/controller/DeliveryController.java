@@ -30,10 +30,11 @@ public class DeliveryController {
         return courierService.seveDelivery(request);
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/{delivery_id}/{user_id}")
     @ResponseStatus(HttpStatus.OK)
-    public DeliveryIdListResponse.DeliveryIdResponse updateDeliveryUser(@PathVariable("id") Long id) {
-
+    public DeliveryIdListResponse.DeliveryIdResponse updateDeliveryUser(@PathVariable("delivery_id") Long deliveryId,
+                                                                        @PathVariable("user_id") Long userId) {
+        return teacherService.updateUser(deliveryId, userId);
     }
 
 }
