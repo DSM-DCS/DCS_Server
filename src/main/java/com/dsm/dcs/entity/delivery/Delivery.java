@@ -2,7 +2,7 @@ package com.dsm.dcs.entity.delivery;
 
 import com.dsm.dcs.entity.BaseTimeEntity;
 import com.dsm.dcs.entity.CourierCompany;
-import com.dsm.dcs.entity.receipt.Receipt;
+import com.dsm.dcs.entity.user.User;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,7 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -24,24 +25,19 @@ public class Delivery extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private CourierCompany courierCompany;
 
-    @Column(nullable = false, length = 10)
-    private String recipientName;
+    @Column(nullable = false, unique = true, length = 13)
+    private String phoneNumber;
 
-    @Column(nullable = false, length = 11)
-    private String recipientPhoneNumber;
-
-    @Column(nullable = false, length = 30)
-    private String product;
-
-    @OneToOne(mappedBy = "delivery", fetch = FetchType.LAZY)
-    private Receipt receipt;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Builder
-    public Delivery(String recipientName, String recipientPhoneNumber, String product, CourierCompany courierCompany) {
-        this.recipientName = recipientName;
-        this.recipientPhoneNumber = recipientPhoneNumber;
-        this.product = product;
+    public Delivery(Long id, String phoneNumber, CourierCompany courierCompany, User user) {
+        this.id = id;
+        this.phoneNumber = phoneNumber;
         this.courierCompany = courierCompany;
+        this.user = user;
     }
 
 }

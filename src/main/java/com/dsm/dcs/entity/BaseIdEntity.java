@@ -9,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
-
 @Getter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
@@ -17,6 +16,6 @@ public abstract class BaseIdEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    protected Long id;
 
 }
