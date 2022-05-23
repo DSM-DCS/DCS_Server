@@ -25,7 +25,7 @@ public class Delivery extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private CourierCompany courierCompany;
 
-    @Column(nullable = false, unique = true, length = 13)
+    @Column(nullable = false, length = 13)
     private String phoneNumber;
 
     @ManyToOne(fetch = FetchType.LAZY)
