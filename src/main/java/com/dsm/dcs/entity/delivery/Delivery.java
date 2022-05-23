@@ -40,4 +40,8 @@ public class Delivery extends BaseTimeEntity {
         this.user = user;
     }
 
+    public void updateUser(User user) {
+        this.user = user;
+    }
+
 }
