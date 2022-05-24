@@ -21,7 +21,7 @@ public class CourierService {
     private final DeliveryRepository deliveryRepository;
     private final UserFacade userFacade;
 
-    public DeliveryIdListResponse seveDelivery(DeliveryListRequest request) {
+    public DeliveryIdListResponse saveDelivery(DeliveryListRequest request) {
 
         List<DeliveryIdListResponse.DeliveryIdResponse> deliveryIdResponses = new ArrayList<>();
 
