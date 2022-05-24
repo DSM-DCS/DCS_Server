@@ -3,8 +3,11 @@ package com.dsm.dcs.controller;
 import com.dsm.dcs.dto.request.DeliveryListRequest;
 import com.dsm.dcs.dto.response.DeliveryIdListResponse;
 import com.dsm.dcs.service.CourierService;
+import com.dsm.dcs.service.teacher.TeacherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,11 +22,19 @@ import javax.validation.Valid;
 public class DeliveryController {
 
     private final CourierService courierService;
+    private final TeacherService teacherService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public DeliveryIdListResponse seveDelivery(@Valid @RequestBody DeliveryListRequest request) {
         return courierService.seveDelivery(request);
+    }
+
+    @PatchMapping("/{delivery_id}/{user_id}")
+    @ResponseStatus(HttpStatus.OK)
+    public DeliveryIdListResponse.DeliveryIdResponse updateDeliveryUser(@PathVariable("delivery_id") Long deliveryId,
+                                                                        @PathVariable("user_id") Long userId) {
+        return teacherService.updateUser(deliveryId, userId);
     }
 
 }

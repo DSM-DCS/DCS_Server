@@ -25,7 +25,7 @@ public class Delivery extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private CourierCompany courierCompany;
 
-    @Column(nullable = false, unique = true, length = 13)
+    @Column(nullable = false, length = 13)
     private String phoneNumber;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -37,6 +37,10 @@ public class Delivery extends BaseTimeEntity {
         this.id = id;
         this.phoneNumber = phoneNumber;
         this.courierCompany = courierCompany;
+        this.user = user;
+    }
+
+    public void updateUser(User user) {
         this.user = user;
     }
 
