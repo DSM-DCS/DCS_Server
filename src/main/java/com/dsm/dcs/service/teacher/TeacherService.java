@@ -22,7 +22,7 @@ public class TeacherService {
         User user = userFacade.getUserById(userId);
         Delivery delivery = deliveryFacade.getDeliveryById(deliveryId);
         delivery.updateUser(user);
-        deliveryRepository.save(delivery).getId();
+        deliveryRepository.save(delivery);
         return new DeliveryIdListResponse.DeliveryIdResponse(deliveryId);
 
     }
