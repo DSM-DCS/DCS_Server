@@ -33,11 +33,7 @@ public class Delivery extends BaseTimeEntity {
     private User user;
 
     @Builder
-<<<<<<< HEAD
     public Delivery(Long id, String phoneNumber, CourierCompany courierCompany, User user) {
-=======
-    public Delivery(Long id, BigInteger courierCompany, User user) {
->>>>>>> 2f53354b475ec6585797eab4c17b50ccccf5bb7e
         this.id = id;
         this.phoneNumber = phoneNumber;
         this.courierCompany = courierCompany;
