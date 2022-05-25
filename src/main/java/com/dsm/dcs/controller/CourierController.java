@@ -22,8 +22,8 @@ public class CourierController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public DeliveryIdListResponse seveDelivery(@Valid @RequestBody DeliveryListRequest request) {
-        return courierService.seveDelivery(request);
+    public DeliveryIdListResponse saveDelivery(@Valid @RequestBody DeliveryListRequest request) {
+        return courierService.saveDelivery(request);
     }
 
 }

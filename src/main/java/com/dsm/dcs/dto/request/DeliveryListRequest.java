@@ -4,15 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.util.List;
 
 @Getter
 @NoArgsConstructor
 public class DeliveryListRequest {
 
-    @NotNull
-    private Integer couriercompany;
+    @NotBlank
+    private String couriercompany;
 
     private List<PhoneNumberRequest> phoneNumberRequestList;
 
@@ -21,7 +22,8 @@ public class DeliveryListRequest {
     @AllArgsConstructor
     public static class PhoneNumberRequest {
 
-        @NotNull
+        @NotBlank
+        @Pattern(regexp = "^010-+\\d{4}-+\\d{4}$")
         private String phoneNumber;
 
     }
