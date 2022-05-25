@@ -17,4 +17,10 @@ public class DeliveryFacade {
                 .orElseThrow(() -> DeliveryNotFoundException.EXCEPTION);
     }
 
+    public void deleteDelivery(Long id) {
+        Delivery delivery = deliveryRepository.findById(id)
+                .orElseThrow(() -> DeliveryNotFoundException.EXCEPTION);
+        deliveryRepository.delete(delivery);
+    }
+
 }

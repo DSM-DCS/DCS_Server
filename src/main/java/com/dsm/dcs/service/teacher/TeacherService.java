@@ -27,4 +27,8 @@ public class TeacherService {
 
     }
 
+    public void deleteDelivery(Long deliveryId) {
+        deliveryFacade.deleteDelivery(deliveryId);
+    }
+
 }

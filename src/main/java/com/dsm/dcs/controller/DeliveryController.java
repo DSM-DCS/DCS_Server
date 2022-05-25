@@ -6,6 +6,7 @@ import com.dsm.dcs.service.CourierService;
 import com.dsm.dcs.service.teacher.TeacherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,6 +36,12 @@ public class DeliveryController {
     public DeliveryIdListResponse.DeliveryIdResponse updateDeliveryUser(@PathVariable("delivery_id") Long deliveryId,
                                                                         @PathVariable("user_id") Long userId) {
         return teacherService.updateUser(deliveryId, userId);
+    }
+
+    @DeleteMapping("/{delivery_id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteDelivery(@PathVariable("delivery_id") Long deliveryId) {
+        teacherService.deleteDelivery(deliveryId);
     }
 
 }
