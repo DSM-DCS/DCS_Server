@@ -28,9 +28,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors()
 
                 .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .formLogin().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
-                .and();
+                .and()
+
+                .authorizeRequests()
+                .anyRequest().permitAll();
+
     }
 }

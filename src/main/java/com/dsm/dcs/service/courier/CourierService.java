@@ -1,4 +1,4 @@
-package com.dsm.dcs.service;
+package com.dsm.dcs.service.courier;
 
 import com.dsm.dcs.dto.request.DeliveryListRequest;
 import com.dsm.dcs.dto.response.DeliveryIdListResponse;
