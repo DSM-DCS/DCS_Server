@@ -27,7 +27,7 @@ public class DeliveryController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public DeliveryIdListResponse seveDelivery(@Valid @RequestBody DeliveryListRequest request) {
-        return courierService.seveDelivery(request);
+        return courierService.saveDelivery(request);
     }
 
     @PatchMapping("/{delivery_id}/{user_id}")
