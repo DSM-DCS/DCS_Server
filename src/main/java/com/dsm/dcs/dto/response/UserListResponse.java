@@ -3,6 +3,7 @@ package com.dsm.dcs.dto.response;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class UserListResponse {
 
     @Getter
     @Builder
-    public class UserResponse {
+    public static class UserResponse {
 
         private final String name;
         private final Integer studentNumber;
