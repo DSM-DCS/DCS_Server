@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class UserFacade {
@@ -19,6 +21,10 @@ public class UserFacade {
     public User getCurrentUser() {
         String accountId = SecurityContextHolder.getContext().getAuthentication().getName();
         return getUserByAccountId(accountId);
+    }
+
+    public List<User> getUsetList() {
+        return userRepository.findAllByOrderByStudentNumberDesc();
     }
 
     public User getUserByAccountId(String id) {
