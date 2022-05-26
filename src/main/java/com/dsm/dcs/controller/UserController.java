@@ -29,7 +29,7 @@ public class UserController {
 
     @GetMapping("/search")
     @ResponseStatus
-    public UserListResponse.UserResponse searchUser(@RequestParam("name") String name) {
+    public UserListResponse searchUser(@RequestParam(value = "name") String name) {
         return userService.searchUser(name);
     }
 
