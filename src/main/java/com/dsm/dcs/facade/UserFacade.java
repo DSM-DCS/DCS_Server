@@ -24,7 +24,7 @@ public class UserFacade {
     }
 
     public List<User> getUsetList() {
-        return userRepository.findAllByOrderByStudentNumberDese();
+        return userRepository.findAllByOrderByStudentNumberDesc();
     }
 
     public User getUserByAccountId(String id) {
