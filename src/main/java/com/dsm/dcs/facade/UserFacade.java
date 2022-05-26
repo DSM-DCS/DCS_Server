@@ -37,6 +37,11 @@ public class UserFacade {
                 .orElse(null);
     }
 
+    public User getUserByName(String name) {
+        return userRepository.findByContainingName(name)
+                .orElseThrow(() -> UserNotFoundException.EXCEPTION);
+    }
+
     public User getUserById(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
