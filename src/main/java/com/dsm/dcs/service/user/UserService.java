@@ -35,5 +35,14 @@ public class UserService {
 
     }
 
+    public UserListResponse.UserResponse searchUser(String name) {
+        User user = userFacade.getUserByName(name);
+
+        return UserListResponse.UserResponse.builder()
+                .name(user.getName())
+                .studentNumber(user.getStudentNumber())
+                .build();
+    }
+
 
 }
