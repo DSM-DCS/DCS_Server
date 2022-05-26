@@ -2,11 +2,13 @@ package com.dsm.dcs.controller;
 
 import com.dsm.dcs.dto.request.DeliveryListRequest;
 import com.dsm.dcs.dto.response.DeliveryIdListResponse;
+import com.dsm.dcs.dto.response.DeliveryListResponse;
 import com.dsm.dcs.service.courier.CourierService;
 import com.dsm.dcs.service.teacher.TeacherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,4 +46,9 @@ public class DeliveryController {
         teacherService.deleteDelivery(deliveryId);
     }
 
+    @GetMapping
+    @ResponseStatus
+    public DeliveryListResponse getDeliveryList() {
+        return teacherService.getDeliveryList();
+    }
 }

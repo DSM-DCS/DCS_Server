@@ -6,6 +6,8 @@ import com.dsm.dcs.exception.DeliveryNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class DeliveryFacade {
@@ -21,6 +23,10 @@ public class DeliveryFacade {
         Delivery delivery = deliveryRepository.findById(id)
                 .orElseThrow(() -> DeliveryNotFoundException.EXCEPTION);
         deliveryRepository.delete(delivery);
+    }
+
+    public List<Delivery> getDeliveryList() {
+        return deliveryRepository.findAllByOrderByIdDesc();
     }
 
 }
