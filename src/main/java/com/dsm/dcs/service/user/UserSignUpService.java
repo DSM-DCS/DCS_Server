@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZonedDateTime;
 
+@Transactional
 @RequiredArgsConstructor
 @Service
 public class UserSignUpService {
@@ -24,7 +25,6 @@ public class UserSignUpService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    @Transactional
     public UserTokenResponse execute(UserSignUpRequest request) {
 
         userFacade.checkUserExists(request.getAccountId());
