@@ -17,9 +17,8 @@ public class UserService {
 
     private final UserFacade userFacade;
 
-    public UserListResponse getUser() {
+    private UserListResponse getUserList(List<User> userList) {
 
-        List<User> userList = userFacade.getUsetList();
         List<UserListResponse.UserResponse> userResponses = new ArrayList<>();
 
         for(User user : userList) {
@@ -32,16 +31,19 @@ public class UserService {
         }
 
         return new UserListResponse(userResponses);
+    }
+
+    public UserListResponse getUser() {
+
+        List<User> userList = userFacade.getUsetList();
+        return getUserList(userList);
 
     }
 
-    public UserListResponse.UserResponse searchUser(String name) {
-        User user = userFacade.getUserByName(name);
+    public UserListResponse searchUser(String name) {
+        List<User> userList = userFacade.getUserByName(name);
+        return getUserList(userList);
 
-        return UserListResponse.UserResponse.builder()
-                .name(user.getName())
-                .studentNumber(user.getStudentNumber())
-                .build();
     }
 
 
