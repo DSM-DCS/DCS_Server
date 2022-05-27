@@ -2,6 +2,7 @@ package com.dsm.dcs.service.teacher;
 
 import com.dsm.dcs.dto.response.DeliveryIdListResponse;
 import com.dsm.dcs.dto.response.DeliveryListResponse;
+import com.dsm.dcs.dto.response.DeliveryNullUserListResponse;
 import com.dsm.dcs.entity.CourierCompany;
 import com.dsm.dcs.entity.delivery.Delivery;
 import com.dsm.dcs.entity.delivery.DeliveryRepository;
@@ -56,6 +57,27 @@ public class TeacherService {
         }
 
         return new DeliveryListResponse(deliveryResponses);
+
+    }
+
+    public DeliveryNullUserListResponse getDeliveryUserNullList() {
+
+        List<DeliveryNullUserListResponse.DeliveryNullUserResponse> deliveryNullUserResponses = new ArrayList<>();
+        List<Delivery> deliveries = deliveryFacade.getDeliveryList();
+
+        for(Delivery delivery : deliveries) {
+            if(delivery.getUser() == null) {
+                deliveryNullUserResponses.add(
+                        DeliveryNullUserListResponse.DeliveryNullUserResponse.builder()
+                                .courierCompany(delivery.getCourierCompany().name())
+                                .phoneNumber(delivery.getPhoneNumber())
+                                .createdDate(delivery.getCreatedDate())
+                                .build()
+                );
+            }
+        }
+
+        return new DeliveryNullUserListResponse(deliveryNullUserResponses);
 
     }
 
