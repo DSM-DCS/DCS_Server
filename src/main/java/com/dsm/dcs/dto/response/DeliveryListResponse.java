@@ -21,7 +21,6 @@ public class DeliveryListResponse {
         private final String name;
         private final LocalDate createdDate;
 
-
     }
 
 }

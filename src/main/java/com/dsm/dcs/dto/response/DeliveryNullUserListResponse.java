@@ -9,16 +9,16 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
-public class DeliveryListResponse {
+public class DeliveryNullUserListResponse {
 
-    List<DeliveryResponse> deliveryResponses;
+    List<DeliveryNullUserResponse> deliveryNullUserResponses;
 
     @Getter
     @Builder
-    public static class DeliveryResponse {
+    public static class DeliveryNullUserResponse {
 
         private final String courierCompany;
-        private final String name;
+        private final String phoneNumber;
         private final LocalDate createdDate;
 
     }
