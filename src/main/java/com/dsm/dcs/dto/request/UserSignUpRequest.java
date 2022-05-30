@@ -29,6 +29,10 @@ public class UserSignUpRequest {
     @Email(message = "이메일 형식이 올바르지 않습니다.")
     private String email;
 
+    @NotBlank(message = "phone_number은 Null 또는 공백 또는 띄어쓰기를 허용하지 않습니다")
+    @Pattern(regexp = "^010-+\\d{4}-+\\d{4}$")
+    private String phoneNumber;
+
     @NotBlank(message = "name은 Null 또는 공백 또는 띄어쓰기를 허용하지 않습니다.")
     private String name;
 
