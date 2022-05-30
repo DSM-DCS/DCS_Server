@@ -48,13 +48,11 @@ public class DeliveryController {
     }
 
     @GetMapping
-    @ResponseStatus
     public DeliveryListResponse getDeliveryList() {
         return teacherService.getDeliveryList();
     }
 
     @GetMapping("/null/user")
-    @ResponseStatus
     public DeliveryNullUserListResponse getDeliveryUserNullList() {
         return teacherService.getDeliveryUserNullList();
     }

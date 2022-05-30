@@ -43,31 +43,29 @@ public class UserController {
     private final VerificationAuthCodeService verificationAuthCodeService;
 
     @GetMapping("/search")
-    @ResponseStatus
     public UserListResponse searchUser(@RequestParam(value = "name") String name) {
         return userService.searchUser(name);
     }
 
     @GetMapping
-    @ResponseStatus
     public UserListResponse getUser() {
         return userService.getUser();
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public UserTokenResponse userSignUp(@RequestBody @Valid UserSignUpRequest request) {
         return userSignUpService.execute(request);
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/email-verifications")
+    @ResponseStatus(HttpStatus.CREATED)
     public void sendEmailAuthCode(@RequestBody @Valid SendEmailRequest request) {
         sendEmailAuthCodeService.execute(request);
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping("/password")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updatePassword(@RequestBody @Valid UpdatePasswordRequest request) {
         updatePasswordService.execute(request);
     }
