@@ -2,6 +2,7 @@ package com.dsm.dcs.facade;
 
 import com.dsm.dcs.entity.delivery.Delivery;
 import com.dsm.dcs.entity.delivery.DeliveryRepository;
+import com.dsm.dcs.entity.user.User;
 import com.dsm.dcs.exception.DeliveryNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -27,6 +28,10 @@ public class DeliveryFacade {
 
     public List<Delivery> getDeliveryList() {
         return deliveryRepository.findAllByOrderByIdDesc();
+    }
+
+    public List<Delivery> getDeliveryList(User user) {
+        return deliveryRepository.findByUserOrderByCreatedDateDesc();
     }
 
 }
