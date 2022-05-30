@@ -4,7 +4,16 @@ import com.dsm.dcs.entity.user.User;
 import com.dsm.dcs.entity.user.UserAuthCode;
 import com.dsm.dcs.entity.user.UserAuthCodeRepository;
 import com.dsm.dcs.entity.user.UserRepository;
-import com.dsm.dcs.exception.*;
+import com.dsm.dcs.exception.InvalidAuthCodeException;
+import com.dsm.dcs.exception.UserNotFoundException;
+import com.dsm.dcs.exception.UserAlreadyExistsException;
+import com.dsm.dcs.exception.AuthCodeAlreadyVerifiedException;
+import com.dsm.dcs.exception.EmailAlreadyExistsException;
+import com.dsm.dcs.exception.UnVerifiedAuthCodeException;
+import com.dsm.dcs.exception.AccountIdAlreadyExistsException;
+import com.dsm.dcs.exception.StudentNumberAlreadyExistsException;
+import com.dsm.dcs.exception.PhoneNumberAlreadyExistsException;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
