@@ -17,6 +17,16 @@ public class UserService {
 
     private final UserFacade userFacade;
 
+    public UserListResponse getUser() {
+        List<User> userList = userFacade.getUsetList();
+        return getUserList(userList);
+    }
+
+    public UserListResponse searchUser(String name) {
+        List<User> userList = userFacade.getUserByName(name);
+        return getUserList(userList);
+    }
+
     private UserListResponse getUserList(List<User> userList) {
 
         List<UserListResponse.UserResponse> userResponses = new ArrayList<>();
@@ -31,19 +41,6 @@ public class UserService {
         }
 
         return new UserListResponse(userResponses);
-    }
-
-    public UserListResponse getUser() {
-
-        List<User> userList = userFacade.getUsetList();
-        return getUserList(userList);
-
-    }
-
-    public UserListResponse searchUser(String name) {
-        List<User> userList = userFacade.getUserByName(name);
-        return getUserList(userList);
-
     }
 
 
