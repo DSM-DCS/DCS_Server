@@ -4,6 +4,12 @@ spring:
     username: ${DB_USER}
     password: ${DB_PWD}
     driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      max-lifetime: 600000
+
+  redis:
+    host: ${REDIS_HOST}
+    port: ${REDIS_PORT}
 
   jpa:
     database: mysql
@@ -21,3 +27,11 @@ jwt:
   secret-key: ${JWT_SECRET:qwer1234}
   access-exp: ${JWT_ACCESS_EXP:12345}
   refresh-exp: ${JWT_REFRESH_EXP:3456789}
+
+aws:
+  ses:
+    access-key: ${AWS_SES_ACCESS}
+    secret-key: ${AWS_SES_SECRET}
+    region: ${AWS_SES_REGION}
+    email: ${SENDER_EMAIL}
+

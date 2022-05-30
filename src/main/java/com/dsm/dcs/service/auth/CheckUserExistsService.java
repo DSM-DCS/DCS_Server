@@ -1,0 +1,16 @@
+package com.dsm.dcs.service.auth;
+
+import com.dsm.dcs.facade.UserFacade;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+@RequiredArgsConstructor
+@Service
+public class CheckUserExistsService {
+
+    private final UserFacade userFacade;
+
+    public void execute(String accountId) {
+        userFacade.checkUserExists(accountId);
+    }
+}

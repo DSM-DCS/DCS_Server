@@ -18,7 +18,7 @@ public class UserService {
     private final UserFacade userFacade;
 
     public UserListResponse getUser() {
-        List<User> userList = userFacade.getUsetList();
+        List<User> userList = userFacade.getUserList();
         return getUserList(userList);
     }
 

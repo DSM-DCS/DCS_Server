@@ -19,6 +19,8 @@ public class DcsExceptionFilter extends OncePerRequestFilter {
         } catch (DcsException e) {
             ErrorResponse errorResponse =
                     new ErrorResponse(e.getStatus(), e.getMessage());
+
+            logger.error(e);
             response.setStatus(e.getStatus());
             response.setContentType("application/json");
             response.getWriter().write(errorResponse.toString());

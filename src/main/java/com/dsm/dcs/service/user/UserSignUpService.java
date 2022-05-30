@@ -2,6 +2,7 @@ package com.dsm.dcs.service.user;
 
 import com.dsm.dcs.dto.request.UserSignUpRequest;
 import com.dsm.dcs.dto.response.UserTokenResponse;
+import com.dsm.dcs.entity.Authority;
 import com.dsm.dcs.entity.user.User;
 import com.dsm.dcs.entity.user.UserRepository;
 import com.dsm.dcs.facade.UserFacade;
@@ -30,13 +31,16 @@ public class UserSignUpService {
         userFacade.checkUserExists(request.getAccountId());
         userFacade.checkEmailExists(request.getEmail());
         userFacade.checkStudentNumberExists(request.getStudentNumber());
+        userFacade.checkPhoneNumberExists(request.getPhoneNumber());
 
         User user = userRepository.save(User.builder()
                 .accountId(request.getAccountId())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .name(request.getName())
                 .email(request.getEmail())
+                .authority(Authority.USER)
                 .studentNumber(request.getStudentNumber())
+                .phoneNumber(request.getPhoneNumber())
                 .build());
 
         String accessToken = jwtTokenProvider.generateAccessToken(user.getAccountId());
@@ -44,6 +48,7 @@ public class UserSignUpService {
 
         return UserTokenResponse.builder()
                 .accessToken(accessToken)
+                .authority(user.getAuthority())
                 .expiredAt(ZonedDateTime.now().plusSeconds(jwtProperties.getAccessExp()))
                 .refreshToken(refreshToken)
                 .build();
