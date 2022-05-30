@@ -1,7 +1,11 @@
 package com.dsm.dcs.infra.ses;
 
 import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceAsync;
-import com.amazonaws.services.simpleemail.model.*;
+import com.amazonaws.services.simpleemail.model.SendEmailRequest;
+import com.amazonaws.services.simpleemail.model.Message;
+import com.amazonaws.services.simpleemail.model.Content;
+import com.amazonaws.services.simpleemail.model.Body;
+import com.amazonaws.services.simpleemail.model.Destination;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
