@@ -6,6 +6,7 @@ import com.dsm.dcs.dto.response.DeliveryListResponse;
 import com.dsm.dcs.dto.response.DeliveryNullUserListResponse;
 import com.dsm.dcs.service.courier.CourierService;
 import com.dsm.dcs.service.teacher.TeacherService;
+import com.dsm.dcs.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,6 +28,7 @@ public class DeliveryController {
 
     private final CourierService courierService;
     private final TeacherService teacherService;
+    private final UserService userService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -59,4 +61,9 @@ public class DeliveryController {
         return teacherService.getDeliveryUserNullList();
     }
 
+    @GetMapping("/{user_id}")
+    @ResponseStatus
+    public DeliveryListResponse myDeliveryList(@PathVariable("user_id") Long userId) {
+        return userService.getDeliveryList(userId);
+    }
 }
