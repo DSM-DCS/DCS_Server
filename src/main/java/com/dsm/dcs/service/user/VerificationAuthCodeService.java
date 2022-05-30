@@ -1,6 +1,6 @@
 package com.dsm.dcs.service.user;
 
-import com.dsm.dcs.dto.request.VerifyAuthCodeRequest;
+import com.dsm.dcs.dto.request.VerificationAuthCodeRequest;
 import com.dsm.dcs.entity.user.UserAuthCode;
 import com.dsm.dcs.entity.user.UserAuthCodeRepository;
 import com.dsm.dcs.exception.InvalidAuthCodeException;
@@ -19,7 +19,7 @@ public class VerificationAuthCodeService {
     private final UserAuthCodeRepository userAuthCodeRepository;
 
     @Transactional
-    public void execute(VerifyAuthCodeRequest request) {
+    public void execute(VerificationAuthCodeRequest request) {
         String email = request.getEmail();
         String code = request.getCode();
 
