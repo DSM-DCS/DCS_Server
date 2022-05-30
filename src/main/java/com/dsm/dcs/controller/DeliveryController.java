@@ -3,6 +3,7 @@ package com.dsm.dcs.controller;
 import com.dsm.dcs.dto.request.DeliveryListRequest;
 import com.dsm.dcs.dto.response.DeliveryIdListResponse;
 import com.dsm.dcs.dto.response.DeliveryListResponse;
+import com.dsm.dcs.dto.response.DeliveryNullUserListResponse;
 import com.dsm.dcs.service.courier.CourierService;
 import com.dsm.dcs.service.teacher.TeacherService;
 import lombok.RequiredArgsConstructor;
@@ -51,4 +52,11 @@ public class DeliveryController {
     public DeliveryListResponse getDeliveryList() {
         return teacherService.getDeliveryList();
     }
+
+    @GetMapping("/null/user")
+    @ResponseStatus
+    public DeliveryNullUserListResponse getDeliveryUserNullList() {
+        return teacherService.getDeliveryUserNullList();
+    }
+
 }
