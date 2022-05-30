@@ -1,6 +1,6 @@
 package com.dsm.dcs.service.auth;
 
-import com.dsm.dcs.dto.response.UserTokenRefreshResponse;
+import com.dsm.dcs.dto.response.UserRefreshTokenResponse;
 import com.dsm.dcs.entity.auth.RefreshToken;
 import com.dsm.dcs.entity.auth.RefreshTokenRepository;
 import com.dsm.dcs.exception.RefreshTokenNotFoundException;
@@ -19,7 +19,7 @@ public class TokenRefreshTokenService {
     private final JwtTokenProvider jwtTokenProvider;
 
     @Transactional
-    public UserTokenRefreshResponse execute(String refreshToken) {
+    public UserRefreshTokenResponse execute(String refreshToken) {
 
         RefreshToken redisRefreshToken = refreshTokenRepository.findByToken(jwtTokenProvider.parseToken(refreshToken))
                 .orElseThrow(() -> RefreshTokenNotFoundException.EXCEPTION);
@@ -29,7 +29,7 @@ public class TokenRefreshTokenService {
 
         String accessToken = jwtTokenProvider.generateAccessToken(redisRefreshToken.getAccountId());
 
-        return UserTokenRefreshResponse.builder()
+        return UserRefreshTokenResponse.builder()
                 .accessToken(accessToken)
                 .refreshToken(newRefreshToken)
                 .expiredAt(jwtTokenProvider.getExpiredTime())
