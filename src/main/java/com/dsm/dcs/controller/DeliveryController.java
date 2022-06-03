@@ -8,6 +8,7 @@ import com.dsm.dcs.service.courier.CourierService;
 import com.dsm.dcs.service.teacher.TeacherService;
 import com.dsm.dcs.service.user.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,18 +51,18 @@ public class DeliveryController {
     }
 
     @GetMapping
-    public DeliveryListResponse getDeliveryList() {
-        return teacherService.getDeliveryList();
+    public DeliveryListResponse getDeliveryList(Pageable page) {
+        return teacherService.getDeliveryList(page);
     }
 
     @GetMapping("/null/user")
-    public DeliveryNullUserListResponse getDeliveryUserNullList() {
-        return teacherService.getDeliveryUserNullList();
+    public DeliveryNullUserListResponse getDeliveryUserNullList(Pageable page) {
+        return teacherService.getDeliveryUserNullList(page);
     }
 
     @GetMapping("/{user_id}")
     @ResponseStatus
-    public DeliveryListResponse myDeliveryList(@PathVariable("user_id") Long userId) {
-        return userService.getDeliveryList(userId);
+    public DeliveryListResponse myDeliveryList(@PathVariable("user_id") Long userId, Pageable page) {
+        return userService.getDeliveryList(userId, page);
     }
 }
