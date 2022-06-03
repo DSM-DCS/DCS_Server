@@ -10,6 +10,7 @@ import com.dsm.dcs.entity.user.User;
 import com.dsm.dcs.facade.DeliveryFacade;
 import com.dsm.dcs.facade.UserFacade;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,10 +40,10 @@ public class TeacherService {
         deliveryFacade.deleteDelivery(deliveryId);
     }
 
-    public DeliveryListResponse getDeliveryList() {
+    public DeliveryListResponse getDeliveryList(Pageable page) {
 
         List<DeliveryListResponse.DeliveryResponse> deliveryResponses = new ArrayList<>();
-        List<Delivery> deliveries = deliveryFacade.getDeliveryList();
+        List<Delivery> deliveries = deliveryFacade.getDeliveryList(page);
 
         for(Delivery delivery : deliveries) {
             if(delivery.getUser() != null) {
@@ -60,10 +61,10 @@ public class TeacherService {
 
     }
 
-    public DeliveryNullUserListResponse getDeliveryUserNullList() {
+    public DeliveryNullUserListResponse getDeliveryUserNullList(Pageable page) {
 
         List<DeliveryNullUserListResponse.DeliveryNullUserResponse> deliveryNullUserResponses = new ArrayList<>();
-        List<Delivery> deliveries = deliveryFacade.getDeliveryList();
+        List<Delivery> deliveries = deliveryFacade.getDeliveryList(page);
 
         for(Delivery delivery : deliveries) {
             if(delivery.getUser() == null) {
