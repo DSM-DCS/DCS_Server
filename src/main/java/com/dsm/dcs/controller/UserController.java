@@ -14,6 +14,7 @@ import com.dsm.dcs.service.user.UserService;
 import com.dsm.dcs.service.user.SendEmailAuthCodeService;
 import com.dsm.dcs.service.user.VerificationAuthCodeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,13 +44,13 @@ public class UserController {
     private final VerificationAuthCodeService verificationAuthCodeService;
 
     @GetMapping("/search")
-    public UserListResponse searchUser(@RequestParam(value = "name") String name) {
-        return userService.searchUser(name);
+    public UserListResponse searchUser(@RequestParam(value = "name") String name, Pageable page) {
+        return userService.searchUser(name, page);
     }
 
     @GetMapping
-    public UserListResponse getUser() {
-        return userService.getUser();
+    public UserListResponse getUser(Pageable page) {
+        return userService.getUser(page);
     }
 
     @PostMapping
