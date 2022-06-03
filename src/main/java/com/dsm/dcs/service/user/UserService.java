@@ -7,6 +7,7 @@ import com.dsm.dcs.entity.user.User;
 import com.dsm.dcs.facade.DeliveryFacade;
 import com.dsm.dcs.facade.UserFacade;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,19 +22,19 @@ public class UserService {
     private final UserFacade userFacade;
     private final DeliveryFacade deliveryFacade;
 
-    public UserListResponse getUser() {
+    public UserListResponse getUser(Pageable page) {
         List<User> userList = userFacade.getUserList();
-        return getUserList(userList);
+        return getUserList(userList, page);
     }
 
-    public UserListResponse searchUser(String name) {
+    public UserListResponse searchUser(String name, Pageable page) {
         List<User> userList = userFacade.getUserByName(name);
-        return getUserList(userList);
+        return getUserList(userList, page);
     }
 
-    public DeliveryListResponse getDeliveryList(Long userId) {
+    public DeliveryListResponse getDeliveryList(Long userId, Pageable page) {
         List<DeliveryListResponse.DeliveryResponse> deliveryResponses = new ArrayList<>();
-        List<Delivery> deliveries = deliveryFacade.getDeliveryList(userFacade.getCurrentUser());
+        List<Delivery> deliveries = deliveryFacade.getDeliveryList(userFacade.getCurrentUser(), page);
 
         for(Delivery delivery : deliveries) {
             deliveryResponses.add(
@@ -48,7 +49,7 @@ public class UserService {
         return new DeliveryListResponse(deliveryResponses);
     }
 
-    private UserListResponse getUserList(List<User> userList) {
+    private UserListResponse getUserList(List<User> userList, Pageable page) {
 
         List<UserListResponse.UserResponse> userResponses = new ArrayList<>();
 
