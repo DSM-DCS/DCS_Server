@@ -26,12 +26,12 @@ public class DeliveryFacade {
         deliveryRepository.delete(delivery);
     }
 
-    public List<Delivery> getDeliveryList(User currentUser) {
+    public List<Delivery> getDeliveryList() {
         return deliveryRepository.findAllByOrderByIdDesc();
     }
 
-//    public List<Delivery> getDeliveryLists(User user) {
-//        return deliveryRepository.findByUserOrderByCreatedDateDesc();
-//    }
+    public List<Delivery> getDeliveryList(User user) {
+        return deliveryRepository.findByUserOrderByCreatedDateDesc();
+    }
 
 }
