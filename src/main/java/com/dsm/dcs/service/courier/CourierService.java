@@ -25,19 +25,19 @@ public class CourierService {
 
         List<DeliveryIdListResponse.DeliveryIdResponse> deliveryIdResponses = new ArrayList<>();
 
-            for (DeliveryListRequest.PhoneNumberRequest phoneNumberRequest : request.getPhoneNumberRequestList()) {
-                deliveryIdResponses.add(
-                        new DeliveryIdListResponse.DeliveryIdResponse(
-                                deliveryRepository.save(
-                                        Delivery.builder()
-                                                .courierCompany(CourierCompany.valueOf(request.getCouriercompany()))
-                                                .phoneNumber(phoneNumberRequest.getPhoneNumber())
-                                                .user(userFacade.getUserByPhoneNumber(phoneNumberRequest.getPhoneNumber()))
-                                                .build()
-                                ).getId()
-                        )
-                );
-            }
+        for (DeliveryListRequest.PhoneNumberRequest phoneNumberRequest : request.getPhoneNumberRequestList()) {
+            deliveryIdResponses.add(
+                    new DeliveryIdListResponse.DeliveryIdResponse(
+                            deliveryRepository.save(
+                                    Delivery.builder()
+                                            .courierCompany(CourierCompany.valueOf(request.getCouriercompany()))
+                                            .phoneNumber(phoneNumberRequest.getPhoneNumber())
+                                            .user(userFacade.getUserByPhoneNumber(phoneNumberRequest.getPhoneNumber()))
+                                            .build()
+                            ).getId()
+                    )
+            );
+        }
 
         return new DeliveryIdListResponse(deliveryIdResponses);
 

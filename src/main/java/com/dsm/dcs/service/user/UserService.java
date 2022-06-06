@@ -33,7 +33,7 @@ public class UserService {
 
     public DeliveryListResponse getDeliveryList(Long userId) {
         List<DeliveryListResponse.DeliveryResponse> deliveryResponses = new ArrayList<>();
-        List<Delivery> deliveries = deliveryFacade.getDeliveryList(userFacade.getCurrentUser());
+        List<Delivery> deliveries = deliveryFacade.getDeliveryList(); // (userFacade.getCurrentUser());
 
         for(Delivery delivery : deliveries) {
             deliveryResponses.add(
