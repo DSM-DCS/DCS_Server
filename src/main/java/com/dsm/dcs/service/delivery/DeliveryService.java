@@ -70,5 +70,9 @@ public class DeliveryService {
     public DeliveryListResponse getDeliveryList(Pageable page) {
         return deliveryFacade.getDeliveryUserNotNullList(page);
     }
-    
+
+    public DeliveryNullUserListResponse getDeliveryUserNullList(Pageable page) {
+        return deliveryFacade.getDeliveryUserNullList(page);
+    }
+
 }
