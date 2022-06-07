@@ -2,8 +2,10 @@ package com.dsm.dcs.facade;
 
 import com.dsm.dcs.entity.delivery.Delivery;
 import com.dsm.dcs.entity.delivery.DeliveryRepository;
+import com.dsm.dcs.entity.user.User;
 import com.dsm.dcs.exception.DeliveryNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -25,8 +27,8 @@ public class DeliveryFacade {
         deliveryRepository.delete(delivery);
     }
 
-    public List<Delivery> getDeliveryList() {
-        return deliveryRepository.findAllByOrderByIdDesc();
+    public List<Delivery> getDeliveryList(Pageable page) {
+        return deliveryRepository.findAllByOrderByIdDesc(page);
     }
 
     public List<Delivery> getDeliveryList(User user, Pageable page) {
