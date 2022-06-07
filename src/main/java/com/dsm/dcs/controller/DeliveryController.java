@@ -4,8 +4,7 @@ import com.dsm.dcs.dto.request.DeliveryListRequest;
 import com.dsm.dcs.dto.response.DeliveryIdListResponse;
 import com.dsm.dcs.dto.response.DeliveryListResponse;
 import com.dsm.dcs.dto.response.DeliveryNullUserListResponse;
-import com.dsm.dcs.service.courier.CourierService;
-import com.dsm.dcs.service.teacher.TeacherService;
+import com.dsm.dcs.service.delivery.DeliveryService;
 import com.dsm.dcs.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -27,42 +26,41 @@ import javax.validation.Valid;
 @RestController
 public class DeliveryController {
 
-    private final CourierService courierService;
-    private final TeacherService teacherService;
+    private final DeliveryService deliveryService;
     private final UserService userService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public DeliveryIdListResponse saveDelivery(@Valid @RequestBody DeliveryListRequest request) {
-        return courierService.saveDelivery(request);
+        return deliveryService.saveDelivery(request);
     }
 
     @PatchMapping("/{delivery_id}/{user_id}")
     @ResponseStatus(HttpStatus.OK)
     public DeliveryIdListResponse.DeliveryIdResponse updateDeliveryUser(@PathVariable("delivery_id") Long deliveryId,
                                                                         @PathVariable("user_id") Long userId) {
-        return teacherService.updateUser(deliveryId, userId);
+        return deliveryService.updateDeliveryUser(deliveryId, userId);
     }
 
     @DeleteMapping("/{delivery_id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteDelivery(@PathVariable("delivery_id") Long deliveryId) {
-        teacherService.deleteDelivery(deliveryId);
+        deliveryService.deleteDelivery(deliveryId);
     }
 
     @GetMapping
     public DeliveryListResponse getDeliveryList(Pageable page) {
-        return teacherService.getDeliveryList(page);
+        return deliveryService.getDeliveryList(page);
     }
 
     @GetMapping("/null/user")
     public DeliveryNullUserListResponse getDeliveryUserNullList(Pageable page) {
-        return teacherService.getDeliveryUserNullList(page);
+        return deliveryService.getDeliveryUserNullList(page);
     }
 
-    @GetMapping("/{user_id}")
-    public DeliveryListResponse myDeliveryList(@PathVariable("user_id") Long userId, Pageable page) {
-        return userService.getDeliveryList(userId, page);
+    @GetMapping("/user")
+    public DeliveryListResponse myDeliveryList(Pageable page) {
+        return deliveryService.getMyDeliveryList(page);
     }
-    }
+    
 }
