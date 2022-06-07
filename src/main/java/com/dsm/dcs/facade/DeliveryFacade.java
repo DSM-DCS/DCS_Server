@@ -32,7 +32,7 @@ public class DeliveryFacade {
     }
 
     public List<Delivery> getDeliveryList(User user, Pageable page) {
-        return deliveryRepository.findByUserOrderByCreatedDateDesc(page);
+        return deliveryRepository.findByUserOrderByCreatedDateDesc(user, page);
     }
 
 }
