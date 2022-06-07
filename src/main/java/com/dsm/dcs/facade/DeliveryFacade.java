@@ -29,8 +29,8 @@ public class DeliveryFacade {
         return deliveryRepository.findAllByOrderByIdDesc();
     }
 
-//    public List<Delivery> getDeliveryList(User user) {
-//        return deliveryRepository.findByUserOrderByCreatedDateDesc();
-//    }
+    public List<Delivery> getDeliveryList(User user, Pageable page) {
+        return deliveryRepository.findByUserOrderByCreatedDateDesc(user, page);
+    }
 
 }
