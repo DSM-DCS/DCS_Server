@@ -4,6 +4,7 @@ import com.dsm.dcs.dto.response.DeliveryListResponse;
 import com.dsm.dcs.dto.response.DeliveryNullUserListResponse;
 import com.dsm.dcs.entity.delivery.Delivery;
 import com.dsm.dcs.entity.delivery.DeliveryRepository;
+import com.dsm.dcs.entity.user.User;
 import com.dsm.dcs.exception.DeliveryNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -26,6 +27,11 @@ public class DeliveryFacade {
         Delivery delivery = deliveryRepository.findById(id)
                 .orElseThrow(() -> DeliveryNotFoundException.EXCEPTION);
         deliveryRepository.delete(delivery);
+    }
+
+    public DeliveryListResponse getDeliveryList(User user, Pageable page) {
+        return new DeliveryListResponse(deliveryRepository.findAllByUserOrderByCreatedDateDesc(user, page)
+                .stream().map(this::getDelivery).collect(Collectors.toList()));
     }
 
     public DeliveryListResponse getDeliveryUserNotNullList(Pageable page) {
