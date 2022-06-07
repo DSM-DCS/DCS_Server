@@ -62,5 +62,5 @@ public class DeliveryController {
     public DeliveryListResponse myDeliveryList(Pageable page) {
         return deliveryService.getMyDeliveryList(page);
     }
-    
+
 }
