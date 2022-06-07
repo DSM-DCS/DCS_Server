@@ -66,5 +66,9 @@ public class DeliveryService {
     public DeliveryListResponse getMyDeliveryList(Pageable page) {
         return deliveryFacade.getDeliveryList(userFacade.getCurrentUser(), page);
     }
+
+    public DeliveryListResponse getDeliveryList(Pageable page) {
+        return deliveryFacade.getDeliveryUserNotNullList(page);
+    }
     
 }
