@@ -33,7 +33,7 @@ public class DeliveryController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public DeliveryIdListResponse seveDelivery(@Valid @RequestBody DeliveryListRequest request) {
+    public DeliveryIdListResponse saveDelivery(@Valid @RequestBody DeliveryListRequest request) {
         return courierService.saveDelivery(request);
     }
 
@@ -61,8 +61,8 @@ public class DeliveryController {
     }
 
     @GetMapping("/{user_id}")
-    @ResponseStatus
     public DeliveryListResponse myDeliveryList(@PathVariable("user_id") Long userId, Pageable page) {
         return userService.getDeliveryList(userId, page);
+    }
     }
 }

@@ -3,7 +3,6 @@ package com.dsm.dcs.entity.user;
 import com.dsm.dcs.entity.Authority;
 import com.dsm.dcs.entity.BaseTimeEntity;
 import com.dsm.dcs.entity.delivery.Delivery;
-import com.dsm.dcs.exception.InvalidRoleException;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -64,12 +63,6 @@ public class User extends BaseTimeEntity {
 
     public void setAuthorityCourier() {
         this.authority = Authority.COURIER;
-    }
-
-    public void updateRootUserPassword(String password) {
-        if (this.authority != Authority.ROOT) {
-            throw InvalidRoleException.EXCEPTION;
-        }
     }
 
     public User updatePassword(String password) {

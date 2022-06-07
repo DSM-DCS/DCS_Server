@@ -25,13 +25,26 @@ jobs:
         run: ./gradlew check
 
       - name: Login to Dockerhub
-        uses: docker/login-action@v1
+        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-      - name: Docker Build
-        run: docker build -t skmn12/dcs:latest .
-
-      - name: Push on Dockerhub
-        run: docker push skmn12/dcs:latest
+      - name: Build and push Docker image
+        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/dcs:latest
+          build-args : |
+            DB_URL=${{ secrets.DB_URL }}
+            DB_USER=${{ secrets.DB_USER }}
+            DB_PWD=${{ secrets.DB_PWD }}
+            AWS_SES_ACCESS=${{ secrets.AWS_SES_ACCESS }}
+            AWS_SES_SECRET=${{ secrets.AWS_SES_SECRET }}
+            AWS_SES_REGION=${{ secrets.AWS_SES_REGION }}
+            SENDER_EMAIL=${{ secrets.SENDER_EMAIL }}
+            JWT_SECRET=${{ secrets.JWT_SECRET }}
+            JWT_ACCESS_EXP=${{ secrets.JWT_ACCESS_EXP }}
+            JWT_REFRESH_EXP=${{ secrets.JWT_REFRESH_EXP }}
