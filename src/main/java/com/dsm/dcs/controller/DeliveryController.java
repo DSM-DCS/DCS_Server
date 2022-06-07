@@ -60,8 +60,8 @@ public class DeliveryController {
     }
 
     @GetMapping("/{user_id}")
-    @ResponseStatus
-    public DeliveryListResponse myDeliveryList(@PathVariable("user_id") Long userId) {
-        return userService.getDeliveryList(userId);
+    public DeliveryListResponse myDeliveryList(@PathVariable("user_id") Long userId, Pageable page) {
+        return userService.getDeliveryList(userId, page);
+    }
     }
 }
