@@ -23,6 +23,45 @@ import java.util.List;
 @Service
 public class DeliveryService {
 
+    private final DeliveryRepository deliveryRepository;
+    private final DeliveryFacade deliveryFacade;
+    private final UserFacade userFacade;
+
+    public DeliveryIdListResponse saveDelivery(DeliveryListRequest request) {
+
+        List<DeliveryIdListResponse.DeliveryIdResponse> deliveryIdResponses = new ArrayList<>();
+
+        for (DeliveryListRequest.PhoneNumberRequest phoneNumberRequest : request.getPhoneNumberRequestList()) {
+            deliveryIdResponses.add(
+                    new DeliveryIdListResponse.DeliveryIdResponse(
+                            deliveryRepository.save(
+                                    Delivery.builder()
+                                            .courierCompany(CourierCompany.valueOf(request.getCouriercompany()))
+                                            .phoneNumber(phoneNumberRequest.getPhoneNumber())
+                                            .user(userFacade.getUserByPhoneNumber(phoneNumberRequest.getPhoneNumber()))
+                                            .build()
+                            ).getId()
+                    )
+            );
+        }
+
+        return new DeliveryIdListResponse(deliveryIdResponses);
+
+    }
+
+    public DeliveryIdListResponse.DeliveryIdResponse updateDeliveryUser(Long userId, Long deliveryId) {
+
+        User user = userFacade.getUserById(userId);
+        Delivery delivery = deliveryFacade.getDeliveryById(deliveryId);
+        delivery.updateUser(user);
+        deliveryRepository.save(delivery);
+        return new DeliveryIdListResponse.DeliveryIdResponse(deliveryId);
+
+    }
+
+    public void deleteDelivery(Long deliveryId) {
+        deliveryFacade.deleteDelivery(deliveryId);
+    }
     
 
 }
