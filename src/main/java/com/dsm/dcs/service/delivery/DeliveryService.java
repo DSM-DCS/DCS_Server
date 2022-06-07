@@ -62,6 +62,9 @@ public class DeliveryService {
     public void deleteDelivery(Long deliveryId) {
         deliveryFacade.deleteDelivery(deliveryId);
     }
-    
 
+    public DeliveryListResponse getMyDeliveryList(Pageable page) {
+        return deliveryFacade.getDeliveryList(userFacade.getCurrentUser(), page);
+    }
+    
 }
