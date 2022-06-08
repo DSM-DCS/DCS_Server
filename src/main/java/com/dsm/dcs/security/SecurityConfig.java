@@ -1,5 +1,6 @@
 package com.dsm.dcs.security;
 
+import com.dsm.dcs.exception.handler.AuthenticationEntryPointImpl;
 import com.dsm.dcs.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -16,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final AuthenticationEntryPointImpl authenticationEntryPoint;
     private final JwtTokenProvider jwtTokenProvider;
 
     @Bean
@@ -35,11 +37,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
                 .and()
-
                 .authorizeRequests()
                 .anyRequest().permitAll()
 
-                .and()
-                .apply(new FilterConfig(jwtTokenProvider));
+                .and().httpBasic().authenticationEntryPoint(authenticationEntryPoint)
+                .and().apply(new FilterConfig(jwtTokenProvider));
     }
 }
