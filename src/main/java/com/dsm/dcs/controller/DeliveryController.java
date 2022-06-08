@@ -27,7 +27,6 @@ import javax.validation.Valid;
 public class DeliveryController {
 
     private final DeliveryService deliveryService;
-    private final UserService userService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
