@@ -1,5 +1,7 @@
 package com.dsm.dcs.facade;
 
+import com.dsm.dcs.dto.response.DeliveryListResponse;
+import com.dsm.dcs.dto.response.DeliveryNullUserListResponse;
 import com.dsm.dcs.entity.delivery.Delivery;
 import com.dsm.dcs.entity.delivery.DeliveryRepository;
 import com.dsm.dcs.entity.user.User;
@@ -8,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -27,12 +29,35 @@ public class DeliveryFacade {
         deliveryRepository.delete(delivery);
     }
 
-    public List<Delivery> getDeliveryList(Pageable page) {
-        return deliveryRepository.findAllByOrderByIdDesc(page);
+    public DeliveryListResponse getDeliveryList(User user, Pageable page) {
+        return new DeliveryListResponse(deliveryRepository.findAllByUserOrderByCreatedDateDesc(user, page)
+                .stream().map(this::getDelivery).collect(Collectors.toList()));
     }
 
-    public List<Delivery> getDeliveryList(User user, Pageable page) {
-        return deliveryRepository.findByUserOrderByCreatedDateDesc(user, page);
+    public DeliveryListResponse getDeliveryUserNotNullList(Pageable page) {
+        return new DeliveryListResponse(deliveryRepository.findAllByUserNotNullOrderByCreatedDateDesc(page)
+                .stream().map(this::getDelivery).collect(Collectors.toList()));
+    }
+
+    public DeliveryNullUserListResponse getDeliveryUserNullList(Pageable page) {
+        return new DeliveryNullUserListResponse(deliveryRepository.findAllByUserOrderByCreatedDateDesc(null, page)
+                .stream().map(this::getUserNullDeilvery).collect(Collectors.toList()));
+    }
+
+    private DeliveryListResponse.DeliveryResponse getDelivery(Delivery delivery) {
+        return DeliveryListResponse.DeliveryResponse.builder()
+                .courierCompany(delivery.getCourierCompany().name())
+                .name(delivery.getUser().getName())
+                .createdDate(delivery.getCreatedDate())
+                .build();
+    }
+
+    private DeliveryNullUserListResponse.DeliveryNullUserResponse getUserNullDeilvery(Delivery delivery) {
+        return DeliveryNullUserListResponse.DeliveryNullUserResponse.builder()
+                .courierCompany(delivery.getCourierCompany().name())
+                .phoneNumber(delivery.getPhoneNumber())
+                .createdDate(delivery.getCreatedDate())
+                .build();
     }
 
 }

@@ -5,6 +5,7 @@ import com.dsm.dcs.entity.user.UserAuthCode;
 import com.dsm.dcs.entity.user.UserAuthCodeRepository;
 import com.dsm.dcs.entity.user.UserRepository;
 import com.dsm.dcs.exception.InvalidAuthCodeException;
+import com.dsm.dcs.exception.InvalidJwtException;
 import com.dsm.dcs.exception.UserNotFoundException;
 import com.dsm.dcs.exception.UserAlreadyExistsException;
 import com.dsm.dcs.exception.AuthCodeAlreadyVerifiedException;
@@ -15,6 +16,7 @@ import com.dsm.dcs.exception.StudentNumberAlreadyExistsException;
 import com.dsm.dcs.exception.PhoneNumberAlreadyExistsException;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
@@ -28,8 +30,11 @@ public class UserFacade {
     private final UserAuthCodeRepository userAuthCodeRepository;
 
     public User getCurrentUser() {
-        String accountId = SecurityContextHolder.getContext().getAuthentication().getName();
-        return getUserByAccountId(accountId);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null) {
+            throw InvalidJwtException.EXCEPTION;
+        }
+        return getUserByAccountId(authentication.getName());
     }
 
     public List<User> getUserList() {
