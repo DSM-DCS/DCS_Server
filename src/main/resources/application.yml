@@ -19,9 +19,8 @@ spring:
       max-request-size: 512MB
 
   redis:
-    host: ${REDIS_HOST:localhost}
-    port: ${REDIS_PORT:6379}
-    password: ${REDIS_PWD}
+    host: ${REDIS_HOST}
+    port: ${REDIS_PORT}
 
 jwt:
   secret-key: ${JWT_SECRET:qwer1234}
