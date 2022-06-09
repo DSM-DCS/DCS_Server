@@ -57,14 +57,6 @@ public class User extends BaseTimeEntity {
         this.authority = authority;
     }
 
-    public void setAuthorityTeacher() {
-        this.authority = Authority.TEACHER;
-    }
-
-    public void setAuthorityCourier() {
-        this.authority = Authority.COURIER;
-    }
-
     public User updatePassword(String password) {
         this.password = password;
         return this;
