@@ -7,10 +7,6 @@ spring:
     hikari:
       max-lifetime: 600000
 
-  redis:
-    host: ${REDIS_HOST}
-    port: ${REDIS_PORT}
-
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
