@@ -19,7 +19,7 @@ spring:
       max-request-size: 512MB
 
   redis:
-    host: ${REDIS_HOST}
+    host: ${REDIS_HOST:3.39.54.235}
     port: ${REDIS_PORT:6379}
     password: ${REDIS_PWD}
 
