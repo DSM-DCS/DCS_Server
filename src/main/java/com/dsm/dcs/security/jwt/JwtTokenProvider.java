@@ -70,6 +70,23 @@ public class JwtTokenProvider {
             return bearerToken.replace((PREFIX), "");
         return null;
     }
+    public boolean validateToken(String token) {
+
+        try {
+            return getTokenBody(token).getExpiration().after(new Date());
+        } catch (Exception e) {
+            throw InvalidJwtException.EXCEPTION;
+        }
+
+    }
+
+    public boolean isRefreshToken(String token) {
+        try {
+            return getHeader(token).get("typ").equals("refresh");
+        } catch (Exception e) {
+            throw NotRefreshTokenException.EXCEPTION;
+        }
+    }
 
     public ZonedDateTime getExpiredTime() {
         return ZonedDateTime.now().plusSeconds(jwtProperties.getAccessExp());
