@@ -17,6 +17,7 @@ public class DeliveryListResponse {
     @Builder
     public static class DeliveryResponse {
 
+        private final Long id;
         private final String courierCompany;
         private final String name;
         private final LocalDate createdDate;

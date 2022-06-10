@@ -17,6 +17,7 @@ public class DeliveryNullUserListResponse {
     @Builder
     public static class DeliveryNullUserResponse {
 
+        private final Long id;
         private final String courierCompany;
         private final String phoneNumber;
         private final LocalDate createdDate;
