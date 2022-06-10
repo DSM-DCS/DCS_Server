@@ -1,7 +1,7 @@
 package com.dsm.dcs.controller;
 
 import com.dsm.dcs.dto.request.TeacherSignUpRequest;
-import com.dsm.dcs.dto.response.UserTokenResponse;
+import com.dsm.dcs.dto.TokenDto;
 import com.dsm.dcs.service.teacher.TeacherSignUpService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,7 +22,7 @@ public class TeacherController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UserTokenResponse teacherSignUp(@RequestBody @Valid TeacherSignUpRequest request) {
+    public TokenDto teacherSignUp(@RequestBody @Valid TeacherSignUpRequest request) {
         return teacherSignUpService.execute(request);
     }
 }
