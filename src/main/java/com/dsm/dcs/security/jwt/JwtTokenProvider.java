@@ -88,7 +88,17 @@ public class JwtTokenProvider {
     }
 
     private String getTokenSubject(String token) {
-        return getTokenBody(token).getSubject();
+        try {
+            return getTokenBody(token).getSubject();
+        } catch (Exception e) {
+            throw InvalidJwtException.EXCEPTION;
+        }
+    }
+
+
+    private JwsHeader getHeader(String token) {
+        return Jwts.parser().setSigningKey(jwtProperties.getSecretKey())
+                .parseClaimsJws(token).getHeader();
     }
 
 }
