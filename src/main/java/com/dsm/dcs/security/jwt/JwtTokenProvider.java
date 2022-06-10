@@ -4,8 +4,10 @@ import com.dsm.dcs.entity.auth.RefreshToken;
 import com.dsm.dcs.entity.auth.RefreshTokenRepository;
 import com.dsm.dcs.exception.ExpiredJwtException;
 import com.dsm.dcs.exception.InvalidJwtException;
+import com.dsm.dcs.exception.NotRefreshTokenException;
 import com.dsm.dcs.security.auth.AuthDetailsService;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwsHeader;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
@@ -37,8 +39,7 @@ public class JwtTokenProvider {
         String refreshToken = generateToken(id, "refresh", jwtProperties.getRefreshExp());
         refreshTokenRepository.save(RefreshToken.builder()
                 .accountId(id)
-                .token(refreshToken)
-                .refreshExp(jwtProperties.getRefreshExp())
+                .refreshToken(refreshToken)
                 .build());
 
         return refreshToken;
