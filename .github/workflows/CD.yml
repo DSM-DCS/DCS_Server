@@ -36,7 +36,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/dsm-dcs:latest
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/dcs:latest
           build-args : |
             DB_URL=${{ secrets.DB_URL }}
             DB_USER=${{ secrets.DB_USER }}
@@ -48,6 +48,4 @@ jobs:
             JWT_SECRET=${{ secrets.JWT_SECRET }}
             JWT_ACCESS_EXP=${{ secrets.JWT_ACCESS_EXP }}
             JWT_REFRESH_EXP=${{ secrets.JWT_REFRESH_EXP }}
-            REDIS_HOST=${{ secrets.REDIS_HOST }}
-            REDIS_PORT=${{ secrets.REDIS_PORT }}
-            REDIS_PWD=${{ secrets.REDIS_PWD }}
+
