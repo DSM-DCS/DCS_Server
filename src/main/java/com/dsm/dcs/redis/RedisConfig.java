@@ -6,10 +6,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
+import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
+
+import java.time.Duration;
 
 @RequiredArgsConstructor
 @Configuration
@@ -25,16 +28,12 @@ public class RedisConfig {
         if(redisProperties.getPassword() != null && !redisProperties.getPassword().isBlank())
             redisConfig.setPassword(redisProperties.getPassword());
 
-        return new LettuceConnectionFactory(redisConfig);
-    }
 
-    @Bean
-    public RedisTemplate<String, Object> redisTemplate() {
-        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
-        redisTemplate.setConnectionFactory(redisConnectionFactory());
-        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
-        redisTemplate.setKeySerializer(RedisSerializer.string());
+        LettuceClientConfiguration clientConfiguration = LettuceClientConfiguration.builder()
+                .commandTimeout(Duration.ofSeconds(3))
+                .shutdownTimeout(Duration.ZERO)
+                .build();
 
-        return redisTemplate;
+        return new LettuceConnectionFactory(redisConfig, clientConfiguration);
     }
 }
