@@ -25,14 +25,12 @@ public class RedisConfig {
     private final RedisProperties redisProperties;
 
     @Bean
-    @ConditionalOnMissingBean(RedisConnectionFactory.class)
     public RedisConnectionFactory redisConnectionFactory() {
         RedisStandaloneConfiguration redisConfig =
                 new RedisStandaloneConfiguration(redisProperties.getHost(), redisProperties.getPort());
         if(redisProperties.getPassword() != null && !redisProperties.getPassword().isBlank())
             redisConfig.setPassword(redisProperties.getPassword());
-
-
+        
         LettuceClientConfiguration clientConfiguration = LettuceClientConfiguration.builder()
                 .commandTimeout(Duration.ofSeconds(3))
                 .shutdownTimeout(Duration.ZERO)
