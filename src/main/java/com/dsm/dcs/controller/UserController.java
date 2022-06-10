@@ -6,7 +6,7 @@ import com.dsm.dcs.dto.request.UserSignUpRequest;
 import com.dsm.dcs.dto.request.VerificationAuthCodeRequest;
 import com.dsm.dcs.dto.response.UserAccountIdResponse;
 import com.dsm.dcs.dto.response.UserListResponse;
-import com.dsm.dcs.dto.response.UserTokenResponse;
+import com.dsm.dcs.dto.TokenDto;
 import com.dsm.dcs.service.user.SearchAccountIdService;
 import com.dsm.dcs.service.user.UpdatePasswordService;
 import com.dsm.dcs.service.user.UserSignUpService;
@@ -55,7 +55,7 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UserTokenResponse userSignUp(@RequestBody @Valid UserSignUpRequest request) {
+    public TokenDto userSignUp(@RequestBody @Valid UserSignUpRequest request) {
         return userSignUpService.execute(request);
     }
 
