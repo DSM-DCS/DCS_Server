@@ -46,6 +46,7 @@ public class DeliveryFacade {
 
     private DeliveryListResponse.DeliveryResponse getDelivery(Delivery delivery) {
         return DeliveryListResponse.DeliveryResponse.builder()
+                .id(delivery.getId())
                 .courierCompany(delivery.getCourierCompany().name())
                 .name(delivery.getUser().getName())
                 .createdDate(delivery.getCreatedDate())
@@ -54,6 +55,7 @@ public class DeliveryFacade {
 
     private DeliveryNullUserListResponse.DeliveryNullUserResponse getUserNullDeilvery(Delivery delivery) {
         return DeliveryNullUserListResponse.DeliveryNullUserResponse.builder()
+                .id(delivery.getId())
                 .courierCompany(delivery.getCourierCompany().name())
                 .phoneNumber(delivery.getPhoneNumber())
                 .createdDate(delivery.getCreatedDate())
