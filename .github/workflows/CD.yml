@@ -36,7 +36,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/dcs:latest
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/dsm-dcs:latest
           build-args : |
             DB_URL=${{ secrets.DB_URL }}
             DB_USER=${{ secrets.DB_USER }}
