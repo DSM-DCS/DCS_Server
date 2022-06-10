@@ -2,8 +2,7 @@ package com.dsm.dcs.controller;
 
 import com.dsm.dcs.dto.request.UserLoginRequest;
 import com.dsm.dcs.dto.request.VerificationPasswordRequest;
-import com.dsm.dcs.dto.response.UserRefreshTokenResponse;
-import com.dsm.dcs.dto.response.UserTokenResponse;
+import com.dsm.dcs.dto.TokenDto;
 import com.dsm.dcs.service.auth.CheckPhoneNumberExistsService;
 import com.dsm.dcs.service.auth.UserSignInService;
 import com.dsm.dcs.service.auth.VerificationPasswordService;
@@ -15,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,13 +38,13 @@ public class AuthController {
     private final VerificationPasswordService verificationPasswordService;
 
     @PostMapping("/token")
-    public UserTokenResponse userSignIn(@RequestBody @Valid UserLoginRequest request) {
+    public TokenDto userSignIn(@RequestBody @Valid UserLoginRequest request) {
         return userSignInService.execute(request);
     }
 
     @PatchMapping("/token")
-    public UserRefreshTokenResponse userTokenRefresh(@RequestHeader("Refresh-Token") String refreshToken) {
-        return tokenRefreshTokenService.execute(refreshToken);
+    public TokenDto userTokenRefresh(@RequestBody @Valid TokenDto tokenDto) {
+        return tokenRefreshTokenService.execute(tokenDto);
     }
 
     @RequestMapping(value = "/account-id", method = RequestMethod.HEAD)
