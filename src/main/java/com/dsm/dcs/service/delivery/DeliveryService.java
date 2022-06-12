@@ -75,4 +75,14 @@ public class DeliveryService {
         return deliveryFacade.getDeliveryUserNullList(page);
     }
 
+    public DeliveryListResponse.DeliveryResponse getDelivery(Long deliveryId) {
+        Delivery delivery = deliveryFacade.getDeliveryById(deliveryId);
+        return DeliveryListResponse.DeliveryResponse.builder()
+                .name(delivery.getUser().getName())
+                .id(delivery.getId())
+                .createdDate(delivery.getCreatedDate())
+                .courierCompany(delivery.getCourierCompany().name())
+                .build();
+    }
+
 }
