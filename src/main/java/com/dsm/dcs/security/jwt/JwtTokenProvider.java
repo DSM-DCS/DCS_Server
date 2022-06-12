@@ -35,13 +35,10 @@ public class JwtTokenProvider {
     }
 
     public String generateRefreshToken(String id) {
-        String refreshToken = generateToken(id, "refresh", jwtProperties.getRefreshExp());
-        refreshTokenRepository.save(RefreshToken.builder()
+        return refreshTokenRepository.save(RefreshToken.builder()
                 .accountId(id)
-                .refreshToken(refreshToken)
-                .build());
-
-        return refreshToken;
+                .refreshToken(generateToken(id, "refresh", refreshExp))
+                .build()).getRefreshToken();
     }
 
     private String generateToken(String id, String type, Long exp) {
