@@ -11,6 +11,7 @@ import io.jsonwebtoken.JwsHeader;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,6 +25,15 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
+    @Value("${jwt.secret-key}")
+    private String secretKey;
+
+    @Value("${jwt.access-exp}")
+    private Long accessExp;
+
+    @Value("${jwt.refresh-exp}")
+    private Long refreshExp;
+
     private static final String HEADER = "Authorization";
     private static final String PREFIX = "Bearer";
 
@@ -31,7 +41,7 @@ public class JwtTokenProvider {
     private final RefreshTokenRepository refreshTokenRepository;
 
     public String generateAccessToken(String id) {
-        return generateToken(id, "access", jwtProperties.getAccessExp());
+        return generateToken(id, "access", accessExp);
     }
 
     public String generateRefreshToken(String id) {
@@ -43,7 +53,7 @@ public class JwtTokenProvider {
 
     private String generateToken(String id, String type, Long exp) {
         return Jwts.builder()
-                .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretKey())
+                .signWith(SignatureAlgorithm.HS256, secretKey)
                 .setSubject(id)
                 .claim("type", type)
                 .setIssuedAt(new Date())
@@ -86,13 +96,13 @@ public class JwtTokenProvider {
     }
 
     public ZonedDateTime getExpiredTime() {
-        return ZonedDateTime.now().plusSeconds(jwtProperties.getAccessExp());
+        return ZonedDateTime.now().plusSeconds(accessExp);
     }
 
     private Claims getTokenBody(String token) {
 
         try {
-            return Jwts.parser().setSigningKey(jwtProperties.getSecretKey())
+            return Jwts.parser().setSigningKey(secretKey)
                     .parseClaimsJws(token).getBody();
         } catch (ExpiredJwtException e) {
             throw ExpiredJwtException.EXCEPTION;
@@ -111,7 +121,7 @@ public class JwtTokenProvider {
 
 
     private JwsHeader getHeader(String token) {
-        return Jwts.parser().setSigningKey(jwtProperties.getSecretKey())
+        return Jwts.parser().setSigningKey(secretKey)
                 .parseClaimsJws(token).getHeader();
     }
 
