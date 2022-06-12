@@ -27,7 +27,6 @@ public class JwtTokenProvider {
     private static final String HEADER = "Authorization";
     private static final String PREFIX = "Bearer";
 
-    private final JwtProperties jwtProperties;
     private final AuthDetailsService authDetailsService;
     private final RefreshTokenRepository refreshTokenRepository;
 
