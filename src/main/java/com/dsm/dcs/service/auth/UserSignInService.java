@@ -1,7 +1,7 @@
 package com.dsm.dcs.service.auth;
 
 import com.dsm.dcs.dto.request.UserLoginRequest;
-import com.dsm.dcs.dto.response.UserTokenResponse;
+import com.dsm.dcs.dto.TokenDto;
 import com.dsm.dcs.entity.user.User;
 import com.dsm.dcs.entity.user.UserRepository;
 import com.dsm.dcs.exception.PasswordMismatchException;
@@ -21,7 +21,7 @@ public class UserSignInService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public UserTokenResponse execute(UserLoginRequest request) {
+    public TokenDto execute(UserLoginRequest request) {
 
         User user = userRepository.findByAccountId(request.getAccountId())
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
@@ -30,13 +30,9 @@ public class UserSignInService {
             throw PasswordMismatchException.EXCEPTION;
         }
 
-        String accessToken = jwtTokenProvider.generateAccessToken(user.getAccountId());
-        String refreshToken = jwtTokenProvider.generateRefreshToken(user.getAccountId());
-
-        return UserTokenResponse.builder()
-                .accessToken(accessToken)
-                .refreshToken(refreshToken)
-                .expiredAt(jwtTokenProvider.getExpiredTime())
+        return TokenDto.builder()
+                .accessToken(jwtTokenProvider.generateAccessToken(user.getAccountId()))
+                .refreshToken(jwtTokenProvider.generateRefreshToken(user.getAccountId()))
                 .build();
     }
 }

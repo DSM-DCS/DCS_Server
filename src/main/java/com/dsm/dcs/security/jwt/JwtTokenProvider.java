@@ -4,8 +4,10 @@ import com.dsm.dcs.entity.auth.RefreshToken;
 import com.dsm.dcs.entity.auth.RefreshTokenRepository;
 import com.dsm.dcs.exception.ExpiredJwtException;
 import com.dsm.dcs.exception.InvalidJwtException;
+import com.dsm.dcs.exception.NotRefreshTokenException;
 import com.dsm.dcs.security.auth.AuthDetailsService;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwsHeader;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
@@ -37,8 +39,7 @@ public class JwtTokenProvider {
         String refreshToken = generateToken(id, "refresh", jwtProperties.getRefreshExp());
         refreshTokenRepository.save(RefreshToken.builder()
                 .accountId(id)
-                .token(refreshToken)
-                .refreshExp(jwtProperties.getRefreshExp())
+                .refreshToken(refreshToken)
                 .build());
 
         return refreshToken;
@@ -70,6 +71,23 @@ public class JwtTokenProvider {
             return bearerToken.replace((PREFIX), "");
         return null;
     }
+    public boolean validateToken(String token) {
+
+        try {
+            return getTokenBody(token).getExpiration().after(new Date());
+        } catch (Exception e) {
+            throw InvalidJwtException.EXCEPTION;
+        }
+
+    }
+
+    public boolean isRefreshToken(String token) {
+        try {
+            return getHeader(token).get("typ").equals("refresh");
+        } catch (Exception e) {
+            throw NotRefreshTokenException.EXCEPTION;
+        }
+    }
 
     public ZonedDateTime getExpiredTime() {
         return ZonedDateTime.now().plusSeconds(jwtProperties.getAccessExp());
@@ -88,7 +106,17 @@ public class JwtTokenProvider {
     }
 
     private String getTokenSubject(String token) {
-        return getTokenBody(token).getSubject();
+        try {
+            return getTokenBody(token).getSubject();
+        } catch (Exception e) {
+            throw InvalidJwtException.EXCEPTION;
+        }
+    }
+
+
+    private JwsHeader getHeader(String token) {
+        return Jwts.parser().setSigningKey(jwtProperties.getSecretKey())
+                .parseClaimsJws(token).getHeader();
     }
 
 }

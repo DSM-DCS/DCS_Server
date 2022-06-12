@@ -1,7 +1,7 @@
 package com.dsm.dcs.controller;
 
 import com.dsm.dcs.dto.request.CourierSignUpRequest;
-import com.dsm.dcs.dto.response.UserTokenResponse;
+import com.dsm.dcs.dto.TokenDto;
 import com.dsm.dcs.service.courier.CourierSignUpService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,7 +24,7 @@ public class CourierController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UserTokenResponse courierSignUp(@RequestBody @Valid CourierSignUpRequest request) {
+    public TokenDto courierSignUp(@RequestBody @Valid CourierSignUpRequest request) {
         return courierSignUpService.execute(request);
     }
 }

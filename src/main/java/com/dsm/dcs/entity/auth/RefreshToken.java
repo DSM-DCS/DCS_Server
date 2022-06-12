@@ -1,35 +1,36 @@
 package com.dsm.dcs.entity.auth;
 
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.redis.core.RedisHash;
-import org.springframework.data.redis.core.TimeToLive;
-import org.springframework.data.redis.core.index.Indexed;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+
+import javax.persistence.Id;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Builder
-@RedisHash
+@Entity
 public class RefreshToken {
 
     @Id
     private String accountId;
 
-    @Indexed
-    private String token;
+    @Column(nullable = false)
+    private String refreshToken;
 
-    @TimeToLive
-    private Long refreshExp;
 
-    public void updateToken(String token, Long refreshExp) {
+    @Builder
+    public RefreshToken(String accountId, String refreshToken) {
+        this.accountId = accountId;
+        this.refreshToken = refreshToken;
+    }
 
-        this.token = token;
-        this.refreshExp = refreshExp;
+    public RefreshToken updateToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+        return this;
     }
 
 }
