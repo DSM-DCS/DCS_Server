@@ -6,7 +6,6 @@ import com.dsm.dcs.entity.Authority;
 import com.dsm.dcs.entity.user.User;
 import com.dsm.dcs.entity.user.UserRepository;
 import com.dsm.dcs.facade.UserFacade;
-import com.dsm.dcs.security.jwt.JwtProperties;
 import com.dsm.dcs.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
