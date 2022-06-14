@@ -1,7 +1,7 @@
 package com.dsm.dcs.entity.user;
 
-import com.dsm.dcs.entity.Authority;
 import com.dsm.dcs.entity.BaseTimeEntity;
+import com.dsm.dcs.entity.Role;
 import com.dsm.dcs.entity.delivery.Delivery;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -40,21 +40,21 @@ public class User extends BaseTimeEntity {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private Authority authority;
+    private Role role;
 
     @OneToMany(mappedBy = "user")
     private List<Delivery> deliveries;
 
     @Builder
     public User(String accountId, String password, String name, String email, String phoneNumber,
-                Integer studentNumber, Authority authority) {
+                Integer studentNumber, Role role) {
         this.accountId = accountId;
         this.password = password;
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.studentNumber = studentNumber;
-        this.authority = authority;
+        this.role = role;
     }
 
     public User updatePassword(String password) {
