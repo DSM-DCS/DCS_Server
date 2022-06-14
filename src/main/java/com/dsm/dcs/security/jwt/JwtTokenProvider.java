@@ -1,5 +1,6 @@
 package com.dsm.dcs.security.jwt;
 
+import com.dsm.dcs.entity.Role;
 import com.dsm.dcs.entity.auth.RefreshToken;
 import com.dsm.dcs.entity.auth.RefreshTokenRepository;
 import com.dsm.dcs.exception.ExpiredJwtException;
@@ -40,22 +41,24 @@ public class JwtTokenProvider {
     private final AuthDetailsService authDetailsService;
     private final RefreshTokenRepository refreshTokenRepository;
 
-    public String generateAccessToken(String id) {
-        return generateToken(id, "access", accessExp);
+    public String generateAccessToken(String id, Role role) {
+        return generateToken(id, "access", accessExp, role.name());
     }
 
-    public String generateRefreshToken(String id) {
+    public String generateRefreshToken(String id, Role role) {
         return refreshTokenRepository.save(RefreshToken.builder()
                 .accountId(id)
-                .refreshToken(generateToken(id, "refresh", refreshExp))
+                .refreshToken(generateToken(id, "refresh", refreshExp, role.name()))
+                .role(role)
                 .build()).getRefreshToken();
     }
 
-    private String generateToken(String id, String type, Long exp) {
+    private String generateToken(String id, String type, Long exp, String role) {
         return Jwts.builder()
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .setSubject(id)
-                .claim("type", type)
+                .setHeaderParam("typ", type)
+                .claim("role", role)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + exp * 1000))
                 .compact();
@@ -95,15 +98,13 @@ public class JwtTokenProvider {
         }
     }
 
-    public ZonedDateTime getExpiredTime() {
-        return ZonedDateTime.now().plusSeconds(accessExp);
+    public String getRole(String token) {
+        return getTokenBody(token).get("role").toString();
     }
 
     private Claims getTokenBody(String token) {
-
         try {
-            return Jwts.parser().setSigningKey(secretKey)
-                    .parseClaimsJws(token).getBody();
+            return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
         } catch (ExpiredJwtException e) {
             throw ExpiredJwtException.EXCEPTION;
         } catch (Exception e) {
@@ -118,7 +119,6 @@ public class JwtTokenProvider {
             throw InvalidJwtException.EXCEPTION;
         }
     }
-
 
     private JwsHeader getHeader(String token) {
         return Jwts.parser().setSigningKey(secretKey)
