@@ -71,11 +71,6 @@ public class UserController {
         updatePasswordService.execute(request);
     }
 
-    @GetMapping("/accounts/{email}")
-    public UserAccountIdResponse searchAccountId(@PathVariable(name = "email") String email) {
-        return searchAccountIdService.execute(email);
-    }
-
     @PutMapping("/email-verifications")
     public void verifyEmail(@RequestBody @Valid VerificationAuthCodeRequest request) {
         verificationAuthCodeService.execute(request);
