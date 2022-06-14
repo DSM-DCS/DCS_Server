@@ -1,8 +1,8 @@
 package com.dsm.dcs.controller;
 
-import com.dsm.dcs.dto.request.CourierSignUpRequest;
 import com.dsm.dcs.dto.TokenDto;
-import com.dsm.dcs.service.courier.CourierSignUpService;
+import com.dsm.dcs.dto.request.LoginRequest;
+import com.dsm.dcs.service.admin.AdminAuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -14,17 +14,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
 
-@RequestMapping("/couriers")
+@RequestMapping("/admin")
 @RequiredArgsConstructor
 @Validated
 @RestController
-public class CourierController {
+public class AdminController {
 
-    private final CourierSignUpService courierSignUpService;
+    private final AdminAuthService adminAuthService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public TokenDto courierSignUp(@RequestBody @Valid CourierSignUpRequest request) {
-        return courierSignUpService.execute(request);
+    public TokenDto courierSignUp(@RequestBody @Valid LoginRequest request) {
+        return adminAuthService.adminSignIn(request);
     }
 }
