@@ -12,7 +12,7 @@ import javax.validation.constraints.Pattern;
 public class UpdatePasswordRequest {
 
     @NotBlank(message = "email은 Null 또는 공백 또는 띄어쓰기를 허용하지 않습니다.")
-    @Email(message = "이메일 형식이 올바르지 않습니다.")
+    @Email(regexp = "^([[~!@#$%^&*()-_.]?0-9a-zA-Z])+@[dsm]+.[hs]+.kr$", message = "이메일 형식이 올바르지 않습니다.")
     private String email;
 
     @NotBlank(message = "new_password는 Null, 공백, 띄어쓰기를 허용하지 않습니다.")

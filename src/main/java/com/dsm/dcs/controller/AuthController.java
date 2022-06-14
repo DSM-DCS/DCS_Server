@@ -1,10 +1,8 @@
 package com.dsm.dcs.controller;
 
-import com.dsm.dcs.dto.request.UserLoginRequest;
 import com.dsm.dcs.dto.request.VerificationPasswordRequest;
 import com.dsm.dcs.dto.TokenDto;
 import com.dsm.dcs.service.auth.CheckPhoneNumberExistsService;
-import com.dsm.dcs.service.auth.UserSignInService;
 import com.dsm.dcs.service.auth.VerificationPasswordService;
 import com.dsm.dcs.service.auth.CheckEmailExistsService;
 import com.dsm.dcs.service.auth.CheckStudentNumberExistsService;
@@ -29,7 +27,6 @@ import javax.validation.constraints.NotBlank;
 @RestController
 public class AuthController {
 
-    private final UserSignInService userSignInService;
     private final TokenRefreshTokenService tokenRefreshTokenService;
     private final CheckUserExistsService checkUserExistsService;
     private final CheckStudentNumberExistsService checkStudentNumberExistsService;
@@ -37,13 +34,8 @@ public class AuthController {
     private final CheckPhoneNumberExistsService checkPhoneNumberExistsService;
     private final VerificationPasswordService verificationPasswordService;
 
-    @PostMapping("/token")
-    public TokenDto userSignIn(@RequestBody @Valid UserLoginRequest request) {
-        return userSignInService.execute(request);
-    }
-
     @PatchMapping("/token")
-    public TokenDto userTokenRefresh(@RequestBody @Valid TokenDto tokenDto) {
+    public TokenDto TokenRefresh(@RequestBody @Valid TokenDto tokenDto) {
         return tokenRefreshTokenService.execute(tokenDto);
     }
 
