@@ -36,7 +36,7 @@ public class TokenRefreshTokenService {
 
         TokenDto token = TokenDto.builder()
                 .refreshToken(refreshToken.getRefreshToken())
-                .accessToken(jwtTokenProvider.generateAccessToken(refreshToken.getAccountId()))
+                .accessToken(jwtTokenProvider.generateAccessToken(refreshToken.getAccountId(), refreshToken.getRole()))
                 .build();
 
         RefreshToken newRefreshToken = refreshToken.updateToken(token.getRefreshToken());
