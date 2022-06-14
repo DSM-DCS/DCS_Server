@@ -5,6 +5,7 @@ import com.dsm.dcs.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -38,6 +39,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .authorizeRequests()
+                .antMatchers(HttpMethod.GET, "/delivery").hasAnyRole("ROLE_TEACHER")
+                .antMatchers(HttpMethod.GET, "/delivery/**").hasAnyRole("ROLE_TEACHER")
+                .antMatchers(HttpMethod.DELETE, "/delivery/**").hasAnyRole("ROLE_TEACHER")
+                .antMatchers(HttpMethod.PATCH, "/delivery/**/**").hasAnyRole("ROLE_TEACHER")
+                .antMatchers(HttpMethod.GET, "/users/seach").hasAnyRole("ROLE_TEACHER")
+                .antMatchers(HttpMethod.GET, "/users").hasAnyRole("ROLE_TEACHER")
+                .antMatchers(HttpMethod.PATCH, "/users/password").hasAnyRole("ROLE_USER")
+                .antMatchers(HttpMethod.GET, "/delivery/user").hasAnyRole("ROLE_USER")
+                .antMatchers(HttpMethod.POST, "/users/password").hasAnyRole("ROLE_COURIER")
+                .antMatchers(HttpMethod.GET, "/delivery/null/uesr").hasAnyRole("ROLE_USER", "ROLE_TEACHER")
                 .anyRequest().permitAll()
 
                 .and().httpBasic().authenticationEntryPoint(authenticationEntryPoint)
