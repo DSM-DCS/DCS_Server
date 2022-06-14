@@ -1,15 +1,14 @@
 package com.dsm.dcs.controller;
 
+import com.dsm.dcs.dto.request.LoginRequest;
 import com.dsm.dcs.dto.request.SendEmailRequest;
 import com.dsm.dcs.dto.request.UpdatePasswordRequest;
 import com.dsm.dcs.dto.request.UserSignUpRequest;
 import com.dsm.dcs.dto.request.VerificationAuthCodeRequest;
-import com.dsm.dcs.dto.response.UserAccountIdResponse;
 import com.dsm.dcs.dto.response.UserListResponse;
 import com.dsm.dcs.dto.TokenDto;
-import com.dsm.dcs.service.user.SearchAccountIdService;
 import com.dsm.dcs.service.user.UpdatePasswordService;
-import com.dsm.dcs.service.user.UserSignUpService;
+import com.dsm.dcs.service.user.UserAuthService;
 import com.dsm.dcs.service.user.UserService;
 import com.dsm.dcs.service.user.SendEmailAuthCodeService;
 import com.dsm.dcs.service.user.VerificationAuthCodeService;
@@ -26,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.validation.Valid;
 
@@ -36,12 +34,22 @@ import javax.validation.Valid;
 @RestController
 public class UserController {
 
-    private final UserSignUpService userSignUpService;
+    private final UserAuthService userAuthService;
     private final UserService userService;
     private final SendEmailAuthCodeService sendEmailAuthCodeService;
-    private final SearchAccountIdService searchAccountIdService;
     private final UpdatePasswordService updatePasswordService;
     private final VerificationAuthCodeService verificationAuthCodeService;
+
+    @PostMapping("/token")
+    public TokenDto userSignIn(@RequestBody @Valid LoginRequest request) {
+        return userAuthService.signIn(request);
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public TokenDto userSignUp(@RequestBody @Valid UserSignUpRequest request) {
+        return userAuthService.signUp(request);
+    }
 
     @GetMapping("/search")
     public UserListResponse searchUser(@RequestParam(value = "name") String name, Pageable page) {
@@ -51,12 +59,6 @@ public class UserController {
     @GetMapping
     public UserListResponse getUser(Pageable page) {
         return userService.getUser(page);
-    }
-
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public TokenDto userSignUp(@RequestBody @Valid UserSignUpRequest request) {
-        return userSignUpService.execute(request);
     }
 
     @PostMapping("/email-verifications")
