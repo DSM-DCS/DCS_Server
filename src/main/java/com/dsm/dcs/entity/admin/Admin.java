@@ -1,7 +1,7 @@
-package com.dsm.dcs.entity.teacher;
+package com.dsm.dcs.entity.admin;
 
-import com.dsm.dcs.entity.Authority;
 import com.dsm.dcs.entity.BaseTimeEntity;
+import com.dsm.dcs.entity.Role;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,32 +15,28 @@ import javax.persistence.Enumerated;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class Teacher extends BaseTimeEntity {
+public class Admin extends BaseTimeEntity {
 
     @Column(nullable = false, unique = true, length = 20)
-    private String accountId;
+    private String adminId;
 
     @Column(nullable = false, length = 60)
     private String password;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private Authority authority;
+    private Role role;
 
     @Builder
-    public Teacher(String accountId, String password, Authority authority) {
-        this.accountId = accountId;
+    public Admin(String adminId, String password, Role role) {
+        this.adminId = adminId;
         this.password = password;
-        this.authority = authority;
+        this.role = role;
     }
 
-    public Teacher updatePassword(String password) {
+    public Admin updatePassword(String password) {
         this.password = password;
         return this;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
 }
