@@ -35,7 +35,7 @@ public class AuthController {
     private final VerificationPasswordService verificationPasswordService;
 
     @PatchMapping("/token")
-    public TokenDto userTokenRefresh(@RequestBody @Valid TokenDto tokenDto) {
+    public TokenDto TokenRefresh(@RequestBody @Valid TokenDto tokenDto) {
         return tokenRefreshTokenService.execute(tokenDto);
     }
 
