@@ -10,7 +10,7 @@ import javax.validation.constraints.NotBlank;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class UserLoginRequest {
+public class LoginRequest {
 
     @NotBlank(message = "account_id는 null, 공백, 띄어쓰기를 허용하지 않습니다.")
     private String accountId;
