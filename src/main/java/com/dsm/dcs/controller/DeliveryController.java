@@ -4,8 +4,8 @@ import com.dsm.dcs.dto.request.DeliveryListRequest;
 import com.dsm.dcs.dto.response.DeliveryIdListResponse;
 import com.dsm.dcs.dto.response.DeliveryListResponse;
 import com.dsm.dcs.dto.response.DeliveryNullUserListResponse;
+import com.dsm.dcs.dto.response.DeliveryResponse;
 import com.dsm.dcs.service.delivery.DeliveryService;
-import com.dsm.dcs.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -63,7 +63,7 @@ public class DeliveryController {
     }
 
     @GetMapping("/{delivery_id}")
-    public DeliveryListResponse.DeliveryResponse getDelivery(@PathVariable("delivery_id") Long deliveryId) {
+    public DeliveryResponse getDelivery(@PathVariable("delivery_id") Long deliveryId) {
         return deliveryService.getDelivery(deliveryId);
     }
 

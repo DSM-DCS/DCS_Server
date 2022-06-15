@@ -4,6 +4,7 @@ import com.dsm.dcs.dto.request.DeliveryListRequest;
 import com.dsm.dcs.dto.response.DeliveryIdListResponse;
 import com.dsm.dcs.dto.response.DeliveryListResponse;
 import com.dsm.dcs.dto.response.DeliveryNullUserListResponse;
+import com.dsm.dcs.dto.response.DeliveryResponse;
 import com.dsm.dcs.entity.CourierCompany;
 import com.dsm.dcs.entity.delivery.Delivery;
 import com.dsm.dcs.entity.delivery.DeliveryRepository;
@@ -64,12 +65,14 @@ public class DeliveryService {
         return deliveryFacade.getDeliveryUserNullList(page);
     }
 
-    public DeliveryListResponse.DeliveryResponse getDelivery(Long deliveryId) {
+    public DeliveryResponse getDelivery(Long deliveryId) {
         Delivery delivery = deliveryFacade.getDeliveryById(deliveryId);
-        return DeliveryListResponse.DeliveryResponse.builder()
+        return DeliveryResponse.builder()
                 .name(delivery.getUser().getName())
                 .id(delivery.getId())
                 .createdDate(delivery.getCreatedDate())
+                .studentNumber(delivery.getUser().getStudentNumber())
+                .phoneNumber(delivery.getUser().getPhoneNumber())
                 .courierCompany(delivery.getCourierCompany().name())
                 .build();
     }
