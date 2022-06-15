@@ -30,8 +30,8 @@ public class DeliveryController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public DeliveryIdListResponse saveDelivery(@Valid @RequestBody DeliveryListRequest request) {
-        return deliveryService.saveDelivery(request);
+    public void saveDelivery(@Valid @RequestBody DeliveryListRequest request) {
+        deliveryService.saveDelivery(request);
     }
 
     @PatchMapping("/{delivery_id}/{user_id}")

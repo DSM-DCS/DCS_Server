@@ -15,9 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Transactional
 @RequiredArgsConstructor
 @Service
@@ -27,25 +24,17 @@ public class DeliveryService {
     private final DeliveryFacade deliveryFacade;
     private final UserFacade userFacade;
 
-    public DeliveryIdListResponse saveDelivery(DeliveryListRequest request) {
-
-        List<DeliveryIdListResponse.DeliveryIdResponse> deliveryIdResponses = new ArrayList<>();
+    public void saveDelivery(DeliveryListRequest request) {
 
         for (DeliveryListRequest.PhoneNumberRequest phoneNumberRequest : request.getPhoneNumberRequestList()) {
-            deliveryIdResponses.add(
-                    new DeliveryIdListResponse.DeliveryIdResponse(
-                            deliveryRepository.save(
-                                    Delivery.builder()
-                                            .courierCompany(CourierCompany.valueOf(request.getCouriercompany()))
-                                            .phoneNumber(phoneNumberRequest.getPhoneNumber())
-                                            .user(userFacade.getUserByPhoneNumber(phoneNumberRequest.getPhoneNumber()))
-                                            .build()
-                            ).getId()
-                    )
+            deliveryRepository.save(
+                    Delivery.builder()
+                            .courierCompany(CourierCompany.valueOf(request.getCouriercompany()))
+                            .phoneNumber(phoneNumberRequest.getPhoneNumber())
+                            .user(userFacade.getUserByPhoneNumber(phoneNumberRequest.getPhoneNumber()))
+                            .build()
             );
         }
-
-        return new DeliveryIdListResponse(deliveryIdResponses);
 
     }
 
