@@ -8,7 +8,6 @@ spring:
   redis:
     port: 6379
     host: ${REDIS_HOST:3.39.54.235}
-    password: ${REDIS_PWD}
 
   jpa:
     database: mysql
