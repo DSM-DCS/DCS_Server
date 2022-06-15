@@ -11,7 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 public class DeliveryNullUserListResponse {
 
-    List<DeliveryNullUserResponse> deliveryNullUserResponses;
+    private List<DeliveryNullUserResponse> deliveryNullUserResponses;
 
     @Getter
     @Builder

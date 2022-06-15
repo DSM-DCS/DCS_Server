@@ -11,7 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 public class DeliveryListResponse {
 
-    List<DeliveryResponse> deliveryResponses;
+    private List<DeliveryResponse> deliveryResponses;
 
     @Getter
     @Builder
