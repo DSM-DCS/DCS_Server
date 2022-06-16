@@ -19,29 +19,11 @@ public class UserService {
     private final UserFacade userFacade;
 
     public UserListResponse getUser(Pageable page) {
-        List<User> userList = userFacade.getUserList();
-        return getUserList(userList, page);
+        return  userFacade.getUserList(page);
     }
 
     public UserListResponse searchUser(String name, Pageable page) {
-        List<User> userList = userFacade.getUserByName(name);
-        return getUserList(userList, page);
-    }
-
-    private UserListResponse getUserList(List<User> userList, Pageable page) {
-
-        List<UserListResponse.UserResponse> userResponses = new ArrayList<>();
-
-        for(User user : userList) {
-            userResponses.add(
-                    UserListResponse.UserResponse.builder()
-                            .name(user.getName())
-                            .studentNumber(user.getStudentNumber())
-                            .build()
-            );
-        }
-
-        return new UserListResponse(userResponses);
+        return userFacade.getUserByName(name, page);
     }
 
 }
