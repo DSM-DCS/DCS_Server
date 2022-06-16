@@ -60,13 +60,6 @@ public class UserFacade {
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
     }
 
-    public boolean isAlreadyExists(String email) {
-        if(userRepository.findByEmail(email).isPresent()) {
-            throw UserAlreadyExistsException.EXCEPTION;
-        }
-        return true;
-    }
-
     public void checkUserExists(String accountId) {
         if (userRepository.findByAccountId(accountId).isPresent()) {
             throw AccountIdAlreadyExistsException.EXCEPTION;
