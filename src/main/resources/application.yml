@@ -7,7 +7,7 @@ spring:
 
   redis:
     port: 6379
-    host: ec2-3-39-54-235.ap-northeast-2.compute.amazonaws.com
+    host: ${REDIS_HOST}
 
   jpa:
     database: mysql
