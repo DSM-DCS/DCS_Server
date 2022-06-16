@@ -35,7 +35,6 @@ public class DeliveryController {
     }
 
     @PatchMapping("/{delivery_id}/{user_id}")
-    @ResponseStatus(HttpStatus.OK)
     public DeliveryIdListResponse.DeliveryIdResponse updateDeliveryUser(@PathVariable("delivery_id") Long deliveryId,
                                                                         @PathVariable("user_id") Long userId) {
         return deliveryService.updateDeliveryUser(deliveryId, userId);
