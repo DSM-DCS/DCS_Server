@@ -13,10 +13,10 @@ import javax.persistence.Entity;
 @Entity
 public class Post extends BaseTimeEntity {
 
-    @Column(nullable = false, length = 200)
+    @Column(nullable = false, length = 100)
     private String title;
 
-    @Column(nullable = false, length = 1000)
+    @Column(nullable = false, length = 500)
     private String content;
 
 }
