@@ -14,13 +14,20 @@ public class DeliveryListResponse {
     private List<DeliveryResponse> deliveryResponses;
 
     @Getter
-    @Builder
     public static class DeliveryResponse {
 
         private final Long id;
         private final String courierCompany;
         private final String name;
         private final LocalDate createdDate;
+
+        @Builder
+        public DeliveryResponse(Long id, String courierCompany, String name, LocalDate createdDate) {
+            this.id = id;
+            this.courierCompany = courierCompany;
+            this.name = name;
+            this.createdDate = createdDate;
+        }
 
     }
 
