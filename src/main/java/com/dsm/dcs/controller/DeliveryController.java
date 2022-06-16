@@ -34,15 +34,16 @@ public class DeliveryController {
         deliveryService.saveDelivery(request);
     }
 
-    @PatchMapping("/{delivery_id}/{user_id}")
-    public DeliveryIdListResponse.DeliveryIdResponse updateDeliveryUser(@PathVariable("delivery_id") Long deliveryId,
-                                                                        @PathVariable("user_id") Long userId) {
+    @PatchMapping("/{deliveryId}/{userId}")
+    @ResponseStatus(HttpStatus.OK)
+    public DeliveryIdListResponse.DeliveryIdResponse updateDeliveryUser(@PathVariable("deliveryId") Long deliveryId,
+                                                                        @PathVariable("userId") Long userId) {
         return deliveryService.updateDeliveryUser(deliveryId, userId);
     }
 
-    @DeleteMapping("/{delivery_id}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteDelivery(@PathVariable("delivery_id") Long deliveryId) {
+    public void deleteDelivery(@PathVariable("id") Long deliveryId) {
         deliveryService.deleteDelivery(deliveryId);
     }
 
@@ -62,7 +63,7 @@ public class DeliveryController {
     }
 
     @GetMapping("/{delivery_id}")
-    public DeliveryResponse getDelivery(@PathVariable("delivery_id") Long deliveryId) {
+    public DeliveryListResponse.DeliveryResponse getDelivery(@PathVariable("delivery_id") Long deliveryId) {
         return deliveryService.getDelivery(deliveryId);
     }
 
