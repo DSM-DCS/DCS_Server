@@ -4,6 +4,7 @@ import com.dsm.dcs.dto.request.PostRequest;
 import com.dsm.dcs.dto.response.PostIdResponse;
 import com.dsm.dcs.entity.post.Post;
 import com.dsm.dcs.entity.post.PostRepository;
+import com.dsm.dcs.facade.PostFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class PostService {
 
+    private final PostFacade postFacade;
     private final PostRepository postRepository;
 
     public PostIdResponse savePost(PostRequest request) {
@@ -26,5 +28,10 @@ public class PostService {
         );
     }
 
+    public PostIdResponse updatePost(Long id, PostRequest request) {
+        Post post = postFacade.findById(id);
+        return new PostIdResponse(postRepository.save(
+                post.update(request.getTitle(), request.getContent())).getId());
+    }
 
 }
