@@ -14,7 +14,7 @@ public class PostListResponse {
     private List<PostResponse> postResponseList;
 
     @Getter
-    public class PostResponse {
+    public static class PostResponse {
 
         private final String title;
         private final LocalDate createdDate;
