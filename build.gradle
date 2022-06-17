@@ -53,6 +53,7 @@ dependencies {
 	runtimeOnly 'mysql:mysql-connector-java'
 
 	implementation 'com.google.firebase:firebase-admin:8.2.0'
+	implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '4.2.2'
 
 }
 
