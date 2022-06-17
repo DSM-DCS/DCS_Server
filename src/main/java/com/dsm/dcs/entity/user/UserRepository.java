@@ -1,5 +1,6 @@
 package com.dsm.dcs.entity.user;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
@@ -11,7 +12,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
     Optional<User> findByStudentNumber(Integer studentNumber);
     Optional<User> findByEmail(String email);
     Optional<User> findByPhoneNumber(String phoneNumber);
-    List<User> findAllByOrderByStudentNumberDesc();
-    List<User> findAllByNameContaining(String name);
+    List<User> findAllByOrderByStudentNumberDesc(Pageable page);
+    List<User> findAllByNameContaining(String name, Pageable page);
 
 }

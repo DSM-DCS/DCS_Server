@@ -1,5 +1,6 @@
 package com.dsm.dcs.facade;
 
+import com.dsm.dcs.dto.response.UserListResponse;
 import com.dsm.dcs.entity.user.User;
 import com.dsm.dcs.entity.user.UserAuthCode;
 import com.dsm.dcs.entity.user.UserAuthCodeRepository;
@@ -7,7 +8,6 @@ import com.dsm.dcs.entity.user.UserRepository;
 import com.dsm.dcs.exception.InvalidAuthCodeException;
 import com.dsm.dcs.exception.InvalidJwtException;
 import com.dsm.dcs.exception.UserNotFoundException;
-import com.dsm.dcs.exception.UserAlreadyExistsException;
 import com.dsm.dcs.exception.AuthCodeAlreadyVerifiedException;
 import com.dsm.dcs.exception.EmailAlreadyExistsException;
 import com.dsm.dcs.exception.UnVerifiedAuthCodeException;
@@ -16,11 +16,13 @@ import com.dsm.dcs.exception.StudentNumberAlreadyExistsException;
 import com.dsm.dcs.exception.PhoneNumberAlreadyExistsException;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -37,8 +39,9 @@ public class UserFacade {
         return getUserByAccountId(authentication.getName());
     }
 
-    public List<User> getUserList() {
-        return userRepository.findAllByOrderByStudentNumberDesc();
+    public UserListResponse getUserList(Pageable page) {
+        return new UserListResponse(userRepository.findAllByOrderByStudentNumberDesc(page).stream()
+                .map(this::getUser).collect(Collectors.toList()));
     }
 
     public User getUserByAccountId(String accountId) {
@@ -51,20 +54,14 @@ public class UserFacade {
                 .orElse(null);
     }
 
-    public List<User> getUserByName(String name) {
-        return userRepository.findAllByNameContaining(name);
+    public UserListResponse getUserByName(String name, Pageable page) {
+        return new UserListResponse(userRepository.findAllByNameContaining(name, page).stream()
+                .map(this::getUser).collect(Collectors.toList()));
     }
 
     public User getUserById(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
-    }
-
-    public boolean isAlreadyExists(String email) {
-        if(userRepository.findByEmail(email).isPresent()) {
-            throw UserAlreadyExistsException.EXCEPTION;
-        }
-        return true;
     }
 
     public void checkUserExists(String accountId) {
@@ -118,6 +115,13 @@ public class UserFacade {
 
     public boolean compareCode(String reqCode, String code) {
         return reqCode.equals(code);
+    }
+
+    private UserListResponse.UserResponse getUser(User user) {
+        return UserListResponse.UserResponse.builder()
+                .name(user.getName())
+                .studentNumber(user.getStudentNumber())
+                .build();
     }
 
 }

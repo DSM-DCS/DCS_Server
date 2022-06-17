@@ -2,10 +2,10 @@ package com.dsm.dcs.dto.request;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Getter
 @NoArgsConstructor
@@ -15,6 +15,6 @@ public class VerificationAuthCodeRequest {
     @Email(message = "이메일 형식이 올바르지 않습니다.")
     private String email;
 
-    @Length(min = 6, max = 6, message = "code는 6글자여야 합니다.")
+    @Size(min = 6, max = 6, message = "code는 6글자여야 합니다.")
     private String code;
 }

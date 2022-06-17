@@ -41,7 +41,7 @@ public class DeliveryFacade {
 
     public DeliveryNullUserListResponse getDeliveryUserNullList(Pageable page) {
         return new DeliveryNullUserListResponse(deliveryRepository.findAllByUserOrderByCreatedDateDesc(null, page)
-                .stream().map(this::getUserNullDeilvery).collect(Collectors.toList()));
+                .stream().map(this::getUserNullDelivery).collect(Collectors.toList()));
     }
 
     private DeliveryListResponse.DeliveryResponse getDelivery(Delivery delivery) {
@@ -53,7 +53,7 @@ public class DeliveryFacade {
                 .build();
     }
 
-    private DeliveryNullUserListResponse.DeliveryNullUserResponse getUserNullDeilvery(Delivery delivery) {
+    private DeliveryNullUserListResponse.DeliveryNullUserResponse getUserNullDelivery(Delivery delivery) {
         return DeliveryNullUserListResponse.DeliveryNullUserResponse.builder()
                 .id(delivery.getId())
                 .courierCompany(delivery.getCourierCompany().name())
