@@ -35,6 +35,9 @@ public class PostService {
         return new PostIdResponse(postRepository.save(
                 post.update(request.getTitle(), request.getContent())).getId());
     }
+    public void deletePost(Long postId) {
+        postRepository.delete(postFacade.findById(postId));
+    }
 
     public PostListResponse getPostList(Pageable page) {
         return postFacade.getPostList(page);
