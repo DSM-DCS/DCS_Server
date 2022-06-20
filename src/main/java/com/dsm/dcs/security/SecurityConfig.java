@@ -1,7 +1,8 @@
 package com.dsm.dcs.security;
 
-import com.dsm.dcs.exception.handler.AuthenticationEntryPointImpl;
+import com.dsm.dcs.error.CustomAuthenticationEntryPoint;
 import com.dsm.dcs.security.jwt.JwtTokenProvider;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,14 +13,15 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.cors.CorsUtils;
 
 @RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final AuthenticationEntryPointImpl authenticationEntryPoint;
     private final JwtTokenProvider jwtTokenProvider;
+    private final ObjectMapper objectMapper;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -39,6 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .authorizeRequests()
+                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 .antMatchers(HttpMethod.GET, "/delivery").hasAnyRole("ROLE_TEACHER")
                 .antMatchers(HttpMethod.GET, "/delivery/**").hasAnyRole("ROLE_TEACHER")
                 .antMatchers(HttpMethod.DELETE, "/delivery/**").hasAnyRole("ROLE_TEACHER")
@@ -49,7 +52,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/delivery/null/user").hasAnyRole("ROLE_USER", "ROLE_TEACHER")
                 .anyRequest().permitAll()
 
-                .and().httpBasic().authenticationEntryPoint(authenticationEntryPoint)
-                .and().apply(new FilterConfig(jwtTokenProvider));
+                .and()
+                .exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint(objectMapper))
+
+                .and()
+                .apply(new FilterConfig(jwtTokenProvider, objectMapper));
     }
 }
