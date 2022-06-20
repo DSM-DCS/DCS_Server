@@ -25,7 +25,6 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
         String errorResponseJson = objectMapper.writeValueAsString(
                 ErrorResponse.builder()
                         .status(errorCode.getStatus())
-                        .code(errorCode.getCode())
                         .message(errorCode.getMessage())
                         .build());
 
