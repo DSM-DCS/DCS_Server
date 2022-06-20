@@ -4,8 +4,8 @@ import com.dsm.dcs.dto.TokenDto;
 import com.dsm.dcs.entity.auth.RefreshToken;
 import com.dsm.dcs.entity.auth.RefreshTokenRepository;
 import com.dsm.dcs.exception.EffectiveJwtException;
-import com.dsm.dcs.exception.NotFindRefreshTokenException;
 import com.dsm.dcs.exception.NotRefreshTokenException;
+import com.dsm.dcs.exception.RefreshTokenNotFoundException;
 import com.dsm.dcs.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -32,7 +32,7 @@ public class TokenRefreshTokenService {
         }
 
         RefreshToken refreshToken = refreshTokenRepository.findById(jwtToken.getRefreshToken())
-                .orElseThrow(() -> NotFindRefreshTokenException.EXCEPTION);
+                .orElseThrow(() -> RefreshTokenNotFoundException.EXCEPTION);
 
         TokenDto token = TokenDto.builder()
                 .refreshToken(refreshToken.getRefreshToken())
