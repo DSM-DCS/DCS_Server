@@ -23,7 +23,6 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(
                 ErrorResponse.builder()
                         .status(errorCode.getStatus())
-                        .code(errorCode.getCode())
                         .message(errorCode.getMessage())
                         .build(),
                 HttpStatus.valueOf(errorCode.getStatus())
