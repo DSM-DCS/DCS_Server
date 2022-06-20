@@ -3,6 +3,7 @@ package com.dsm.dcs.controller;
 import com.dsm.dcs.dto.request.PostRequest;
 import com.dsm.dcs.dto.response.PostIdResponse;
 import com.dsm.dcs.dto.response.PostListResponse;
+import com.dsm.dcs.dto.response.PostResponse;
 import com.dsm.dcs.service.post.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -48,4 +49,9 @@ public class PostController {
         return postService.getPostList(page);
     }
 
+    @GetMapping("/{id}")
+    public PostResponse getPost(@PathVariable("id") Long postId) {
+        return postService.getPost(postId);
+    }
+    
 }

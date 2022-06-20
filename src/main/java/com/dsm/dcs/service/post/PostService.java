@@ -3,6 +3,7 @@ package com.dsm.dcs.service.post;
 import com.dsm.dcs.dto.request.PostRequest;
 import com.dsm.dcs.dto.response.PostIdResponse;
 import com.dsm.dcs.dto.response.PostListResponse;
+import com.dsm.dcs.dto.response.PostResponse;
 import com.dsm.dcs.entity.post.Post;
 import com.dsm.dcs.entity.post.PostRepository;
 import com.dsm.dcs.facade.PostFacade;
@@ -41,6 +42,15 @@ public class PostService {
 
     public PostListResponse getPostList(Pageable page) {
         return postFacade.getPostList(page);
+    }
+
+    public PostResponse getPost(Long postId) {
+        Post post = postFacade.findById(postId);
+        return PostResponse.builder()
+                .title(post.getTitle())
+                .content(post.getContent())
+                .createdDate(post.getCreatedDate())
+                .build();
     }
 
 }
