@@ -1,6 +1,7 @@
 package com.dsm.dcs.exception;
 
-import com.dsm.dcs.exception.handler.DcsException;
+import com.dsm.dcs.error.exception.DcsException;
+import com.dsm.dcs.error.exception.ErrorCode;
 
 public class EffectiveJwtException extends DcsException {
 
@@ -8,7 +9,7 @@ public class EffectiveJwtException extends DcsException {
             new EffectiveJwtException();
 
     private EffectiveJwtException() {
-        super(401, "Effective Access Token");
+        super(ErrorCode.EFFECTIVE_JWT);
     }
 
 }
