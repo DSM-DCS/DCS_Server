@@ -34,7 +34,6 @@ public class ExceptionFilter extends OncePerRequestFilter {
     private void sendErrorMessage(HttpServletResponse response, ErrorCode errorCode) throws IOException {
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .status(errorCode.getStatus())
-                .code(errorCode.getCode())
                 .message(errorCode.getMessage())
                 .build();
         String errorResponseJson = objectMapper.writeValueAsString(errorResponse);
