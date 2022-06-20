@@ -24,7 +24,7 @@ public class AdminController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public TokenDto courierSignUp(@RequestBody @Valid LoginRequest request) {
+    public TokenDto courierSignIn (@RequestBody @Valid LoginRequest request) {
         return adminAuthService.adminSignIn(request);
     }
 }
