@@ -45,7 +45,12 @@ public class PostService {
     }
 
     public PostResponse getPost(Long postId) {
-        return new PostResponse(postFacade.findById(postId));
+        Post post = postFacade.findById(postId);
+        return PostResponse.builder()
+                .title(post.getTitle())
+                .content(post.getContent())
+                .createdDate(post.getCreatedDate())
+                .build();
     }
 
 }
