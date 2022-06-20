@@ -1,6 +1,7 @@
 package com.dsm.dcs.exception;
 
-import com.dsm.dcs.exception.handler.DcsException;
+import com.dsm.dcs.error.exception.DcsException;
+import com.dsm.dcs.error.exception.ErrorCode;
 
 public class UnVerifiedAuthCodeException extends DcsException {
 
@@ -8,6 +9,6 @@ public class UnVerifiedAuthCodeException extends DcsException {
             new UnVerifiedAuthCodeException();
 
     private UnVerifiedAuthCodeException() {
-        super(401, "UnVerified Auth Code");
+        super(ErrorCode.UNVERIFIED_AUTH_CODE);
     }
 }
