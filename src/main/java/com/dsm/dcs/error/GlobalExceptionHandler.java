@@ -1,5 +1,7 @@
-package com.dsm.dcs.exception.handler;
+package com.dsm.dcs.error;
 
+import com.dsm.dcs.error.exception.DcsException;
+import com.dsm.dcs.error.exception.ErrorCode;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
@@ -9,26 +11,23 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import javax.validation.ValidationException;
 import java.util.HashMap;
 import java.util.Map;
 
 @RestControllerAdvice
-public class DcsExceptionHandler {
+public class GlobalExceptionHandler {
 
     @ExceptionHandler(DcsException.class)
-    protected ResponseEntity<ErrorResponse> handlerDcsException(final DcsException e) {
-        return new ResponseEntity<>(new ErrorResponse(e.getStatus(), e.getMessage()), HttpStatus.valueOf(e.getStatus()));
-    }
-
-    @ExceptionHandler(ValidationException.class)
-    protected ResponseEntity<ErrorResponse> handlerValidException() {
-        return new ResponseEntity<>(new ErrorResponse(400, "Invalid value"), HttpStatus.valueOf(400));
-    }
-
-    @ExceptionHandler(NullPointerException.class)
-    protected ResponseEntity<ErrorResponse> handlerNullPointerException() {
-        return new ResponseEntity<>(new ErrorResponse(400, "Null Pointer Exception"), HttpStatus.valueOf(400));
+    public ResponseEntity<ErrorResponse> handleGlobal(DcsException e) {
+        final ErrorCode errorCode = e.getErrorCode();
+        return new ResponseEntity<>(
+                ErrorResponse.builder()
+                        .status(errorCode.getStatus())
+                        .code(errorCode.getCode())
+                        .message(errorCode.getMessage())
+                        .build(),
+                HttpStatus.valueOf(errorCode.getStatus())
+        );
     }
 
     @ExceptionHandler({BindException.class})
