@@ -1,6 +1,7 @@
 package com.dsm.dcs.exception;
 
-import com.dsm.dcs.exception.handler.DcsException;
+import com.dsm.dcs.error.exception.DcsException;
+import com.dsm.dcs.error.exception.ErrorCode;
 
 public class InvalidJwtException extends DcsException {
 
@@ -8,6 +9,6 @@ public class InvalidJwtException extends DcsException {
             new InvalidJwtException();
 
     private InvalidJwtException() {
-        super(401, "Invalid Token");
+        super(ErrorCode.INVALID_JWT);
     }
 }
