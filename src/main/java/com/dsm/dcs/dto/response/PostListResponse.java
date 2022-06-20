@@ -16,11 +16,13 @@ public class PostListResponse {
     @Getter
     public static class PostResponse {
 
+        private final Long id;
         private final String title;
         private final LocalDate createdDate;
 
         @Builder
-        public PostResponse(String title, LocalDate createdDate) {
+        public PostResponse(Long id, String title, LocalDate createdDate) {
+            this.id = id;
             this.title = title;
             this.createdDate = createdDate;
         }
