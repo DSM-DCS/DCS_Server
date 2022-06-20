@@ -1,6 +1,7 @@
 package com.dsm.dcs.exception;
 
-import com.dsm.dcs.exception.handler.DcsException;
+import com.dsm.dcs.error.exception.DcsException;
+import com.dsm.dcs.error.exception.ErrorCode;
 
 public class AuthCodeAlreadyVerifiedException extends DcsException {
 
@@ -8,6 +9,6 @@ public class AuthCodeAlreadyVerifiedException extends DcsException {
             new AuthCodeAlreadyVerifiedException();
 
     private AuthCodeAlreadyVerifiedException() {
-        super(404, "AuthCode already exists");
+        super(ErrorCode.USER_AUTH_CODE_ALREADY_VERIFIED);
     }
 }
