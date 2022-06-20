@@ -18,10 +18,4 @@ public class AdminFacade {
                 .orElseThrow(() -> AdminNotFoundException.EXCEPTION);
     }
 
-    public void checkUserExists(String accountId) {
-        if (adminRepository.findByAdminId(accountId).isPresent()) {
-            throw AccountIdExistsException.EXCEPTION;
-        }
-    }
-
 }
