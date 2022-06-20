@@ -1,6 +1,7 @@
 package com.dsm.dcs.exception;
 
-import com.dsm.dcs.exception.handler.DcsException;
+import com.dsm.dcs.error.exception.DcsException;
+import com.dsm.dcs.error.exception.ErrorCode;
 
 public class PasswordMismatchException extends DcsException {
 
@@ -8,6 +9,6 @@ public class PasswordMismatchException extends DcsException {
             new PasswordMismatchException();
 
     private PasswordMismatchException() {
-        super(401, "Password Mismatch");
+        super(ErrorCode.PASSWORD_NOT_MATCH);
     }
 }
