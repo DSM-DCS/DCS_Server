@@ -1,8 +1,9 @@
 package com.dsm.dcs.security;
 
-import com.dsm.dcs.exception.handler.DcsExceptionFilter;
+import com.dsm.dcs.error.ExceptionFilter;
 import com.dsm.dcs.security.jwt.JwtTokenFilter;
 import com.dsm.dcs.security.jwt.JwtTokenProvider;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,12 +14,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class FilterConfig extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
 
     private final JwtTokenProvider jwtTokenProvider;
+    private final ObjectMapper objectMapper;
 
     @Override
     public void configure(HttpSecurity builder) {
         JwtTokenFilter jwtTokenFilter = new JwtTokenFilter(jwtTokenProvider);
-        DcsExceptionFilter dcsExceptionFilter = new DcsExceptionFilter();
+        ExceptionFilter exceptionFilter = new ExceptionFilter(objectMapper);
         builder.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
-        builder.addFilterBefore(dcsExceptionFilter, JwtTokenFilter.class);
+        builder.addFilterBefore(exceptionFilter, JwtTokenFilter.class);
     }
 }
