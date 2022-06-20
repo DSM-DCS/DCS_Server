@@ -1,6 +1,7 @@
 package com.dsm.dcs.exception;
 
-import com.dsm.dcs.exception.handler.DcsException;
+import com.dsm.dcs.error.exception.DcsException;
+import com.dsm.dcs.error.exception.ErrorCode;
 
 public class RefreshTokenNotFoundException extends DcsException {
 
@@ -8,6 +9,6 @@ public class RefreshTokenNotFoundException extends DcsException {
             new RefreshTokenNotFoundException();
 
     private RefreshTokenNotFoundException() {
-        super(404, "RefreshToken Not Found");
+        super(ErrorCode.REFRESH_TOKEN_NOT_FOUND);
     }
 }

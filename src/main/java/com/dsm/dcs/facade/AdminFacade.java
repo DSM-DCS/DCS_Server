@@ -2,7 +2,7 @@ package com.dsm.dcs.facade;
 
 import com.dsm.dcs.entity.admin.Admin;
 import com.dsm.dcs.entity.admin.AdminRepository;
-import com.dsm.dcs.exception.AccountIdAlreadyExistsException;
+import com.dsm.dcs.exception.AccountIdExistsException;
 import com.dsm.dcs.exception.AdminNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -20,7 +20,7 @@ public class AdminFacade {
 
     public void checkUserExists(String accountId) {
         if (adminRepository.findByAdminId(accountId).isPresent()) {
-            throw AccountIdAlreadyExistsException.EXCEPTION;
+            throw AccountIdExistsException.EXCEPTION;
         }
     }
 

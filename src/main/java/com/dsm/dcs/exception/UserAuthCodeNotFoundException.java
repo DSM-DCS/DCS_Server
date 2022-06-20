@@ -1,6 +1,7 @@
 package com.dsm.dcs.exception;
 
-import com.dsm.dcs.exception.handler.DcsException;
+import com.dsm.dcs.error.exception.DcsException;
+import com.dsm.dcs.error.exception.ErrorCode;
 
 public class UserAuthCodeNotFoundException extends DcsException {
 
@@ -8,6 +9,6 @@ public class UserAuthCodeNotFoundException extends DcsException {
             new UserAuthCodeNotFoundException();
 
     private UserAuthCodeNotFoundException() {
-        super(404, "User AuthCode Not Found");
+        super(ErrorCode.USER_AUTH_CODE_NOT_FOUND);
     }
 }

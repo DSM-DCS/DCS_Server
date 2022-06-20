@@ -1,6 +1,7 @@
 package com.dsm.dcs.exception;
 
-import com.dsm.dcs.exception.handler.DcsException;
+import com.dsm.dcs.error.exception.DcsException;
+import com.dsm.dcs.error.exception.ErrorCode;
 
 public class ExpiredJwtException extends DcsException {
 
@@ -8,6 +9,6 @@ public class ExpiredJwtException extends DcsException {
             new ExpiredJwtException();
 
     private ExpiredJwtException() {
-        super(401, "Expired Jwt");
+        super(ErrorCode.EXPIRED_JWT);
     }
 }

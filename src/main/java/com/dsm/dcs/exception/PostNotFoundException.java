@@ -1,6 +1,7 @@
 package com.dsm.dcs.exception;
 
-import com.dsm.dcs.exception.handler.DcsException;
+import com.dsm.dcs.error.exception.DcsException;
+import com.dsm.dcs.error.exception.ErrorCode;
 
 public class PostNotFoundException extends DcsException {
 
@@ -8,7 +9,7 @@ public class PostNotFoundException extends DcsException {
             new PostNotFoundException();
 
     private PostNotFoundException() {
-        super(404, "Post Not Found");
+        super(ErrorCode.POST_NOT_FOUND);
     }
 
 }

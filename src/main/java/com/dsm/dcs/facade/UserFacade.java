@@ -9,11 +9,11 @@ import com.dsm.dcs.exception.InvalidAuthCodeException;
 import com.dsm.dcs.exception.InvalidJwtException;
 import com.dsm.dcs.exception.UserNotFoundException;
 import com.dsm.dcs.exception.AuthCodeAlreadyVerifiedException;
-import com.dsm.dcs.exception.EmailAlreadyExistsException;
+import com.dsm.dcs.exception.EmailExistsException;
 import com.dsm.dcs.exception.UnVerifiedAuthCodeException;
-import com.dsm.dcs.exception.AccountIdAlreadyExistsException;
-import com.dsm.dcs.exception.StudentNumberAlreadyExistsException;
-import com.dsm.dcs.exception.PhoneNumberAlreadyExistsException;
+import com.dsm.dcs.exception.AccountIdExistsException;
+import com.dsm.dcs.exception.StudentNumberExistsException;
+import com.dsm.dcs.exception.PhoneNumberExistsException;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -21,7 +21,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
@@ -66,25 +65,25 @@ public class UserFacade {
 
     public void checkUserExists(String accountId) {
         if (userRepository.findByAccountId(accountId).isPresent()) {
-            throw AccountIdAlreadyExistsException.EXCEPTION;
+            throw AccountIdExistsException.EXCEPTION;
         }
     }
 
     public void checkStudentNumberExists(Integer studentNumber) {
         if (userRepository.findByStudentNumber(studentNumber).isPresent()) {
-            throw StudentNumberAlreadyExistsException.EXCEPTION;
+            throw StudentNumberExistsException.EXCEPTION;
         }
     }
 
     public void checkEmailExists(String email) {
         if (userRepository.findByEmail(email).isPresent()) {
-            throw EmailAlreadyExistsException.EXCEPTION;
+            throw EmailExistsException.EXCEPTION;
         }
     }
 
     public void checkPhoneNumberExists(String phoneNumber) {
         if (userRepository.findByPhoneNumber(phoneNumber).isPresent()) {
-            throw PhoneNumberAlreadyExistsException.EXCEPTION;
+            throw PhoneNumberExistsException.EXCEPTION;
         }
     }
 

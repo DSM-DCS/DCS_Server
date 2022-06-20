@@ -1,6 +1,7 @@
 package com.dsm.dcs.exception;
 
-import com.dsm.dcs.exception.handler.DcsException;
+import com.dsm.dcs.error.exception.DcsException;
+import com.dsm.dcs.error.exception.ErrorCode;
 
 public class DeliveryNotFoundException extends DcsException {
 
@@ -8,6 +9,6 @@ public class DeliveryNotFoundException extends DcsException {
             new DeliveryNotFoundException();
 
     private DeliveryNotFoundException() {
-        super(404, "Delivery Not Found");
+        super(ErrorCode.DELIVERY_NOT_FOUND);
     }
 }
