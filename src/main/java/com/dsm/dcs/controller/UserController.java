@@ -58,7 +58,7 @@ public class UserController {
     }
 
     @GetMapping
-    public UserListResponse getUser(Pageable page) {
+    public UserListResponse getUserList(Pageable page) {
         return userService.getUser(page);
     }
 
