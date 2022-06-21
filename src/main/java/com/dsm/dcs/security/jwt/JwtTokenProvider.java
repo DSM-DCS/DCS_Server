@@ -80,13 +80,12 @@ public class JwtTokenProvider {
         return null;
     }
     public boolean validateToken(String token) {
-
         try {
-            return getTokenBody(token).getExpiration().after(new Date());
-        } catch (Exception e) {
-            throw InvalidJwtException.EXCEPTION;
+            getTokenBody(token).getExpiration().after(new Date());
+            return true;
+        } catch (InvalidJwtException e) {
+            return false;
         }
-
     }
 
     public boolean isRefreshToken(String token) {
