@@ -7,6 +7,7 @@ import com.dsm.dcs.dto.request.UserSignUpRequest;
 import com.dsm.dcs.dto.request.VerificationAuthCodeRequest;
 import com.dsm.dcs.dto.response.UserListResponse;
 import com.dsm.dcs.dto.TokenDto;
+import com.dsm.dcs.dto.response.UserResponse;
 import com.dsm.dcs.service.user.UpdatePasswordService;
 import com.dsm.dcs.service.user.UserAuthService;
 import com.dsm.dcs.service.user.UserService;
@@ -76,6 +77,11 @@ public class UserController {
     @PutMapping("/email-verifications")
     public void verifyEmail(@RequestBody @Valid VerificationAuthCodeRequest request) {
         verificationAuthCodeService.execute(request);
+    }
+
+    @GetMapping
+    public UserResponse getMyPage() {
+        return userService.getUser();
     }
 
 }
