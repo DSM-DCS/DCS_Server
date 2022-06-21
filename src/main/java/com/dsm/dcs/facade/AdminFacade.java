@@ -2,7 +2,6 @@ package com.dsm.dcs.facade;
 
 import com.dsm.dcs.entity.admin.Admin;
 import com.dsm.dcs.entity.admin.AdminRepository;
-import com.dsm.dcs.exception.AccountIdExistsException;
 import com.dsm.dcs.exception.AdminNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
