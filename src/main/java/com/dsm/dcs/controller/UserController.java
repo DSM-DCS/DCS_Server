@@ -79,7 +79,7 @@ public class UserController {
         verificationAuthCodeService.execute(request);
     }
 
-    @GetMapping
+    @GetMapping("/my")
     public UserResponse getMyPage() {
         return userService.getUser();
     }
