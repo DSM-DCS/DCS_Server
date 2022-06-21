@@ -15,13 +15,13 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.validation.Valid;
 
 @RequiredArgsConstructor
+@Transactional
 @Service
 public class TokenRefreshTokenService {
 
     private final RefreshTokenRepository refreshTokenRepository;
     private final JwtTokenProvider jwtTokenProvider;
 
-    @Transactional
     public TokenDto execute(@Valid TokenDto jwtToken) {
 
         if(jwtTokenProvider.validateToken(jwtToken.getAccessToken())) {
