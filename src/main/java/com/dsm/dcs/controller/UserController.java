@@ -11,7 +11,6 @@ import com.dsm.dcs.dto.response.UserListResponse;
 import com.dsm.dcs.dto.response.UserResponse;
 import com.dsm.dcs.service.user.UserAuthService;
 import com.dsm.dcs.service.user.UserService;
-import com.dsm.dcs.service.user.SendIdAuthCodeService;
 import com.dsm.dcs.service.user.SendPasswordAuthCodeService;
 import com.dsm.dcs.service.user.ChangePasswordService;
 import com.dsm.dcs.service.user.SendEmailAuthCodeService;
@@ -45,7 +44,6 @@ public class UserController {
     private final UpdatePasswordService updatePasswordService;
     private final VerificationAuthCodeService verificationAuthCodeService;
     private final SendPasswordAuthCodeService sendPasswordAuthCodeService;
-    private final SendIdAuthCodeService sendIdAuthCodeService;
     private final ChangePasswordService changePasswordService;
 
     @PostMapping("/token")
@@ -79,12 +77,6 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     public void sendPasswordAuthCode(@RequestBody @Valid SendEmailRequest request) {
         sendPasswordAuthCodeService.execute(request);
-    }
-
-    @PostMapping("/email-verifications/id")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void sendIdAuthCode(@RequestBody @Valid SendEmailRequest request) {
-        sendIdAuthCodeService.execute(request);
     }
 
     @PatchMapping("/password")
