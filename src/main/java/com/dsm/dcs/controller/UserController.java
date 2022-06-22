@@ -81,7 +81,7 @@ public class UserController {
         sendPasswordAuthCodeService.execute(request);
     }
 
-    @PostMapping("helper/id")
+    @PostMapping("/email-verifications/id")
     @ResponseStatus(HttpStatus.CREATED)
     public void sendIdAuthCode(@RequestBody @Valid SendEmailRequest request) {
         sendIdAuthCodeService.execute(request);
