@@ -1,5 +1,6 @@
 package com.dsm.dcs.security.jwt;
 
+import com.dsm.dcs.exception.InvalidJwtException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,9 +22,11 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
 
         String bearer = jwtTokenProvider.resolveToken(request);
-        if (bearer != null) {
+        if (bearer != null && jwtTokenProvider.validateToken(bearer)) {
             Authentication authentication = jwtTokenProvider.authentication(bearer);
             SecurityContextHolder.getContext().setAuthentication(authentication);
+        } else {
+            throw InvalidJwtException.EXCEPTION;
         }
         filterChain.doFilter(request, response);
 
