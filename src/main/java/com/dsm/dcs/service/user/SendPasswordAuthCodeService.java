@@ -9,13 +9,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
-public class SendEmailAuthCodeService {
+public class SendPasswordAuthCodeService {
 
     private final UserAuthCodeFacade authCodeFacade;
 
     @Transactional
     public void execute(SendEmailRequest request) {
 
-        authCodeFacade.sendEmail(request.getEmail(), Action.SIGNUP);
+        authCodeFacade.sendEmail(request.getEmail(), Action.UPDATE_PASSWORD);
     }
 }

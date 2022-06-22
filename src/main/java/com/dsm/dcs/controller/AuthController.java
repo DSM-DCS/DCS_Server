@@ -44,7 +44,7 @@ public class AuthController {
     }
 
     @RequestMapping(value = "/student-number", method = RequestMethod.HEAD)
-    public void CheckStudentNumberExists(@NotBlank @RequestParam(name = "studentNumber") Integer studentNumber) {
+    public void CheckStudentNumberExists(@RequestParam(name = "studentNumber") Integer studentNumber) {
         checkExistsService.checkStudentNumberExists(studentNumber);
     }
 

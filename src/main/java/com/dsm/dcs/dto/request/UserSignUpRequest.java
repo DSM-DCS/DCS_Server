@@ -1,7 +1,6 @@
 package com.dsm.dcs.dto.request;
 
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -25,7 +24,7 @@ public class UserSignUpRequest {
     private String password;
 
     @NotBlank(message = "email은 Null 또는 공백 또는 띄어쓰기를 허용하지 않습니다.")
-    @Email(message = "이메일 형식이 올바르지 않습니다.")
+    @Email(regexp = "^([[~!@#$%^&*()-_.]?0-9a-zA-Z])+@[dsm]+.[hs]+.kr$", message = "이메일 형식이 올바르지 않습니다.")
     private String email;
 
     @NotBlank(message = "phone_number은 Null 또는 공백 또는 띄어쓰기를 허용하지 않습니다")
