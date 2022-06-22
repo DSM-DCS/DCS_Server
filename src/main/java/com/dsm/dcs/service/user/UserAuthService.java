@@ -4,6 +4,7 @@ import com.dsm.dcs.dto.TokenDto;
 import com.dsm.dcs.dto.request.LoginRequest;
 import com.dsm.dcs.dto.request.UserSignUpRequest;
 import com.dsm.dcs.entity.Role;
+import com.dsm.dcs.entity.auth.RefreshToken;
 import com.dsm.dcs.entity.auth.RefreshTokenRepository;
 import com.dsm.dcs.entity.user.User;
 import com.dsm.dcs.entity.user.UserRepository;
@@ -65,10 +66,9 @@ public class UserAuthService {
 
     public void logout() {
         User user = userFacade.getCurrentUser();
-        refreshTokenRepository.delete(
-                refreshTokenRepository.findById(user.getAccountId())
-                        .orElseThrow(() -> RefreshTokenNotFoundException.EXCEPTION)
-        );
+        RefreshToken refreshToken = refreshTokenRepository.findById(user.getAccountId())
+                .orElseThrow(() -> RefreshTokenNotFoundException.EXCEPTION);
+        refreshTokenRepository.delete(refreshToken);
     }
 
 }
