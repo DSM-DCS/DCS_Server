@@ -79,10 +79,10 @@ public class JwtTokenProvider {
             return bearerToken.replace((PREFIX), "");
         return null;
     }
+
     public boolean validateToken(String token) {
         try {
-            getTokenBody(token).getExpiration().after(new Date());
-            return true;
+            return getTokenBody(token).getExpiration().after(new Date());
         } catch (InvalidJwtException e) {
             return false;
         }
