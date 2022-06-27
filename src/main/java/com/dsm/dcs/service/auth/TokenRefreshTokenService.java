@@ -4,7 +4,6 @@ import com.dsm.dcs.dto.TokenDto;
 import com.dsm.dcs.entity.auth.RefreshToken;
 import com.dsm.dcs.entity.auth.RefreshTokenRepository;
 import com.dsm.dcs.exception.EffectiveJwtException;
-import com.dsm.dcs.exception.InvalidJwtException;
 import com.dsm.dcs.exception.NotRefreshTokenException;
 import com.dsm.dcs.exception.RefreshTokenNotFoundException;
 import com.dsm.dcs.security.jwt.JwtTokenProvider;
