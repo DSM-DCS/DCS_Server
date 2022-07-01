@@ -42,8 +42,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-                .antMatchers(HttpMethod.PATCH, "/users/password").hasAnyRole("ROLE_USER")
-                .antMatchers(HttpMethod.GET, "/users/verification-password").hasAnyRole("ROLE_USER")
                 .antMatchers(HttpMethod.GET, "/users").hasAnyRole("ROLE_TEACHER")
                 .antMatchers(HttpMethod.GET, "/users/search").hasAnyRole("ROLE_TEACHER")
                 .antMatchers(HttpMethod.GET, "/users/mypage").hasAnyRole("ROLE_USER")
