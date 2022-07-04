@@ -79,7 +79,7 @@ public class UserController {
     }
 
     @PostMapping("/passwords")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     public void findPasswordService(@RequestBody FindPasswordRequest request) {
         findPasswordService.execute(request);
     }
