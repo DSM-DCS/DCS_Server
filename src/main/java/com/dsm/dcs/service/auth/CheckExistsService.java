@@ -10,10 +10,6 @@ public class CheckExistsService {
 
     private final UserFacade userFacade;
 
-    public void checkEmailExists(String email) {
-        userFacade.checkEmailExists(email);
-    }
-
     public void checkPhoneNumberExists(String phoneNumber) {
         userFacade.checkPhoneNumberExists(phoneNumber);
     }
