@@ -9,7 +9,6 @@ import com.dsm.dcs.exception.InvalidAuthCodeException;
 import com.dsm.dcs.exception.InvalidJwtException;
 import com.dsm.dcs.exception.UserNotFoundException;
 import com.dsm.dcs.exception.AuthCodeAlreadyVerifiedException;
-import com.dsm.dcs.exception.EmailExistsException;
 import com.dsm.dcs.exception.UnVerifiedAuthCodeException;
 import com.dsm.dcs.exception.AccountIdExistsException;
 import com.dsm.dcs.exception.StudentNumberExistsException;
@@ -72,12 +71,6 @@ public class UserFacade {
     public void checkStudentNumberExists(Integer studentNumber) {
         if (userRepository.findByStudentNumber(studentNumber).isPresent()) {
             throw StudentNumberExistsException.EXCEPTION;
-        }
-    }
-
-    public void checkEmailExists(String email) {
-        if (userRepository.findByEmail(email).isPresent()) {
-            throw EmailExistsException.EXCEPTION;
         }
     }
 
