@@ -18,9 +18,23 @@ public class SesUtil {
 
     public void sendMail(String email, String authCode) {
         Message message = new Message()
-                .withSubject(createContent("test 이메일 입니다."))
+                .withSubject(createContent("[DCS] 이메일 인증코드입니다."))
                 .withBody(new Body()
                         .withHtml(createContent(authCode)));
+
+        SendEmailRequest request = new SendEmailRequest()
+                .withDestination(new Destination().withToAddresses(email))
+                .withSource(sesProperties.getEmail())
+                .withMessage(message);
+
+        amazonSimpleEmailServiceAsync.sendEmailAsync(request);
+    }
+
+    public void SendEmailForPassword(String email, String result) {
+        Message message = new Message()
+                .withSubject(createContent("회원님의 비밀번호 "))
+                .withBody(new Body()
+                        .withHtml(createContent(result)));
 
         SendEmailRequest request = new SendEmailRequest()
                 .withDestination(new Destination().withToAddresses(email))

@@ -1,18 +1,17 @@
 package com.dsm.dcs.controller;
 
 import com.dsm.dcs.dto.TokenDto;
+import com.dsm.dcs.dto.request.FindPasswordRequest;
+import com.dsm.dcs.dto.request.UserSignUpRequest;
 import com.dsm.dcs.dto.request.LoginRequest;
 import com.dsm.dcs.dto.request.SendEmailRequest;
-import com.dsm.dcs.dto.request.UpdatePasswordRequest;
-import com.dsm.dcs.dto.request.UserSignUpRequest;
-import com.dsm.dcs.dto.request.ChangePasswordRequest;
 import com.dsm.dcs.dto.request.VerificationAuthCodeRequest;
+import com.dsm.dcs.dto.request.UpdatePasswordRequest;
 import com.dsm.dcs.dto.response.UserListResponse;
 import com.dsm.dcs.dto.response.UserResponse;
 import com.dsm.dcs.service.user.UserAuthService;
 import com.dsm.dcs.service.user.UserService;
-import com.dsm.dcs.service.user.SendPasswordAuthCodeService;
-import com.dsm.dcs.service.user.ChangePasswordService;
+import com.dsm.dcs.service.user.FindPasswordService;
 import com.dsm.dcs.service.user.SendEmailAuthCodeService;
 import com.dsm.dcs.service.user.UpdatePasswordService;
 import com.dsm.dcs.service.user.VerificationAuthCodeService;
@@ -44,8 +43,7 @@ public class UserController {
     private final SendEmailAuthCodeService sendEmailAuthCodeService;
     private final UpdatePasswordService updatePasswordService;
     private final VerificationAuthCodeService verificationAuthCodeService;
-    private final SendPasswordAuthCodeService sendPasswordAuthCodeService;
-    private final ChangePasswordService changePasswordService;
+    private final FindPasswordService findPasswordService;
 
     @PostMapping("/token")
     public TokenDto userSignIn(@RequestBody @Valid LoginRequest request) {
@@ -80,22 +78,16 @@ public class UserController {
         sendEmailAuthCodeService.execute(request);
     }
 
-    @PostMapping("/email-verifications/password")
+    @PostMapping("/passwords")
     @ResponseStatus(HttpStatus.CREATED)
-    public void sendPasswordAuthCode(@RequestBody @Valid SendEmailRequest request) {
-        sendPasswordAuthCodeService.execute(request);
+    public void findPasswordService(@RequestBody FindPasswordRequest request) {
+        findPasswordService.execute(request);
     }
 
     @PatchMapping("/password")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updatePassword(@RequestBody @Valid UpdatePasswordRequest request) {
         updatePasswordService.execute(request);
-    }
-
-    @PatchMapping("/email-verifications/newpassword")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void changePassword(@RequestBody ChangePasswordRequest request) {
-        changePasswordService.execute(request);
     }
 
     @PutMapping("/email-verifications")
