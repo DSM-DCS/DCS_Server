@@ -38,7 +38,6 @@ public enum ErrorCode {
     PHONE_NUMBER_EXISTS(409,  "PhoneNumber Exists"),
     STUDENT_NUMBER_EXISTS(409,  "StudentNumber Exists"),
     USER_AUTH_CODE_ALREADY_VERIFIED(409,  "Auth Code already exists"),
-    EMAIL_EXISTS(409,  "Email Exists"),
 
     // 429
     AUTH_CODE_REQUEST_OVER_LIMIT(429,  "Auth Code Request Over Limit"),
