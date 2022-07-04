@@ -44,7 +44,6 @@ public class UserAuthService {
     public TokenDto signUp(UserSignUpRequest request) {
 
         userFacade.checkUserExists(request.getAccountId());
-        userFacade.checkEmailExists(request.getEmail());
         userFacade.checkStudentNumberExists(request.getStudentNumber());
         userFacade.checkPhoneNumberExists(request.getPhoneNumber());
 
