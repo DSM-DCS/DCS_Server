@@ -3,6 +3,7 @@ package com.dsm.dcs.service.user;
 import com.dsm.dcs.dto.response.UserListResponse;
 import com.dsm.dcs.dto.response.UserResponse;
 import com.dsm.dcs.entity.user.User;
+import com.dsm.dcs.facade.AdminFacade;
 import com.dsm.dcs.facade.UserFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +24,7 @@ public class UserService {
     }
 
     public UserListResponse searchUser(String name, Pageable page) {
+        adminFacade.getRoleTeacher();
         return userFacade.getUserByName(name, page);
     }
 
