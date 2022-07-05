@@ -38,6 +38,7 @@ public class PostService {
     }
 
     public PostIdResponse updatePost(Long id, PostRequest request) {
+        adminFacade.getRoleTeacher();
         Post post = postFacade.findById(id);
         return new PostIdResponse(postRepository.save(
                 post.update(request.getTitle(), request.getContent())).getId());
