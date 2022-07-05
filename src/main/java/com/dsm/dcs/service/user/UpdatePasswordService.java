@@ -19,6 +19,7 @@ public class UpdatePasswordService {
 
     @Transactional
     public void execute(UpdatePasswordRequest request) {
+        userFacade.getRole();
         String email = request.getEmail();
 
         userRepository.findByEmail(email)
