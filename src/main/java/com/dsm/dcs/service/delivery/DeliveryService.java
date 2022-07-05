@@ -52,22 +52,31 @@ public class DeliveryService {
     }
 
     public void deleteDelivery(Long deliveryId) {
+        adminFacade.getRoleTeacher();
         deliveryFacade.deleteDelivery(deliveryId);
     }
 
     public DeliveryListResponse getMyDeliveryList(Pageable page) {
+        userFacade.getRole();
         return deliveryFacade.getDeliveryList(userFacade.getCurrentUser(), page);
     }
 
     public DeliveryListResponse getDeliveryList(Pageable page) {
+        adminFacade.getRoleTeacher();
         return deliveryFacade.getDeliveryUserNotNullList(page);
     }
 
     public DeliveryNullUserListResponse getDeliveryUserNullList(Pageable page) {
+        if(!adminFacade.getRoleTeacherBoolean() && !userFacade.getRoleBoolean()) {
+            throw ForbiddenException.EXCEPTION;
+        }
         return deliveryFacade.getDeliveryUserNullList(page);
     }
 
     public DeliveryResponse getDelivery(Long deliveryId) {
+        if(!adminFacade.getRoleTeacherBoolean() && !userFacade.getRoleBoolean()) {
+            throw ForbiddenException.EXCEPTION;
+        }
         Delivery delivery = deliveryFacade.getDeliveryById(deliveryId);
         return DeliveryResponse.builder()
                 .name(delivery.getUser().getName())
