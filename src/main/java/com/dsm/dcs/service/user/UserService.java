@@ -15,8 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
     private final UserFacade userFacade;
+    private final AdminFacade adminFacade;
 
     public UserListResponse getUser(Pageable page) {
+        adminFacade.getRoleTeacher();
         return  userFacade.getUserList(page);
     }
 
