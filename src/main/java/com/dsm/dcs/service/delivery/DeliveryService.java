@@ -9,6 +9,8 @@ import com.dsm.dcs.entity.CourierCompany;
 import com.dsm.dcs.entity.delivery.Delivery;
 import com.dsm.dcs.entity.delivery.DeliveryRepository;
 import com.dsm.dcs.entity.user.User;
+import com.dsm.dcs.exception.ForbiddenException;
+import com.dsm.dcs.facade.AdminFacade;
 import com.dsm.dcs.facade.DeliveryFacade;
 import com.dsm.dcs.facade.UserFacade;
 import lombok.RequiredArgsConstructor;
@@ -24,9 +26,10 @@ public class DeliveryService {
     private final DeliveryRepository deliveryRepository;
     private final DeliveryFacade deliveryFacade;
     private final UserFacade userFacade;
+    private final AdminFacade adminFacade;
 
     public void saveDelivery(DeliveryListRequest request) {
-
+        adminFacade.getRoleCourier();
         for (DeliveryListRequest.PhoneNumberRequest phoneNumberRequest : request.getPhoneNumberRequestList()) {
             deliveryRepository.save(
                     Delivery.builder()
