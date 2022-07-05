@@ -44,14 +44,21 @@ public class PostService {
                 post.update(request.getTitle(), request.getContent())).getId());
     }
     public void deletePost(Long postId) {
+        adminFacade.getRoleTeacher();
         postRepository.delete(postFacade.findById(postId));
     }
 
     public PostListResponse getPostList(Pageable page) {
+        if(!adminFacade.getRoleTeacherBoolean() && !userFacade.getRoleBoolean()) {
+            throw ForbiddenException.EXCEPTION;
+        }
         return postFacade.getPostList(page);
     }
 
     public PostResponse getPost(Long postId) {
+        if(!adminFacade.getRoleTeacherBoolean() && !userFacade.getRoleBoolean()) {
+            throw ForbiddenException.EXCEPTION;
+        }
         Post post = postFacade.findById(postId);
         return PostResponse.builder()
                 .title(post.getTitle())
