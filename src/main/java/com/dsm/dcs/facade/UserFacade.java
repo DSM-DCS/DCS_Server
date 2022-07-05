@@ -5,6 +5,7 @@ import com.dsm.dcs.entity.user.User;
 import com.dsm.dcs.entity.user.UserAuthCode;
 import com.dsm.dcs.entity.user.UserAuthCodeRepository;
 import com.dsm.dcs.entity.user.UserRepository;
+import com.dsm.dcs.exception.ForbiddenException;
 import com.dsm.dcs.exception.InvalidAuthCodeException;
 import com.dsm.dcs.exception.InvalidJwtException;
 import com.dsm.dcs.exception.UserNotFoundException;
@@ -34,7 +35,21 @@ public class UserFacade {
         if (authentication == null) {
             throw InvalidJwtException.EXCEPTION;
         }
+
         return getUserByAccountId(authentication.getName());
+    }
+
+    public Boolean getRoleBoolean() {
+        if(getCurrentUser().getRole().name() != "ROLE_USER"){
+            return false;
+        }
+        return true;
+    }
+
+    public void getRole() {
+        if(!getRoleBoolean()){
+            throw ForbiddenException.EXCEPTION;
+        }
     }
 
     public UserListResponse getUserList(Pageable page) {
