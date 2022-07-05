@@ -62,7 +62,7 @@ public class DeliveryController {
         return deliveryService.getMyDeliveryList(page);
     }
 
-    @GetMapping("/{delivery_id}")
+    @GetMapping("/{id}")
     public DeliveryResponse getDelivery(@PathVariable("delivery_id") Long deliveryId) {
         return deliveryService.getDelivery(deliveryId);
     }
