@@ -16,6 +16,7 @@ public class VerificationPasswordService {
     private final PasswordEncoder passwordEncoder;
 
     public void execute(VerificationPasswordRequest request) {
+        userFacade.getRole();
         User user = userFacade.getCurrentUser();
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
