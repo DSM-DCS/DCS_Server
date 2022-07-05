@@ -39,11 +39,10 @@ public class DeliveryService {
                             .build()
             );
         }
-
     }
 
     public DeliveryIdListResponse.DeliveryIdResponse updateDeliveryUser(Long userId, Long deliveryId) {
-
+        adminFacade.getRoleTeacher();
         User user = userFacade.getUserById(userId);
         Delivery delivery = deliveryFacade.getDeliveryById(deliveryId);
         delivery.updateUser(user);
