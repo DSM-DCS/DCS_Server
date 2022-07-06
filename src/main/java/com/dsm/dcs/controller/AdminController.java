@@ -27,4 +27,10 @@ public class AdminController {
     public TokenDto courierSignIn (@RequestBody @Valid LoginRequest request) {
         return adminAuthService.adminSignIn(request);
     }
+
+    @GetMapping("/verification/teacher")
+    public Boolean verificationTeacher() {
+        return adminAuthService.verificationTeacher();
+    }
+
 }
