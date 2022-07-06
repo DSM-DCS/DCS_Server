@@ -38,6 +38,14 @@ public class AdminFacade {
         return true;
     }
 
+    public Boolean getRoleCourierBoolean() {
+        if(getCurrentAdmin().getRole().name() != "ROLE_COURIER"){
+            return false;
+        }
+        return true;
+    }
+
+
     public void getRoleTeacher() {
         if(!getRoleTeacherBoolean()){
             throw ForbiddenException.EXCEPTION;
@@ -45,7 +53,7 @@ public class AdminFacade {
     }
 
     public Boolean getRoleCourier() {
-        if(getCurrentAdmin().getRole().name() != "ROLE_COURIER"){
+        if(!getRoleCourierBoolean()){
             throw ForbiddenException.EXCEPTION;
         }
         return true;
