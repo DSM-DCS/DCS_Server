@@ -32,4 +32,13 @@ public class AdminAuthService {
                 .refreshToken(jwtTokenProvider.generateRefreshToken(admin.getAdminId(), admin.getRole()))
                 .build();
     }
+
+    public Boolean verificationTeacher() {
+        return adminFacade.getRoleTeacherBoolean();
+    }
+
+    public Boolean verificationCourier() {
+        return adminFacade.getRoleCourierBoolean();
+    }
+
 }
