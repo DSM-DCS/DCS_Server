@@ -6,6 +6,7 @@ import com.dsm.dcs.service.admin.AdminAuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -31,6 +32,11 @@ public class AdminController {
     @GetMapping("/verification/teacher")
     public Boolean verificationTeacher() {
         return adminAuthService.verificationTeacher();
+    }
+
+    @GetMapping("/verification/courier")
+    public Boolean verificationCourier() {
+        return adminAuthService.verificationCourier();
     }
 
 }
