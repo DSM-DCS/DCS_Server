@@ -32,7 +32,7 @@ public class SesUtil {
 
     public void SendEmailForPassword(String email, String result) {
         Message message = new Message()
-                .withSubject(createContent("회원님의 비밀번호 "))
+                .withSubject(createContent("[DCS] 재설정된 비밀번호입니다. "))
                 .withBody(new Body()
                         .withHtml(createContent(result)));
 
