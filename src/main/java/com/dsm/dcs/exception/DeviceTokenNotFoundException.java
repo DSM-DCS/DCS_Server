@@ -1,6 +1,8 @@
 package com.dsm.dcs.exception;
 
-import com.dsm.dcs.exception.handler.DcsException;
+
+import com.dsm.dcs.error.exception.DcsException;
+import com.dsm.dcs.error.exception.ErrorCode;
 
 public class DeviceTokenNotFoundException extends DcsException {
 
@@ -8,6 +10,6 @@ public class DeviceTokenNotFoundException extends DcsException {
             new DeviceTokenNotFoundException();
 
     private DeviceTokenNotFoundException() {
-        super(404, "DeviceToken Not Found");
+        super(ErrorCode.DEVICE_TOKEN_NOT_FOUND);
     }
 }
