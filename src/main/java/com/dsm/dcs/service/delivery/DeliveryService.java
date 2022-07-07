@@ -10,7 +10,6 @@ import com.dsm.dcs.entity.delivery.Delivery;
 import com.dsm.dcs.entity.delivery.DeliveryRepository;
 import com.dsm.dcs.entity.user.User;
 import com.dsm.dcs.exception.FireBaseException;
-import com.dsm.dcs.exception.handler.DcsException;
 import com.dsm.dcs.exception.ForbiddenException;
 import com.dsm.dcs.facade.AdminFacade;
 import com.dsm.dcs.facade.DeliveryFacade;
@@ -23,8 +22,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 @Transactional
 @RequiredArgsConstructor
@@ -41,11 +38,12 @@ public class DeliveryService {
     public void saveDelivery(DeliveryListRequest request) {
         adminFacade.getRoleCourier();
         for (DeliveryListRequest.PhoneNumberRequest phoneNumberRequest : request.getPhoneNumberRequestList()) {
+            User user = userFacade.getUserByPhoneNumber(phoneNumberRequest.getPhoneNumber());
             deliveryRepository.save(
                     Delivery.builder()
                             .courierCompany(CourierCompany.valueOf(request.getCouriercompany()))
                             .phoneNumber(phoneNumberRequest.getPhoneNumber())
-                            .user(userFacade.getUserByPhoneNumber(phoneNumberRequest.getPhoneNumber()))
+                            .user(user)
                             .build()
             );
             try {
@@ -54,8 +52,6 @@ public class DeliveryService {
                 throw FireBaseException.EXCEPTION;
             }
         }
-
-        return new DeliveryIdListResponse(deliveryIdResponses);
 
     }
 
