@@ -32,3 +32,6 @@ aws:
     region: ${AWS_SES_REGION}
     email: ${SENDER_EMAIL}
 
+app :
+  firebase-url : ${FIREBASE_URL}
+  firebase-file : ${FIREBASE_FILE}

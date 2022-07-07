@@ -4,6 +4,8 @@ import com.dsm.dcs.dto.TokenDto;
 import com.dsm.dcs.dto.request.LoginRequest;
 import com.dsm.dcs.dto.request.UserSignUpRequest;
 import com.dsm.dcs.entity.Role;
+import com.dsm.dcs.entity.deviceToken.DeviceToken;
+import com.dsm.dcs.entity.deviceToken.DeviceTokenRepository;
 import com.dsm.dcs.entity.auth.RefreshToken;
 import com.dsm.dcs.entity.auth.RefreshTokenRepository;
 import com.dsm.dcs.entity.user.User;
@@ -22,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserAuthService {
 
+    private final DeviceTokenRepository deviceTokenRepository;
     private final UserRepository userRepository;
     private final RefreshTokenRepository refreshTokenRepository;
     private final UserFacade userFacade;
@@ -34,6 +37,10 @@ public class UserAuthService {
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw PasswordMismatchException.EXCEPTION;
         }
+
+        deviceTokenRepository.save(DeviceToken.builder()
+                .accountId(user.getAccountId())
+                .deviceToken(request.getDeviceToken()).build());
 
         return TokenDto.builder()
                 .accessToken(jwtTokenProvider.generateAccessToken(user.getAccountId(), Role.ROLE_USER))
@@ -56,6 +63,10 @@ public class UserAuthService {
                 .studentNumber(request.getStudentNumber())
                 .phoneNumber(request.getPhoneNumber())
                 .build());
+
+        deviceTokenRepository.save(DeviceToken.builder()
+                .accountId(user.getAccountId())
+                .deviceToken(request.getDeviceToken()).build());
 
         return TokenDto.builder()
                 .accessToken(jwtTokenProvider.generateAccessToken(user.getAccountId(), user.getRole()))

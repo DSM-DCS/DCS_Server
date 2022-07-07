@@ -9,14 +9,22 @@ import com.dsm.dcs.entity.CourierCompany;
 import com.dsm.dcs.entity.delivery.Delivery;
 import com.dsm.dcs.entity.delivery.DeliveryRepository;
 import com.dsm.dcs.entity.user.User;
+import com.dsm.dcs.exception.FireBaseException;
+import com.dsm.dcs.exception.handler.DcsException;
 import com.dsm.dcs.exception.ForbiddenException;
 import com.dsm.dcs.facade.AdminFacade;
 import com.dsm.dcs.facade.DeliveryFacade;
+import com.dsm.dcs.facade.DeviceTokenFacade;
 import com.dsm.dcs.facade.UserFacade;
+import com.dsm.dcs.firebase.FireBaseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Transactional
 @RequiredArgsConstructor
@@ -24,7 +32,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class DeliveryService {
 
     private final DeliveryRepository deliveryRepository;
+    private final FireBaseService fireBaseService;
     private final DeliveryFacade deliveryFacade;
+    private final DeviceTokenFacade deviceTokenFacade;
     private final UserFacade userFacade;
     private final AdminFacade adminFacade;
 
@@ -38,7 +48,15 @@ public class DeliveryService {
                             .user(userFacade.getUserByPhoneNumber(phoneNumberRequest.getPhoneNumber()))
                             .build()
             );
+            try {
+                fireBaseService.sendMessageTo(deviceTokenFacade.findByDeviceToken(user.getAccountId()).getDeviceToken(), "DCS", "택배가 기숙사로 배송이 완료되었습니다.");
+            } catch (IOException e) {
+                throw FireBaseException.EXCEPTION;
+            }
         }
+
+        return new DeliveryIdListResponse(deliveryIdResponses);
+
     }
 
     public DeliveryIdListResponse.DeliveryIdResponse updateDeliveryUser(Long userId, Long deliveryId) {

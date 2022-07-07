@@ -17,4 +17,7 @@ public class LoginRequest {
 
     @NotBlank(message = "password는 Null, 공백, 띄어쓰기를 허용하지 않습니다.")
     private String password;
+
+    @NotBlank
+    private String deviceToken;
 }
