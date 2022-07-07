@@ -38,4 +38,7 @@ public class UserSignUpRequest {
 
     private Integer studentNumber;
 
+    @NotBlank
+    private String deviceToken;
+
 }
