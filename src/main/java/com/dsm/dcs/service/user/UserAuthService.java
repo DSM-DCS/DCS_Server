@@ -61,6 +61,10 @@ public class UserAuthService {
                 .phoneNumber(request.getPhoneNumber())
                 .build());
 
+        deviceTokenRepository.save(DeviceToken.builder()
+                .accountId(user.getAccountId())
+                .deviceToken(request.getDeviceToken()).build());
+
         return TokenDto.builder()
                 .accessToken(jwtTokenProvider.generateAccessToken(user.getAccountId(), user.getRole()))
                 .refreshToken(jwtTokenProvider.generateRefreshToken(user.getAccountId(), user.getRole()))
