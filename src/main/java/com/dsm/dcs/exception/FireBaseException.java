@@ -1,6 +1,7 @@
 package com.dsm.dcs.exception;
 
-import com.dsm.dcs.exception.handler.DcsException;
+import com.dsm.dcs.error.exception.DcsException;
+import com.dsm.dcs.error.exception.ErrorCode;
 
 public class FireBaseException extends DcsException {
 
@@ -8,6 +9,6 @@ public class FireBaseException extends DcsException {
             new FireBaseException();
 
     private FireBaseException() {
-        super(409, "알림을 성공적으로 전송하지 못함");
+        super(ErrorCode.FIREBASE_EXCEPTION);
     }
 }
