@@ -1,6 +1,6 @@
 package com.dsm.dcs.dto.request;
 
-import lombok.AllArgsConstructor;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -9,7 +9,7 @@ import javax.validation.constraints.Pattern;
 import java.util.List;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class DeliveryListRequest {
 
     @NotBlank
@@ -18,8 +18,7 @@ public class DeliveryListRequest {
     private List<PhoneNumberRequest> phoneNumberRequestList;
 
     @Getter
-    @NoArgsConstructor
-    @AllArgsConstructor
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class PhoneNumberRequest {
 
         @NotBlank

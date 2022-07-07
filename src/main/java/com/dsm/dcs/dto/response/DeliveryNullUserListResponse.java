@@ -11,16 +11,24 @@ import java.util.List;
 @AllArgsConstructor
 public class DeliveryNullUserListResponse {
 
-    List<DeliveryNullUserResponse> deliveryNullUserResponses;
+    private List<DeliveryNullUserResponse> deliveryNullUserResponses;
 
     @Getter
-    @Builder
     public static class DeliveryNullUserResponse {
 
         private final Long id;
         private final String courierCompany;
         private final String phoneNumber;
         private final LocalDate createdDate;
+
+        @Builder
+        public DeliveryNullUserResponse(Long id, String courierCompany, String phoneNumber, LocalDate createdDate) {
+            this.id = id;
+            this.courierCompany = courierCompany;
+            this.phoneNumber = phoneNumber;
+            this.createdDate = createdDate;
+        }
+
 
     }
 

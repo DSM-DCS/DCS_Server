@@ -1,7 +1,8 @@
 package com.dsm.dcs.security;
 
-import com.dsm.dcs.exception.handler.AuthenticationEntryPointImpl;
+import com.dsm.dcs.error.CustomAuthenticationEntryPoint;
 import com.dsm.dcs.security.jwt.JwtTokenProvider;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,14 +13,15 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.cors.CorsUtils;
 
 @RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final AuthenticationEntryPointImpl authenticationEntryPoint;
     private final JwtTokenProvider jwtTokenProvider;
+    private final ObjectMapper objectMapper;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -39,17 +41,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/delivery").hasAnyRole("ROLE_TEACHER")
-                .antMatchers(HttpMethod.GET, "/delivery/**").hasAnyRole("ROLE_TEACHER")
-                .antMatchers(HttpMethod.DELETE, "/delivery/**").hasAnyRole("ROLE_TEACHER")
-                .antMatchers(HttpMethod.PATCH, "/delivery/**/**").hasAnyRole("ROLE_TEACHER")
-                .antMatchers(HttpMethod.GET, "/users/search").hasAnyRole("ROLE_TEACHER")
-                .antMatchers(HttpMethod.GET, "/delivery/user").hasAnyRole("ROLE_USER")
-                .antMatchers(HttpMethod.POST, "/delivery").hasAnyRole("ROLE_COURIER")
-                .antMatchers(HttpMethod.GET, "/delivery/null/user").hasAnyRole("ROLE_USER", "ROLE_TEACHER")
-                .anyRequest().permitAll()
+                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+                .antMatchers(HttpMethod.POST, "/users").permitAll()
+                .antMatchers(HttpMethod.POST, "/users/token").permitAll()
+                .antMatchers(HttpMethod.PATCH, "/users/token").permitAll()
+                .antMatchers(HttpMethod.POST, "/users/email-verifications").permitAll()
+                .antMatchers(HttpMethod.POST, "/users/passwords").permitAll()
+                .antMatchers(HttpMethod.PUT, "/users/email-verifications").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/users/logout").permitAll()
+                .antMatchers(HttpMethod.HEAD, "/users/account-id").permitAll()
+                .antMatchers(HttpMethod.HEAD, "/users/student-number").permitAll()
+                .antMatchers(HttpMethod.HEAD, "/users/phone-number").permitAll()
+                .antMatchers(HttpMethod.POST, "/admin").permitAll()
+                .antMatchers(HttpMethod.GET, "/admin/verification/teacher").permitAll()
+                .antMatchers(HttpMethod.GET, "/admin/verification/courier").permitAll()
+                .anyRequest().authenticated()
 
-                .and().httpBasic().authenticationEntryPoint(authenticationEntryPoint)
-                .and().apply(new FilterConfig(jwtTokenProvider));
+                .and()
+                .exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint(objectMapper))
+
+                .and()
+                .apply(new FilterConfig(jwtTokenProvider, objectMapper));
     }
 }

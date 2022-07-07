@@ -6,9 +6,12 @@ import com.dsm.dcs.dto.request.UserSignUpRequest;
 import com.dsm.dcs.entity.Role;
 import com.dsm.dcs.entity.deviceToken.DeviceToken;
 import com.dsm.dcs.entity.deviceToken.DeviceTokenRepository;
+import com.dsm.dcs.entity.auth.RefreshToken;
+import com.dsm.dcs.entity.auth.RefreshTokenRepository;
 import com.dsm.dcs.entity.user.User;
 import com.dsm.dcs.entity.user.UserRepository;
 import com.dsm.dcs.exception.PasswordMismatchException;
+import com.dsm.dcs.exception.RefreshTokenNotFoundException;
 import com.dsm.dcs.facade.UserFacade;
 import com.dsm.dcs.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +26,7 @@ public class UserAuthService {
 
     private final DeviceTokenRepository deviceTokenRepository;
     private final UserRepository userRepository;
+    private final RefreshTokenRepository refreshTokenRepository;
     private final UserFacade userFacade;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
@@ -33,7 +37,7 @@ public class UserAuthService {
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw PasswordMismatchException.EXCEPTION;
         }
-        
+
         deviceTokenRepository.save(DeviceToken.builder()
                 .accountId(user.getAccountId())
                 .deviceToken(request.getDeviceToken()).build());
@@ -47,7 +51,6 @@ public class UserAuthService {
     public TokenDto signUp(UserSignUpRequest request) {
 
         userFacade.checkUserExists(request.getAccountId());
-        userFacade.checkEmailExists(request.getEmail());
         userFacade.checkStudentNumberExists(request.getStudentNumber());
         userFacade.checkPhoneNumberExists(request.getPhoneNumber());
 
@@ -69,6 +72,13 @@ public class UserAuthService {
                 .accessToken(jwtTokenProvider.generateAccessToken(user.getAccountId(), user.getRole()))
                 .refreshToken(jwtTokenProvider.generateRefreshToken(user.getAccountId(), user.getRole()))
                 .build();
+    }
+
+    public void logout() {
+        User user = userFacade.getCurrentUser();
+        RefreshToken refreshToken = refreshTokenRepository.findById(user.getAccountId())
+                .orElseThrow(() -> RefreshTokenNotFoundException.EXCEPTION);
+        refreshTokenRepository.delete(refreshToken);
     }
 
 }

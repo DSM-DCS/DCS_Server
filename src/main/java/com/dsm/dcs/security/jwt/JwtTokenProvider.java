@@ -19,7 +19,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.ZonedDateTime;
 import java.util.Date;
 
 @RequiredArgsConstructor
@@ -80,14 +79,13 @@ public class JwtTokenProvider {
             return bearerToken.replace((PREFIX), "");
         return null;
     }
-    public boolean validateToken(String token) {
 
+    public boolean validateToken(String token) {
         try {
             return getTokenBody(token).getExpiration().after(new Date());
-        } catch (Exception e) {
-            throw InvalidJwtException.EXCEPTION;
+        } catch (InvalidJwtException e) {
+            return false;
         }
-
     }
 
     public boolean isRefreshToken(String token) {

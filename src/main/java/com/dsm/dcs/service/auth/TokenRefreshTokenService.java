@@ -4,8 +4,8 @@ import com.dsm.dcs.dto.TokenDto;
 import com.dsm.dcs.entity.auth.RefreshToken;
 import com.dsm.dcs.entity.auth.RefreshTokenRepository;
 import com.dsm.dcs.exception.EffectiveJwtException;
-import com.dsm.dcs.exception.NotFindRefreshTokenException;
 import com.dsm.dcs.exception.NotRefreshTokenException;
+import com.dsm.dcs.exception.RefreshTokenNotFoundException;
 import com.dsm.dcs.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,13 +14,13 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.validation.Valid;
 
 @RequiredArgsConstructor
+@Transactional
 @Service
 public class TokenRefreshTokenService {
 
     private final RefreshTokenRepository refreshTokenRepository;
     private final JwtTokenProvider jwtTokenProvider;
 
-    @Transactional
     public TokenDto execute(@Valid TokenDto jwtToken) {
 
         if(jwtTokenProvider.validateToken(jwtToken.getAccessToken())) {
@@ -31,8 +31,8 @@ public class TokenRefreshTokenService {
             throw NotRefreshTokenException.EXCEPTION;
         }
 
-        RefreshToken refreshToken = refreshTokenRepository.findById(jwtToken.getRefreshToken())
-                .orElseThrow(() -> NotFindRefreshTokenException.EXCEPTION);
+        RefreshToken refreshToken = refreshTokenRepository.findByRefreshToken(jwtToken.getRefreshToken())
+                .orElseThrow(() -> RefreshTokenNotFoundException.EXCEPTION);
 
         TokenDto token = TokenDto.builder()
                 .refreshToken(refreshToken.getRefreshToken())
@@ -45,4 +45,5 @@ public class TokenRefreshTokenService {
         return token;
 
     }
+
 }

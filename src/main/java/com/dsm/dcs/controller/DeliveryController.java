@@ -4,8 +4,8 @@ import com.dsm.dcs.dto.request.DeliveryListRequest;
 import com.dsm.dcs.dto.response.DeliveryIdListResponse;
 import com.dsm.dcs.dto.response.DeliveryListResponse;
 import com.dsm.dcs.dto.response.DeliveryNullUserListResponse;
+import com.dsm.dcs.dto.response.DeliveryResponse;
 import com.dsm.dcs.service.delivery.DeliveryService;
-import com.dsm.dcs.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -30,20 +30,20 @@ public class DeliveryController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public DeliveryIdListResponse saveDelivery(@Valid @RequestBody DeliveryListRequest request) {
-        return deliveryService.saveDelivery(request);
+    public void saveDelivery(@Valid @RequestBody DeliveryListRequest request) {
+        deliveryService.saveDelivery(request);
     }
 
-    @PatchMapping("/{delivery_id}/{user_id}")
+    @PatchMapping("/{deliveryId}/{userId}")
     @ResponseStatus(HttpStatus.OK)
-    public DeliveryIdListResponse.DeliveryIdResponse updateDeliveryUser(@PathVariable("delivery_id") Long deliveryId,
-                                                                        @PathVariable("user_id") Long userId) {
+    public DeliveryIdListResponse.DeliveryIdResponse updateDeliveryUser(@PathVariable("deliveryId") Long deliveryId,
+                                                                        @PathVariable("userId") Long userId) {
         return deliveryService.updateDeliveryUser(deliveryId, userId);
     }
 
-    @DeleteMapping("/{delivery_id}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteDelivery(@PathVariable("delivery_id") Long deliveryId) {
+    public void deleteDelivery(@PathVariable("id") Long deliveryId) {
         deliveryService.deleteDelivery(deliveryId);
     }
 
@@ -62,8 +62,8 @@ public class DeliveryController {
         return deliveryService.getMyDeliveryList(page);
     }
 
-    @GetMapping("/{delivery_id}")
-    public DeliveryListResponse.DeliveryResponse getDelivery(@PathVariable("delivery_id") Long deliveryId) {
+    @GetMapping("/{id}")
+    public DeliveryResponse getDelivery(@PathVariable("delivery_id") Long deliveryId) {
         return deliveryService.getDelivery(deliveryId);
     }
 

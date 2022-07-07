@@ -1,6 +1,7 @@
 package com.dsm.dcs.exception;
 
-import com.dsm.dcs.exception.handler.DcsException;
+import com.dsm.dcs.error.exception.DcsException;
+import com.dsm.dcs.error.exception.ErrorCode;
 
 public class NotRefreshTokenException extends DcsException {
 
@@ -8,7 +9,7 @@ public class NotRefreshTokenException extends DcsException {
             new  NotRefreshTokenException();
 
     private  NotRefreshTokenException() {
-        super(401, "Not a refresh token");
+        super(ErrorCode.NOT_REFRESH_TOKEN);
     }
 
 }

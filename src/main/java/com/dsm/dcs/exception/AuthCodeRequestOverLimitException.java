@@ -1,6 +1,7 @@
 package com.dsm.dcs.exception;
 
-import com.dsm.dcs.exception.handler.DcsException;
+import com.dsm.dcs.error.exception.DcsException;
+import com.dsm.dcs.error.exception.ErrorCode;
 
 public class AuthCodeRequestOverLimitException extends DcsException {
 
@@ -8,6 +9,6 @@ public class AuthCodeRequestOverLimitException extends DcsException {
             new AuthCodeRequestOverLimitException();
 
     private AuthCodeRequestOverLimitException() {
-        super(429, "Auth Code Request Over Limit");
+        super(ErrorCode.AUTH_CODE_REQUEST_OVER_LIMIT);
     }
 }

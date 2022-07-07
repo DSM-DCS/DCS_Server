@@ -7,7 +7,7 @@ spring:
 
   redis:
     port: 6379
-    host: ec2-3-39-54-235.ap-northeast-2.compute.amazonaws.com
+    host: ${REDIS_HOST:ec2-3-39-54-235.ap-northeast-2.compute.amazonaws.com}
 
   jpa:
     database: mysql
@@ -22,8 +22,8 @@ spring:
 
 jwt:
   secret-key: ${JWT_SECRET:qwer1234}
-  access-exp: ${JWT_ACCESS_EXP:123456}
-  refresh-exp: ${JWT_REFRESH_EXP:34567890}
+  access-exp: ${JWT_ACCESS_EXP:1800}
+  refresh-exp: ${JWT_REFRESH_EXP:43200}
 
 aws:
   ses:

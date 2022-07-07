@@ -1,21 +1,25 @@
 package com.dsm.dcs.controller;
 
+import com.dsm.dcs.dto.TokenDto;
+import com.dsm.dcs.dto.request.FindPasswordRequest;
+import com.dsm.dcs.dto.request.UserSignUpRequest;
 import com.dsm.dcs.dto.request.LoginRequest;
 import com.dsm.dcs.dto.request.SendEmailRequest;
-import com.dsm.dcs.dto.request.UpdatePasswordRequest;
-import com.dsm.dcs.dto.request.UserSignUpRequest;
 import com.dsm.dcs.dto.request.VerificationAuthCodeRequest;
+import com.dsm.dcs.dto.request.UpdatePasswordRequest;
 import com.dsm.dcs.dto.response.UserListResponse;
-import com.dsm.dcs.dto.TokenDto;
-import com.dsm.dcs.service.user.UpdatePasswordService;
+import com.dsm.dcs.dto.response.UserResponse;
 import com.dsm.dcs.service.user.UserAuthService;
 import com.dsm.dcs.service.user.UserService;
+import com.dsm.dcs.service.user.FindPasswordService;
 import com.dsm.dcs.service.user.SendEmailAuthCodeService;
+import com.dsm.dcs.service.user.UpdatePasswordService;
 import com.dsm.dcs.service.user.VerificationAuthCodeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -39,6 +43,7 @@ public class UserController {
     private final SendEmailAuthCodeService sendEmailAuthCodeService;
     private final UpdatePasswordService updatePasswordService;
     private final VerificationAuthCodeService verificationAuthCodeService;
+    private final FindPasswordService findPasswordService;
 
     @PostMapping("/token")
     public TokenDto userSignIn(@RequestBody @Valid LoginRequest request) {
@@ -51,13 +56,19 @@ public class UserController {
         return userAuthService.signUp(request);
     }
 
+    @DeleteMapping("/logout")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void logout() {
+        userAuthService.logout();
+    }
+
     @GetMapping("/search")
     public UserListResponse searchUser(@RequestParam(value = "name") String name, Pageable page) {
         return userService.searchUser(name, page);
     }
 
     @GetMapping
-    public UserListResponse getUser(Pageable page) {
+    public UserListResponse getUserList(Pageable page) {
         return userService.getUser(page);
     }
 
@@ -65,6 +76,12 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     public void sendEmailAuthCode(@RequestBody @Valid SendEmailRequest request) {
         sendEmailAuthCodeService.execute(request);
+    }
+
+    @PostMapping("/passwords")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void findPasswordService(@RequestBody FindPasswordRequest request) {
+        findPasswordService.execute(request);
     }
 
     @PatchMapping("/password")
@@ -76,6 +93,11 @@ public class UserController {
     @PutMapping("/email-verifications")
     public void verifyEmail(@RequestBody @Valid VerificationAuthCodeRequest request) {
         verificationAuthCodeService.execute(request);
+    }
+
+    @GetMapping("/mypage")
+    public UserResponse getMyPage() {
+        return userService.getUser();
     }
 
 }

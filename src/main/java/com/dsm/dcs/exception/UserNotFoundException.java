@@ -1,6 +1,7 @@
 package com.dsm.dcs.exception;
 
-import com.dsm.dcs.exception.handler.DcsException;
+import com.dsm.dcs.error.exception.DcsException;
+import com.dsm.dcs.error.exception.ErrorCode;
 
 public class UserNotFoundException extends DcsException {
 
@@ -8,6 +9,6 @@ public class UserNotFoundException extends DcsException {
             new UserNotFoundException();
 
     private UserNotFoundException() {
-        super(404, "User Not Found");
+        super(ErrorCode.USER_NOT_FOUND);
     }
 }
