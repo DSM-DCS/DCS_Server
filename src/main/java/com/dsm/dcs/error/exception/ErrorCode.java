@@ -17,16 +17,12 @@ public enum ErrorCode {
     INVALID_JWT(401,  "Invalid Jwt"),
     EFFECTIVE_JWT(401, "Effective Access Token"),
     NOT_REFRESH_TOKEN(401,  "Not Refresh Token"),
-    UNAUTHORIZED_USER_AUTH_CODE(401,  "Unauthorized User AuthCode"),
-    INVALID_AUTH_CODE(401,  "Invalid Auth Code"),
-    UNVERIFIED_AUTH_CODE(401,  "Unverified Auth Code"),
 
     // 403
     FORBIDDEN(403,  "Forbidden"),
 
     // 404
     USER_NOT_FOUND(404,  "User Not Found"),
-    USER_AUTH_CODE_NOT_FOUND(404, "User Auth Code Not Found"),
     ADMIN_NOT_FOUND(404,  "Admin Not Found"),
     REFRESH_TOKEN_NOT_FOUND(404,  "Refresh Token Not Found"),
     DELIVERY_NOT_FOUND(404,  "Delivery Not Found"),
@@ -37,7 +33,6 @@ public enum ErrorCode {
     USER_EXISTS(409,  "User Exists"),
     ACCOUNT_ID_EXISTS(409,  "AccountId Exists"),
     PHONE_NUMBER_EXISTS(409,  "PhoneNumber Exists"),
-    STUDENT_NUMBER_EXISTS(409,  "StudentNumber Exists"),
     USER_AUTH_CODE_ALREADY_VERIFIED(409,  "Auth Code already exists"),
     FIREBASE_EXCEPTION(409,  "알림을 성공적으로 전송하지 못함"),
 
