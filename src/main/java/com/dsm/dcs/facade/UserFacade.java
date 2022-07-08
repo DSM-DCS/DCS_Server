@@ -53,7 +53,7 @@ public class UserFacade {
     }
 
     public UserListResponse getUserList(Pageable page) {
-        return new UserListResponse(userRepository.findAllByOrderByStudentNumberDesc(page).stream()
+        return new UserListResponse(userRepository.findAllByOrderByIdDesc(page).stream()
                 .map(this::getUser).collect(Collectors.toList()));
     }
 
@@ -80,12 +80,6 @@ public class UserFacade {
     public void checkUserExists(String accountId) {
         if (userRepository.findByAccountId(accountId).isPresent()) {
             throw AccountIdExistsException.EXCEPTION;
-        }
-    }
-
-    public void checkStudentNumberExists(Integer studentNumber) {
-        if (userRepository.findByStudentNumber(studentNumber).isPresent()) {
-            throw StudentNumberExistsException.EXCEPTION;
         }
     }
 
@@ -125,10 +119,7 @@ public class UserFacade {
     }
 
     private UserListResponse.UserResponse getUser(User user) {
-        return UserListResponse.UserResponse.builder()
-                .name(user.getName())
-                .studentNumber(user.getStudentNumber())
-                .build();
+        return new UserListResponse.UserResponse(user.getName());
     }
 
 }
