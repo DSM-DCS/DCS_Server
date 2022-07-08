@@ -16,7 +16,7 @@ public class DeviceTokenFacade {
 
     public DeviceToken findByDeviceToken(String accountId) {
         return deviceTokenRepository.findById(accountId)
-                .orElseThrow(() -> DeviceTokenNotFoundException.EXCEPTION);
+                .orElseThrow(null);
     }
 
 }
