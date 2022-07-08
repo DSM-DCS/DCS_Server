@@ -8,6 +8,7 @@ import com.dsm.dcs.dto.response.DeliveryResponse;
 import com.dsm.dcs.entity.CourierCompany;
 import com.dsm.dcs.entity.delivery.Delivery;
 import com.dsm.dcs.entity.delivery.DeliveryRepository;
+import com.dsm.dcs.entity.deviceToken.DeviceToken;
 import com.dsm.dcs.entity.user.User;
 import com.dsm.dcs.exception.FireBaseException;
 import com.dsm.dcs.exception.ForbiddenException;
@@ -47,7 +48,10 @@ public class DeliveryService {
                             .build()
             );
             try {
-                fireBaseService.sendMessageTo(deviceTokenFacade.findByDeviceToken(user.getAccountId()).getDeviceToken(), "DCS", "택배가 기숙사로 배송이 완료되었습니다.");
+                DeviceToken deviceToken = deviceTokenFacade.findByDeviceToken(user.getAccountId());
+                if(deviceToken.getDeviceToken() != null) {
+                    fireBaseService.sendMessageTo(deviceToken.getDeviceToken(), "DCS", "택배가 기숙사로 배송이 완료되었습니다.");
+                }
             } catch (IOException e) {
                 throw FireBaseException.EXCEPTION;
             }
