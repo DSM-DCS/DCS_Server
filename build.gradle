@@ -43,9 +43,7 @@ dependencies {
 	implementation 'com.querydsl:querydsl-jpa'
 	annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jpa"
 	annotationProcessor 'jakarta.persistence:jakarta.persistence-api'
-
-	implementation 'com.amazonaws:aws-java-sdk-ses:1.12.237'
-
+	
 	implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
 	implementation 'org.apache.poi:poi:5.2.2'
 	implementation 'org.apache.poi:poi-ooxml:5.2.2'
