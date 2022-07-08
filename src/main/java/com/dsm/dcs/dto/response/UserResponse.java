@@ -8,16 +8,12 @@ public class UserResponse {
 
     private final String name;
     private final String accountId;
-    private final String email;
-    private final Integer studentNumber;
     private final String phoneNumber;
 
     @Builder
-    public UserResponse(String name, String accountId, String email, Integer studentNumber, String phoneNumber) {
+    public UserResponse(String name, String accountId, String phoneNumber) {
         this.name = name;
         this.accountId = accountId;
-        this.email = email;
-        this.studentNumber = studentNumber;
         this.phoneNumber = phoneNumber;
     }
 

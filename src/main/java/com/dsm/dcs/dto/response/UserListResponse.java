@@ -13,15 +13,12 @@ public class UserListResponse {
     private List<UserResponse> userResponses;
 
     @Getter
-    @Builder
     public static class UserResponse {
 
         private final String name;
-        private final Integer studentNumber;
 
-        public UserResponse(String name, Integer studentNumber) {
+        public UserResponse(String name) {
             this.name = name;
-            this.studentNumber = studentNumber;
         }
 
     }
