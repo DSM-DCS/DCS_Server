@@ -17,7 +17,6 @@ public class DeviceToken {
     @Id
     private String accountId;
 
-    @Column(nullable = false)
     private String deviceToken;
 
     @Builder
