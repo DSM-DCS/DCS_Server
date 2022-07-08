@@ -14,10 +14,6 @@ public class CheckExistsService {
         userFacade.checkPhoneNumberExists(phoneNumber);
     }
 
-    public void checkStudentNumberExists(Integer studentNumber) {
-        userFacade.checkStudentNumberExists(studentNumber);
-    }
-
     public void checkAccountIdExists(String accountId) {
         userFacade.checkUserExists(accountId);
     }
