@@ -30,7 +30,6 @@ public class UserSignUpRequest {
     @Pattern(regexp = "^010-+\\d{4}-+\\d{4}$")
     private String phoneNumber;
 
-    @NotBlank
     private String deviceToken;
 
 }
