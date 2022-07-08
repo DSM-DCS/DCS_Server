@@ -2,17 +2,11 @@ package com.dsm.dcs.facade;
 
 import com.dsm.dcs.dto.response.UserListResponse;
 import com.dsm.dcs.entity.user.User;
-import com.dsm.dcs.entity.user.UserAuthCode;
-import com.dsm.dcs.entity.user.UserAuthCodeRepository;
 import com.dsm.dcs.entity.user.UserRepository;
 import com.dsm.dcs.exception.ForbiddenException;
-import com.dsm.dcs.exception.InvalidAuthCodeException;
 import com.dsm.dcs.exception.InvalidJwtException;
 import com.dsm.dcs.exception.UserNotFoundException;
-import com.dsm.dcs.exception.AuthCodeAlreadyVerifiedException;
-import com.dsm.dcs.exception.UnVerifiedAuthCodeException;
 import com.dsm.dcs.exception.AccountIdExistsException;
-import com.dsm.dcs.exception.StudentNumberExistsException;
 import com.dsm.dcs.exception.PhoneNumberExistsException;
 
 import lombok.RequiredArgsConstructor;
@@ -28,7 +22,6 @@ import java.util.stream.Collectors;
 public class UserFacade {
 
     private final UserRepository userRepository;
-    private final UserAuthCodeRepository userAuthCodeRepository;
 
     public User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -87,35 +80,6 @@ public class UserFacade {
         if (userRepository.findByPhoneNumber(phoneNumber).isPresent()) {
             throw PhoneNumberExistsException.EXCEPTION;
         }
-    }
-
-    public boolean checkVerified(boolean isVerified) {
-        if (!isVerified) {
-            throw UnVerifiedAuthCodeException.EXCEPTION;
-        }
-
-        return true;
-    }
-
-    public boolean isVerified(String email) {
-        return getAuthCodeById(email).isVerify();
-    }
-
-    public UserAuthCode getAuthCodeById(String email) {
-        return userAuthCodeRepository.findById(email)
-                .orElseThrow(() -> InvalidAuthCodeException.EXCEPTION);
-    }
-
-    public boolean isAlreadyVerified(boolean isVerified) {
-        if (isVerified) {
-            throw AuthCodeAlreadyVerifiedException.EXCEPTION;
-        }
-
-        return true;
-    }
-
-    public boolean compareCode(String reqCode, String code) {
-        return reqCode.equals(code);
     }
 
     private UserListResponse.UserResponse getUser(User user) {
