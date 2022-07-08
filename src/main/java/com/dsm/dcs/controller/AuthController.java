@@ -38,11 +38,6 @@ public class AuthController {
         checkExistsService.checkAccountIdExists(accountId);
     }
 
-    @RequestMapping(value = "/student-number", method = RequestMethod.HEAD)
-    public void CheckStudentNumberExists(@RequestParam(name = "studentNumber") Integer studentNumber) {
-        checkExistsService.checkStudentNumberExists(studentNumber);
-    }
-
     @RequestMapping(value = "/phone-number", method = RequestMethod.HEAD)
     public void CheckPhoneNumberExists(@NotBlank @RequestParam(name = "phoneNumber") String phoneNumber) {
         checkExistsService.checkPhoneNumberExists(phoneNumber);
