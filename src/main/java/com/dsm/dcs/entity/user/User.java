@@ -1,5 +1,6 @@
 package com.dsm.dcs.entity.user;
 
+import com.dsm.dcs.entity.BaseIdEntity;
 import com.dsm.dcs.entity.BaseTimeEntity;
 import com.dsm.dcs.entity.Role;
 import com.dsm.dcs.entity.delivery.Delivery;
@@ -18,7 +19,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class User extends BaseTimeEntity {
+public class User extends BaseIdEntity {
 
     @Column(nullable = false, unique = true, length = 20)
     private String accountId;
@@ -29,14 +30,8 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false, length = 10)
     private String name;
 
-    @Column(nullable = false, length = 35)
-    private String email;
-
     @Column(nullable = false, unique = true, length = 13)
     private String phoneNumber;
-
-    @Column(nullable = false, unique = true)
-    private Integer studentNumber;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -46,14 +41,11 @@ public class User extends BaseTimeEntity {
     private List<Delivery> deliveries;
 
     @Builder
-    public User(String accountId, String password, String name, String email, String phoneNumber,
-                Integer studentNumber, Role role) {
+    public User(String accountId, String password, String name, String phoneNumber, Role role) {
         this.accountId = accountId;
         this.password = password;
         this.name = name;
-        this.email = email;
         this.phoneNumber = phoneNumber;
-        this.studentNumber = studentNumber;
         this.role = role;
     }
 
