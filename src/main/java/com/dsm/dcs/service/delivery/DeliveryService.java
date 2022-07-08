@@ -96,7 +96,6 @@ public class DeliveryService {
                 .name(delivery.getUser().getName())
                 .id(delivery.getId())
                 .createdDate(delivery.getCreatedDate())
-                .studentNumber(delivery.getUser().getStudentNumber())
                 .phoneNumber(delivery.getUser().getPhoneNumber())
                 .courierCompany(delivery.getCourierCompany().name())
                 .build();

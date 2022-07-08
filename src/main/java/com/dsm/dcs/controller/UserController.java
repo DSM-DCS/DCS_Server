@@ -1,20 +1,12 @@
 package com.dsm.dcs.controller;
 
 import com.dsm.dcs.dto.TokenDto;
-import com.dsm.dcs.dto.request.FindPasswordRequest;
 import com.dsm.dcs.dto.request.UserSignUpRequest;
 import com.dsm.dcs.dto.request.LoginRequest;
-import com.dsm.dcs.dto.request.SendEmailRequest;
-import com.dsm.dcs.dto.request.VerificationAuthCodeRequest;
-import com.dsm.dcs.dto.request.UpdatePasswordRequest;
 import com.dsm.dcs.dto.response.UserListResponse;
 import com.dsm.dcs.dto.response.UserResponse;
 import com.dsm.dcs.service.user.UserAuthService;
 import com.dsm.dcs.service.user.UserService;
-import com.dsm.dcs.service.user.FindPasswordService;
-import com.dsm.dcs.service.user.SendEmailAuthCodeService;
-import com.dsm.dcs.service.user.UpdatePasswordService;
-import com.dsm.dcs.service.user.VerificationAuthCodeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -40,10 +32,6 @@ public class UserController {
 
     private final UserAuthService userAuthService;
     private final UserService userService;
-    private final SendEmailAuthCodeService sendEmailAuthCodeService;
-    private final UpdatePasswordService updatePasswordService;
-    private final VerificationAuthCodeService verificationAuthCodeService;
-    private final FindPasswordService findPasswordService;
 
     @PostMapping("/token")
     public TokenDto userSignIn(@RequestBody @Valid LoginRequest request) {
@@ -70,29 +58,6 @@ public class UserController {
     @GetMapping
     public UserListResponse getUserList(Pageable page) {
         return userService.getUser(page);
-    }
-
-    @PostMapping("/email-verifications")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void sendEmailAuthCode(@RequestBody @Valid SendEmailRequest request) {
-        sendEmailAuthCodeService.execute(request);
-    }
-
-    @PostMapping("/passwords")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void findPasswordService(@RequestBody FindPasswordRequest request) {
-        findPasswordService.execute(request);
-    }
-
-    @PatchMapping("/password")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updatePassword(@RequestBody @Valid UpdatePasswordRequest request) {
-        updatePasswordService.execute(request);
-    }
-
-    @PutMapping("/email-verifications")
-    public void verifyEmail(@RequestBody @Valid VerificationAuthCodeRequest request) {
-        verificationAuthCodeService.execute(request);
     }
 
     @GetMapping("/mypage")

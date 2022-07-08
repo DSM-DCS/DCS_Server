@@ -33,9 +33,7 @@ public class UserService {
         return UserResponse.builder()
                 .accountId(user.getAccountId())
                 .name(user.getName())
-                .studentNumber(user.getStudentNumber())
                 .phoneNumber(user.getPhoneNumber())
-                .email(user.getEmail())
                 .build();
     }
 

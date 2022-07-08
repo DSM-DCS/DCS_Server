@@ -22,7 +22,6 @@ public class AdminFacade {
         if (authentication == null) {
             throw InvalidJwtException.EXCEPTION;
         }
-
         return findByAdminId(authentication.getName());
     }
 

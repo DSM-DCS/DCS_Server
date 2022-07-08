@@ -51,16 +51,13 @@ public class UserAuthService {
     public TokenDto signUp(UserSignUpRequest request) {
 
         userFacade.checkUserExists(request.getAccountId());
-        userFacade.checkStudentNumberExists(request.getStudentNumber());
         userFacade.checkPhoneNumberExists(request.getPhoneNumber());
 
         User user = userRepository.save(User.builder()
                 .accountId(request.getAccountId())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .name(request.getName())
-                .email(request.getEmail())
                 .role(Role.ROLE_USER)
-                .studentNumber(request.getStudentNumber())
                 .phoneNumber(request.getPhoneNumber())
                 .build());
 
