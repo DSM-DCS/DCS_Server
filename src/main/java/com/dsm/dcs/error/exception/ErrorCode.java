@@ -23,14 +23,11 @@ public enum ErrorCode {
 
     // 404
     USER_NOT_FOUND(404,  "User Not Found"),
-    ADMIN_NOT_FOUND(404,  "Admin Not Found"),
     REFRESH_TOKEN_NOT_FOUND(404,  "Refresh Token Not Found"),
     DELIVERY_NOT_FOUND(404,  "Delivery Not Found"),
     POST_NOT_FOUND(404,  "Post Not Found"),
-    DEVICE_TOKEN_NOT_FOUND(404,  "Device Token Not Found"),
 
     // 409
-    USER_EXISTS(409,  "User Exists"),
     ACCOUNT_ID_EXISTS(409,  "AccountId Exists"),
     PHONE_NUMBER_EXISTS(409,  "PhoneNumber Exists"),
     USER_AUTH_CODE_ALREADY_VERIFIED(409,  "Auth Code already exists"),
