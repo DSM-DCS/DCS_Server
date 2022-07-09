@@ -53,8 +53,8 @@ public class DeliveryService {
         Account account = userFacade.getUserById(userId);
         Delivery delivery = deliveryFacade.getDeliveryById(deliveryId);
         delivery.updateUser(account);
-        deliveryRepository.save(delivery);
-        return new DeliveryIdListResponse.DeliveryIdResponse(deliveryId);
+        return new DeliveryIdListResponse.DeliveryIdResponse(deliveryRepository.save(delivery).getId());
+
 
     }
 
