@@ -3,6 +3,7 @@ package com.dsm.dcs.controller;
 import com.dsm.dcs.dto.request.DeliveryListRequest;
 import com.dsm.dcs.dto.response.DeliveryIdListResponse;
 import com.dsm.dcs.dto.response.DeliveryListResponse;
+import com.dsm.dcs.dto.response.DeliveryMainListResponse;
 import com.dsm.dcs.dto.response.DeliveryNotUserListResponse;
 import com.dsm.dcs.service.delivery.DeliveryService;
 import lombok.RequiredArgsConstructor;
@@ -62,9 +63,8 @@ public class DeliveryController {
     }
 
     @GetMapping("/main")
-    public DeliveryListResponse getMainDeliveryList(Pageable page) {
+    public DeliveryMainListResponse getMainDeliveryList(Pageable page) {
         return deliveryService.getMainDeliveryList(page);
     }
-
 
 }
