@@ -3,7 +3,7 @@ package com.dsm.dcs.controller;
 import com.dsm.dcs.dto.request.DeliveryListRequest;
 import com.dsm.dcs.dto.response.DeliveryIdListResponse;
 import com.dsm.dcs.dto.response.DeliveryListResponse;
-import com.dsm.dcs.dto.response.DeliveryNullUserListResponse;
+import com.dsm.dcs.dto.response.DeliveryNotUserListResponse;
 import com.dsm.dcs.service.delivery.DeliveryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -51,9 +51,9 @@ public class DeliveryController {
         return deliveryService.getDeliveryList(page);
     }
 
-    @GetMapping("/null/user")
-    public DeliveryNullUserListResponse getDeliveryUserNullList(Pageable page) {
-        return deliveryService.getDeliveryUserNullList(page);
+    @GetMapping("/not-user")
+    public DeliveryNotUserListResponse getNotUserDeliveryList(Pageable page) {
+        return deliveryService.getNotUserDeliveryList(page);
     }
 
     @GetMapping("/user")
