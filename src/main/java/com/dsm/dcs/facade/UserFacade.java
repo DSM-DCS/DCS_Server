@@ -72,7 +72,8 @@ public class UserFacade {
     }
 
     public UserListResponse getUserList(Pageable page) {
-        return new UserListResponse(userRepository.findAllByOrderByIdDesc(page).stream()
+        return new UserListResponse(accountRepository.findAllByOrderByIdDesc(page).stream()
+                .filter(account -> account.getRole().name() == "ROLE_USER")
                 .map(this::getUser).collect(Collectors.toList()));
     }
 
