@@ -28,15 +28,19 @@ public class Delivery extends BaseTimeEntity {
     @Column(nullable = false, length = 13)
     private String phoneNumber;
 
+    @Column(nullable = false, length = 20)
+    private String products;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id")
     private Account account;
 
     @Builder
-    public Delivery(Long id, String phoneNumber, CourierCompany courierCompany, Account account) {
+    public Delivery(Long id, String phoneNumber, CourierCompany courierCompany, String products, Account account) {
         this.id = id;
         this.phoneNumber = phoneNumber;
         this.courierCompany = courierCompany;
+        this.products = products;
         this.account = account;
     }
 
