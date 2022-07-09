@@ -44,6 +44,4 @@ public class Delivery extends BaseTimeEntity {
         this.account = account;
     }
 
-    }
-
 }
