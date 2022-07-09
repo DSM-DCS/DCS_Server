@@ -2,7 +2,7 @@ package com.dsm.dcs.service.user;
 
 import com.dsm.dcs.dto.response.UserListResponse;
 import com.dsm.dcs.dto.response.UserResponse;
-import com.dsm.dcs.entity.user.User;
+import com.dsm.dcs.entity.account.Account;
 import com.dsm.dcs.facade.AdminFacade;
 import com.dsm.dcs.facade.UserFacade;
 import lombok.RequiredArgsConstructor;
@@ -29,11 +29,11 @@ public class UserService {
     }
 
     public UserResponse getUser() {
-        User user = userFacade.getCurrentUser();
+        Account account = userFacade.getCurrentUser();
         return UserResponse.builder()
-                .accountId(user.getAccountId())
-                .name(user.getName())
-                .phoneNumber(user.getPhoneNumber())
+                .accountId(account.getAccountId())
+                .name(account.getName())
+                .phoneNumber(account.getPhoneNumber())
                 .build();
     }
 

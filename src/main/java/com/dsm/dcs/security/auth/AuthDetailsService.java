@@ -1,6 +1,6 @@
 package com.dsm.dcs.security.auth;
 
-import com.dsm.dcs.entity.user.UserRepository;
+import com.dsm.dcs.entity.account.AccountRepository;
 import com.dsm.dcs.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthDetailsService implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    private final AccountRepository userRepository;
 
     @Override
     public AuthDetails loadUserByUsername(String accountId) throws UsernameNotFoundException {

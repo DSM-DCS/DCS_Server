@@ -1,7 +1,7 @@
 package com.dsm.dcs.service.auth;
 
 import com.dsm.dcs.dto.request.VerificationPasswordRequest;
-import com.dsm.dcs.entity.user.User;
+import com.dsm.dcs.entity.account.Account;
 import com.dsm.dcs.exception.PasswordMismatchException;
 import com.dsm.dcs.facade.UserFacade;
 import lombok.RequiredArgsConstructor;
@@ -17,9 +17,9 @@ public class VerificationPasswordService {
 
     public void execute(VerificationPasswordRequest request) {
         userFacade.getRole();
-        User user = userFacade.getCurrentUser();
+        Account account = userFacade.getCurrentUser();
 
-        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+        if (!passwordEncoder.matches(request.getPassword(), account.getPassword())) {
             throw PasswordMismatchException.EXCEPTION;
         }
     }

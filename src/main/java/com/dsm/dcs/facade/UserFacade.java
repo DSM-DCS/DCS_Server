@@ -1,8 +1,8 @@
 package com.dsm.dcs.facade;
 
 import com.dsm.dcs.dto.response.UserListResponse;
-import com.dsm.dcs.entity.user.User;
-import com.dsm.dcs.entity.user.UserRepository;
+import com.dsm.dcs.entity.account.Account;
+import com.dsm.dcs.entity.account.AccountRepository;
 import com.dsm.dcs.exception.ForbiddenException;
 import com.dsm.dcs.exception.InvalidJwtException;
 import com.dsm.dcs.exception.UserNotFoundException;
@@ -21,9 +21,9 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserFacade {
 
-    private final UserRepository userRepository;
+    private final AccountRepository accountRepository;
 
-    public User getCurrentUser() {
+    public Account getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null) {
             throw InvalidJwtException.EXCEPTION;
@@ -50,40 +50,40 @@ public class UserFacade {
                 .map(this::getUser).collect(Collectors.toList()));
     }
 
-    public User getUserByAccountId(String accountId) {
-        return userRepository.findByAccountId(accountId)
+    public Account getUserByAccountId(String accountId) {
+        return accountRepository.findByAccountId(accountId)
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
     }
 
-    public User getUserByPhoneNumber(String phoneNumber) {
-        return userRepository.findByPhoneNumber(phoneNumber)
+    public Account getUserByPhoneNumber(String phoneNumber) {
+        return accountRepository.findByPhoneNumber(phoneNumber)
                 .orElse(null);
     }
 
     public UserListResponse getUserByName(String name, Pageable page) {
-        return new UserListResponse(userRepository.findAllByNameContaining(name, page).stream()
+        return new UserListResponse(accountRepository.findAllByNameContaining(name, page).stream()
                 .map(this::getUser).collect(Collectors.toList()));
     }
 
-    public User getUserById(Long userId) {
-        return userRepository.findById(userId)
+    public Account getUserById(Long userId) {
+        return accountRepository.findById(userId)
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
     }
 
     public void checkUserExists(String accountId) {
-        if (userRepository.findByAccountId(accountId).isPresent()) {
+        if (accountRepository.findByAccountId(accountId).isPresent()) {
             throw AccountIdExistsException.EXCEPTION;
         }
     }
 
     public void checkPhoneNumberExists(String phoneNumber) {
-        if (userRepository.findByPhoneNumber(phoneNumber).isPresent()) {
+        if (accountRepository.findByPhoneNumber(phoneNumber).isPresent()) {
             throw PhoneNumberExistsException.EXCEPTION;
         }
     }
 
-    private UserListResponse.UserResponse getUser(User user) {
-        return new UserListResponse.UserResponse(user.getName());
+    private UserListResponse.UserResponse getUser(Account account) {
+        return new UserListResponse.UserResponse(account.getName());
     }
 
 }

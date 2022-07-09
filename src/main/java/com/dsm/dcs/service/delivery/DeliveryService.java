@@ -6,6 +6,7 @@ import com.dsm.dcs.dto.response.DeliveryListResponse;
 import com.dsm.dcs.dto.response.DeliveryNullUserListResponse;
 import com.dsm.dcs.dto.response.DeliveryResponse;
 import com.dsm.dcs.entity.CourierCompany;
+import com.dsm.dcs.entity.account.Account;
 import com.dsm.dcs.entity.delivery.Delivery;
 import com.dsm.dcs.entity.delivery.DeliveryRepository;
 import com.dsm.dcs.entity.deviceToken.DeviceToken;
@@ -39,12 +40,12 @@ public class DeliveryService {
     public void saveDelivery(DeliveryListRequest request) {
         adminFacade.getRoleCourier();
         for (DeliveryListRequest.PhoneNumberRequest phoneNumberRequest : request.getPhoneNumberRequestList()) {
-            User user = userFacade.getUserByPhoneNumber(phoneNumberRequest.getPhoneNumber());
+            Account account = userFacade.getUserByPhoneNumber(phoneNumberRequest.getPhoneNumber());
             deliveryRepository.save(
                     Delivery.builder()
                             .courierCompany(CourierCompany.valueOf(request.getCouriercompany()))
                             .phoneNumber(phoneNumberRequest.getPhoneNumber())
-                            .user(user)
+                            .account(account)
                             .build()
             );
             try {
@@ -63,7 +64,7 @@ public class DeliveryService {
         adminFacade.getRoleTeacher();
         User user = userFacade.getUserById(userId);
         Delivery delivery = deliveryFacade.getDeliveryById(deliveryId);
-        delivery.updateUser(user);
+        delivery.updateUser(account);
         deliveryRepository.save(delivery);
         return new DeliveryIdListResponse.DeliveryIdResponse(deliveryId);
 
@@ -97,10 +98,10 @@ public class DeliveryService {
         }
         Delivery delivery = deliveryFacade.getDeliveryById(deliveryId);
         return DeliveryResponse.builder()
-                .name(delivery.getUser().getName())
+                .name(delivery.getAccount().getName())
                 .id(delivery.getId())
                 .createdDate(delivery.getCreatedDate())
-                .phoneNumber(delivery.getUser().getPhoneNumber())
+                .phoneNumber(delivery.getAccount().getPhoneNumber())
                 .courierCompany(delivery.getCourierCompany().name())
                 .build();
     }
