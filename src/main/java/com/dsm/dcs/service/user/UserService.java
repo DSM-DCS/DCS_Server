@@ -17,12 +17,12 @@ public class UserService {
     private final UserFacade userFacade;
 
     public UserListResponse getUser(Pageable page) {
-        adminFacade.getRoleTeacher();
+        userFacade.checkRoleAdmin();
         return  userFacade.getUserList(page);
     }
 
     public UserListResponse searchUser(String name, Pageable page) {
-        adminFacade.getRoleTeacher();
+        userFacade.checkRoleAdmin();
         return userFacade.getUserByName(name, page);
     }
 
