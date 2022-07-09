@@ -9,7 +9,7 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
-public class DeliveryNullUserListResponse {
+public class DeliveryNotUserListResponse {
 
     private List<DeliveryNullUserResponse> deliveryNullUserResponses;
 
@@ -19,16 +19,17 @@ public class DeliveryNullUserListResponse {
         private final Long id;
         private final String courierCompany;
         private final String phoneNumber;
+        private final String products;
         private final LocalDate createdDate;
 
         @Builder
-        public DeliveryNullUserResponse(Long id, String courierCompany, String phoneNumber, LocalDate createdDate) {
+        public DeliveryNullUserResponse(Long id, String courierCompany, String phoneNumber,String products, LocalDate createdDate) {
             this.id = id;
             this.courierCompany = courierCompany;
             this.phoneNumber = phoneNumber;
+            this.products = products;
             this.createdDate = createdDate;
         }
-
 
     }
 
