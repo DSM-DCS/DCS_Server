@@ -1,15 +1,16 @@
-package com.dsm.dcs.service.user;
+package com.dsm.dcs.service.auth;
 
 import com.dsm.dcs.dto.TokenDto;
 import com.dsm.dcs.dto.request.LoginRequest;
 import com.dsm.dcs.dto.request.UserSignUpRequest;
+import com.dsm.dcs.dto.response.RoleResponse;
 import com.dsm.dcs.entity.Role;
+import com.dsm.dcs.entity.account.Account;
+import com.dsm.dcs.entity.account.AccountRepository;
 import com.dsm.dcs.entity.deviceToken.DeviceToken;
 import com.dsm.dcs.entity.deviceToken.DeviceTokenRepository;
 import com.dsm.dcs.entity.auth.RefreshToken;
 import com.dsm.dcs.entity.auth.RefreshTokenRepository;
-import com.dsm.dcs.entity.user.User;
-import com.dsm.dcs.entity.user.UserRepository;
 import com.dsm.dcs.exception.PasswordMismatchException;
 import com.dsm.dcs.exception.RefreshTokenNotFoundException;
 import com.dsm.dcs.facade.UserFacade;
@@ -22,29 +23,29 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional
 @Service
-public class UserAuthService {
+public class AuthService {
 
     private final DeviceTokenRepository deviceTokenRepository;
-    private final UserRepository userRepository;
+    private final AccountRepository userRepository;
     private final RefreshTokenRepository refreshTokenRepository;
     private final UserFacade userFacade;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
 
     public TokenDto signIn(LoginRequest request) {
-        User user = userFacade.getUserByAccountId(request.getAccountId());
+        Account account = userFacade.getUserByAccountId(request.getAccountId());
 
-        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+        if (!passwordEncoder.matches(request.getPassword(), account.getPassword())) {
             throw PasswordMismatchException.EXCEPTION;
         }
 
         deviceTokenRepository.save(DeviceToken.builder()
-                .accountId(user.getAccountId())
+                .accountId(account.getAccountId())
                 .deviceToken(request.getDeviceToken()).build());
 
         return TokenDto.builder()
-                .accessToken(jwtTokenProvider.generateAccessToken(user.getAccountId(), Role.ROLE_USER))
-                .refreshToken(jwtTokenProvider.generateRefreshToken(user.getAccountId(), Role.ROLE_USER))
+                .accessToken(jwtTokenProvider.generateAccessToken(account.getAccountId(), Role.ROLE_USER))
+                .refreshToken(jwtTokenProvider.generateRefreshToken(account.getAccountId(), Role.ROLE_USER))
                 .build();
     }
 
@@ -53,7 +54,7 @@ public class UserAuthService {
         userFacade.checkUserExists(request.getAccountId());
         userFacade.checkPhoneNumberExists(request.getPhoneNumber());
 
-        User user = userRepository.save(User.builder()
+        Account user = userRepository.save(Account.builder()
                 .accountId(request.getAccountId())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .name(request.getName())
@@ -72,10 +73,14 @@ public class UserAuthService {
     }
 
     public void logout() {
-        User user = userFacade.getCurrentUser();
-        RefreshToken refreshToken = refreshTokenRepository.findById(user.getAccountId())
+        Account account = userFacade.getCurrentUser();
+        RefreshToken refreshToken = refreshTokenRepository.findById(account.getAccountId())
                 .orElseThrow(() -> RefreshTokenNotFoundException.EXCEPTION);
         refreshTokenRepository.delete(refreshToken);
+    }
+
+    public RoleResponse getAccountRole() {
+        return new RoleResponse(userFacade.getCurrentUser().getRole().name());
     }
 
 }
