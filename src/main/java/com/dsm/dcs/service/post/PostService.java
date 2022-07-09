@@ -24,7 +24,7 @@ public class PostService {
     private final PostRepository postRepository;
 
     public PostIdResponse savePost(PostRequest request) {
-        adminFacade.getRoleTeacher();
+        userFacade.checkRoleAdmin();
         return new PostIdResponse(
                 postRepository.save(
                         Post.builder()
@@ -36,25 +36,25 @@ public class PostService {
     }
 
     public PostIdResponse updatePost(Long id, PostRequest request) {
-        adminFacade.getRoleTeacher();
+        userFacade.checkRoleAdmin();
         Post post = postFacade.findById(id);
         return new PostIdResponse(postRepository.save(
                 post.update(request.getTitle(), request.getContent())).getId());
     }
     public void deletePost(Long postId) {
-        adminFacade.getRoleTeacher();
+        userFacade.checkRoleAdmin();
         postRepository.delete(postFacade.findById(postId));
     }
 
     public PostListResponse getPostList(Pageable page) {
-        if(!adminFacade.getRoleTeacherBoolean() && !userFacade.getRoleBoolean()) {
+        if(!userFacade.isAdmin() && !userFacade.isUser()) {
             throw ForbiddenException.EXCEPTION;
         }
         return postFacade.getPostList(page);
     }
 
     public PostResponse getPost(Long postId) {
-        if(!adminFacade.getRoleTeacherBoolean() && !userFacade.getRoleBoolean()) {
+        if(!userFacade.isAdmin() && !userFacade.isUser()) {
             throw ForbiddenException.EXCEPTION;
         }
         Post post = postFacade.findById(postId);

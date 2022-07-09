@@ -32,15 +32,41 @@ public class UserFacade {
         return getUserByAccountId(authentication.getName());
     }
 
-    public Boolean getRoleBoolean() {
+    public Boolean isUser() {
         if(getCurrentUser().getRole().name() != "ROLE_USER"){
             return false;
         }
         return true;
     }
 
-    public void getRole() {
-        if(!getRoleBoolean()){
+    public Boolean isAdmin() {
+        if(getCurrentUser().getRole().name() != "ROLE_ADMIN"){
+            return false;
+        }
+        return true;
+    }
+
+    public Boolean isCourier() {
+        if(getCurrentUser().getRole().name() != "ROLE_COURIER"){
+            return false;
+        }
+        return true;
+    }
+
+    public void checkRoleUser() {
+        if(!isUser()){
+            throw ForbiddenException.EXCEPTION;
+        }
+    }
+
+    public void checkRoleAdmin() {
+        if(!isAdmin()){
+            throw ForbiddenException.EXCEPTION;
+        }
+    }
+
+    public void checkRoleCourier() {
+        if(!isCourier()){
             throw ForbiddenException.EXCEPTION;
         }
     }

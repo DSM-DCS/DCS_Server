@@ -36,7 +36,7 @@ public class DeliveryService {
     private final UserFacade userFacade;
 
     public void saveDelivery(DeliveryListRequest request) {
-        adminFacade.getRoleCourier();
+        userFacade.checkRoleCourier();
         for (DeliveryListRequest.PhoneNumberRequest phoneNumberRequest : request.getPhoneNumberRequestList()) {
             Account account = userFacade.getUserByPhoneNumber(phoneNumberRequest.getPhoneNumber());
             deliveryRepository.save(
@@ -59,8 +59,8 @@ public class DeliveryService {
     }
 
     public DeliveryIdListResponse.DeliveryIdResponse updateDeliveryUser(Long userId, Long deliveryId) {
-        adminFacade.getRoleTeacher();
-        User user = userFacade.getUserById(userId);
+        userFacade.checkRoleAdmin();
+        Account account = userFacade.getUserById(userId);
         Delivery delivery = deliveryFacade.getDeliveryById(deliveryId);
         delivery.updateUser(account);
         deliveryRepository.save(delivery);
@@ -69,29 +69,29 @@ public class DeliveryService {
     }
 
     public void deleteDelivery(Long deliveryId) {
-        adminFacade.getRoleTeacher();
+        userFacade.checkRoleAdmin();
         deliveryFacade.deleteDelivery(deliveryId);
     }
 
     public DeliveryListResponse getMyDeliveryList(Pageable page) {
-        userFacade.getRole();
+        userFacade.checkRoleUser();
         return deliveryFacade.getDeliveryList(userFacade.getCurrentUser(), page);
     }
 
     public DeliveryListResponse getDeliveryList(Pageable page) {
-        adminFacade.getRoleTeacher();
+        userFacade.checkRoleAdmin();
         return deliveryFacade.getDeliveryUserNotNullList(page);
     }
 
     public DeliveryNullUserListResponse getDeliveryUserNullList(Pageable page) {
-        if(!adminFacade.getRoleTeacherBoolean() && !userFacade.getRoleBoolean()) {
+        if(!userFacade.isAdmin() && !userFacade.isUser()) {
             throw ForbiddenException.EXCEPTION;
         }
         return deliveryFacade.getDeliveryUserNullList(page);
     }
 
     public DeliveryResponse getDelivery(Long deliveryId) {
-        if(!adminFacade.getRoleTeacherBoolean() && !userFacade.getRoleBoolean()) {
+        if(!userFacade.isAdmin() && !userFacade.isUser()) {
             throw ForbiddenException.EXCEPTION;
         }
         Delivery delivery = deliveryFacade.getDeliveryById(deliveryId);

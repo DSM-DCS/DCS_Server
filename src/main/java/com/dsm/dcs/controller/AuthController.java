@@ -73,4 +73,9 @@ public class AuthController {
         verificationPasswordService.execute(request);
     }
 
+    @GetMapping("/role")
+    public RoleResponse getAccountRole() {
+        return authService.getAccountRole();
+    }
+
 }
