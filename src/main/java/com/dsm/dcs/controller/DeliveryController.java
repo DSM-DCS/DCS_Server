@@ -59,6 +59,11 @@ public class DeliveryController {
         return deliveryService.getMyDeliveryList(page);
     }
 
+    @GetMapping("received/user")
+    public DeliveryListResponse receivedDeliveryList(Pageable page) {
+        return deliveryService.getReceivedDeliveryList(page);
+    }
+
     @GetMapping("/main")
     public DeliveryMainListResponse getMainDeliveryList(Pageable page) {
         return deliveryService.getMainDeliveryList(page);
