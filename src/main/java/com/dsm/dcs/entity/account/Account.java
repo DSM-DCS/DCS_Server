@@ -36,7 +36,7 @@ public class Account extends BaseIdEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "account")
     private List<Delivery> deliveries;
 
     @Builder
