@@ -31,6 +31,9 @@ public class Delivery extends BaseTimeEntity {
     @Column(nullable = false, length = 20)
     private String products;
 
+    @Column(nullable = false)
+    private Boolean isReceipt;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id")
     private Account account;
@@ -46,6 +49,10 @@ public class Delivery extends BaseTimeEntity {
 
     public void updateUser(Account account) {
         this.account = account;
+    }
+
+    public void isReceipt() {
+        this.isReceipt = true;
     }
 
 }
