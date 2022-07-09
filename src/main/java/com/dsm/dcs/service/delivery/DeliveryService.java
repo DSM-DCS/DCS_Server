@@ -10,6 +10,7 @@ import com.dsm.dcs.entity.account.Account;
 import com.dsm.dcs.entity.delivery.Delivery;
 import com.dsm.dcs.entity.delivery.DeliveryRepository;
 import com.dsm.dcs.exception.ForbiddenException;
+import com.dsm.dcs.exception.RecipientNotFoundException;
 import com.dsm.dcs.facade.DeliveryFacade;
 import com.dsm.dcs.facade.DeviceTokenFacade;
 import com.dsm.dcs.facade.UserFacade;
@@ -37,6 +38,7 @@ public class DeliveryService {
                             .courierCompany(CourierCompany.valueOf(request.getCouriercompany()))
                             .phoneNumber(deliveryRequest.getPhoneNumber())
                             .products(deliveryRequest.getProducts())
+                            .isReceipt(false)
                             .account(account)
                             .build()
             );
@@ -52,19 +54,29 @@ public class DeliveryService {
         Account account = userFacade.getUserById(userId);
         Delivery delivery = deliveryFacade.getDeliveryById(deliveryId);
         delivery.updateUser(account);
-        deliveryRepository.save(delivery);
-        return new DeliveryIdListResponse.DeliveryIdResponse(deliveryId);
+        return new DeliveryIdListResponse.DeliveryIdResponse(deliveryRepository.save(delivery).getId());
 
     }
 
-    public void deleteDelivery(Long deliveryId) {
+    public DeliveryIdListResponse.DeliveryIdResponse receiptDelivery(Long deliveryId) {
         userFacade.checkRoleAdmin();
-        deliveryFacade.deleteDelivery(deliveryId);
+        Delivery delivery = deliveryFacade.getDeliveryById(deliveryId);
+        if(!isAccount(delivery.getAccount())) {
+            throw RecipientNotFoundException.EXCEPTION;
+        }
+        delivery.isReceipt();
+        return new DeliveryIdListResponse.DeliveryIdResponse(deliveryRepository.save(delivery).getId());
+
     }
 
     public DeliveryListResponse getMyDeliveryList(Pageable page) {
         userFacade.checkRoleUser();
         return deliveryFacade.getDeliveryList(userFacade.getCurrentUser(), page);
+    }
+
+    public DeliveryListResponse getReceivedDeliveryList(Pageable page) {
+        userFacade.checkRoleUser();
+        return deliveryFacade.getReceivedDeliveryList(userFacade.getCurrentUser(), page);
     }
 
     public DeliveryListResponse getDeliveryList(Pageable page) {

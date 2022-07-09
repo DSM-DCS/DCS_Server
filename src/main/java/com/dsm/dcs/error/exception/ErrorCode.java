@@ -26,7 +26,7 @@ public enum ErrorCode {
     REFRESH_TOKEN_NOT_FOUND(404,  "Refresh Token Not Found"),
     DELIVERY_NOT_FOUND(404,  "Delivery Not Found"),
     POST_NOT_FOUND(404,  "Post Not Found"),
-
+    RECIPIENT_NOT_FOUND(404, "택배를 수령 받을 user 정보가 없습니다"),
     // 409
     ACCOUNT_ID_EXISTS(409,  "AccountId Exists"),
     PHONE_NUMBER_EXISTS(409,  "PhoneNumber Exists"),
