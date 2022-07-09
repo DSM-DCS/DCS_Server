@@ -39,8 +39,14 @@ public class UserFacade {
         return true;
     }
 
-    public void getRole() {
-        if(!getRoleBoolean()){
+    public Boolean isAdmin() {
+        if(getCurrentUser().getRole().name() != "ROLE_ADMIN"){
+            return false;
+        }
+        return true;
+    }
+    public void checkRoleAdmin() {
+        if(!isAdmin()){
             throw ForbiddenException.EXCEPTION;
         }
     }
