@@ -57,11 +57,6 @@ public class DeliveryService {
 
     }
 
-    public void deleteDelivery(Long deliveryId) {
-        userFacade.checkRoleAdmin();
-        deliveryFacade.deleteDelivery(deliveryId);
-    }
-
     public DeliveryListResponse getMyDeliveryList(Pageable page) {
         userFacade.checkRoleUser();
         return deliveryFacade.getDeliveryList(userFacade.getCurrentUser(), page);

@@ -24,12 +24,6 @@ public class DeliveryFacade {
                 .orElseThrow(() -> DeliveryNotFoundException.EXCEPTION);
     }
 
-    public void deleteDelivery(Long id) {
-        Delivery delivery = deliveryRepository.findById(id)
-                .orElseThrow(() -> DeliveryNotFoundException.EXCEPTION);
-        deliveryRepository.delete(delivery);
-    }
-
     public DeliveryListResponse getDeliveryList(Account account, Pageable page) {
         return new DeliveryListResponse(deliveryRepository.findAllByAccountOrderByCreatedDateDesc(account, page)
                 .stream().map(this::getDelivery).collect(Collectors.toList()));

@@ -41,12 +41,6 @@ public class DeliveryController {
         return deliveryService.updateDeliveryUser(deliveryId, userId);
     }
 
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteDelivery(@PathVariable("id") Long deliveryId) {
-        deliveryService.deleteDelivery(deliveryId);
-    }
-
     @GetMapping
     public DeliveryListResponse getDeliveryList(Pageable page) {
         return deliveryService.getDeliveryList(page);
