@@ -10,6 +10,7 @@ import com.dsm.dcs.entity.account.Account;
 import com.dsm.dcs.entity.delivery.Delivery;
 import com.dsm.dcs.entity.delivery.DeliveryRepository;
 import com.dsm.dcs.exception.ForbiddenException;
+import com.dsm.dcs.exception.RecipientNotFoundException;
 import com.dsm.dcs.facade.DeliveryFacade;
 import com.dsm.dcs.facade.DeviceTokenFacade;
 import com.dsm.dcs.facade.UserFacade;
@@ -55,6 +56,16 @@ public class DeliveryService {
         delivery.updateUser(account);
         return new DeliveryIdListResponse.DeliveryIdResponse(deliveryRepository.save(delivery).getId());
 
+    }
+
+    public DeliveryIdListResponse.DeliveryIdResponse receiptDelivery(Long deliveryId) {
+        userFacade.checkRoleAdmin();
+        Delivery delivery = deliveryFacade.getDeliveryById(deliveryId);
+        if(!isAccount(delivery.getAccount())) {
+            throw RecipientNotFoundException.EXCEPTION;
+        }
+        delivery.isReceipt();
+        return new DeliveryIdListResponse.DeliveryIdResponse(deliveryRepository.save(delivery).getId());
 
     }
 
