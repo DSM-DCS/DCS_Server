@@ -36,12 +36,13 @@ public class DeliveryService {
 
     public void saveDelivery(DeliveryListRequest request) {
         userFacade.checkRoleCourier();
-        for (DeliveryListRequest.PhoneNumberRequest phoneNumberRequest : request.getPhoneNumberRequestList()) {
-            Account account = userFacade.getUserByPhoneNumber(phoneNumberRequest.getPhoneNumber());
+        for (DeliveryListRequest.deliveryRequest deliveryRequest : request.getDeliveryRequestList()) {
+            Account account = userFacade.getUserByPhoneNumber(deliveryRequest.getPhoneNumber());
             deliveryRepository.save(
                     Delivery.builder()
                             .courierCompany(CourierCompany.valueOf(request.getCouriercompany()))
-                            .phoneNumber(phoneNumberRequest.getPhoneNumber())
+                            .phoneNumber(account.getPhoneNumber())
+                            .products(deliveryRequest.getProducts())
                             .account(account)
                             .build()
             );
@@ -99,6 +100,7 @@ public class DeliveryService {
                 .id(delivery.getId())
                 .createdDate(delivery.getCreatedDate())
                 .phoneNumber(delivery.getAccount().getPhoneNumber())
+                .products(delivery.getProducts())
                 .courierCompany(delivery.getCourierCompany().name())
                 .build();
     }
