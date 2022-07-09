@@ -1,6 +1,7 @@
 package com.dsm.dcs.facade;
 
 import com.dsm.dcs.dto.response.DeliveryListResponse;
+import com.dsm.dcs.dto.response.DeliveryMainListResponse;
 import com.dsm.dcs.dto.response.DeliveryNotUserListResponse;
 import com.dsm.dcs.entity.account.Account;
 import com.dsm.dcs.entity.delivery.Delivery;
@@ -44,6 +45,11 @@ public class DeliveryFacade {
                 .stream().map(this::getNotUserDelivery).collect(Collectors.toList()));
     }
 
+    public DeliveryMainListResponse getMainDeliveryList(Pageable page) {
+        return new DeliveryMainListResponse(deliveryRepository.findAllByOrderByCreatedDateDesc(page)
+                .stream().map(this::getMainDelivery).collect(Collectors.toList()));
+    }
+
     private DeliveryListResponse.DeliveryResponse getDelivery(Delivery delivery) {
         return DeliveryListResponse.DeliveryResponse.builder()
                 .id(delivery.getId())
@@ -60,6 +66,15 @@ public class DeliveryFacade {
                 .id(delivery.getId())
                 .courierCompany(delivery.getCourierCompany().name())
                 .phoneNumber(delivery.getPhoneNumber())
+                .products(delivery.getProducts())
+                .createdDate(delivery.getCreatedDate())
+                .build();
+    }
+
+    private DeliveryMainListResponse.DeliveryResponse getMainDelivery(Delivery delivery) {
+        return DeliveryMainListResponse.DeliveryResponse.builder()
+                .id(delivery.getId())
+                .courierCompany(delivery.getCourierCompany().name())
                 .products(delivery.getProducts())
                 .createdDate(delivery.getCreatedDate())
                 .build();

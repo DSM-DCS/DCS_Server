@@ -3,6 +3,7 @@ package com.dsm.dcs.service.delivery;
 import com.dsm.dcs.dto.request.DeliveryListRequest;
 import com.dsm.dcs.dto.response.DeliveryIdListResponse;
 import com.dsm.dcs.dto.response.DeliveryListResponse;
+import com.dsm.dcs.dto.response.DeliveryMainListResponse;
 import com.dsm.dcs.dto.response.DeliveryNotUserListResponse;
 import com.dsm.dcs.entity.CourierCompany;
 import com.dsm.dcs.entity.account.Account;
@@ -76,6 +77,10 @@ public class DeliveryService {
             throw ForbiddenException.EXCEPTION;
         }
         return deliveryFacade.getNotUserDeliveryList(page);
+    }
+
+    public DeliveryMainListResponse getMainDeliveryList(Pageable page) {
+        return deliveryFacade.getMainDeliveryList(page);
     }
 
     private Boolean isAccount(Account account) {
