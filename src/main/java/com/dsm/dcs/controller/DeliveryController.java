@@ -39,6 +39,11 @@ public class DeliveryController {
         return deliveryService.updateDeliveryUser(userId, deliveryId);
     }
 
+    @PatchMapping("receipt/{deliveryId}")
+    public DeliveryIdListResponse.DeliveryIdResponse receiptDelivery(@PathVariable("deliveryId") Long deliveryId) {
+        return deliveryService.receiptDelivery(deliveryId);
+    }
+
     @GetMapping
     public DeliveryListResponse getDeliveryList(Pageable page) {
         return deliveryService.getDeliveryList(page);
