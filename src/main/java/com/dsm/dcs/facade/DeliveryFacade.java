@@ -29,6 +29,11 @@ public class DeliveryFacade {
                 .stream().map(this::getDelivery).collect(Collectors.toList()));
     }
 
+    public DeliveryListResponse getReceivedDeliveryList(Account account, Pageable page) {
+        return new DeliveryListResponse(deliveryRepository.findAllByAccountAndIsReceiptTrueOrderByCreatedDateDesc(account, page)
+                .stream().map(this::getDelivery).collect(Collectors.toList()));
+    }
+
     public DeliveryListResponse getDeliveryList(Pageable page) {
         return new DeliveryListResponse(deliveryRepository.findAllByAccountNotNullAndIsReceiptFalseOrderByCreatedDateDesc(page)
                 .stream().map(this::getDelivery).collect(Collectors.toList()));

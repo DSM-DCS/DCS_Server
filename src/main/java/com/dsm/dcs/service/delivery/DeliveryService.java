@@ -74,6 +74,11 @@ public class DeliveryService {
         return deliveryFacade.getDeliveryList(userFacade.getCurrentUser(), page);
     }
 
+    public DeliveryListResponse getReceivedDeliveryList(Pageable page) {
+        userFacade.checkRoleUser();
+        return deliveryFacade.getReceivedDeliveryList(userFacade.getCurrentUser(), page);
+    }
+
     public DeliveryListResponse getDeliveryList(Pageable page) {
         userFacade.checkRoleAdmin();
         return deliveryFacade.getDeliveryList(page);
