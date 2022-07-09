@@ -16,11 +16,11 @@ public class DeliveryListRequest {
     @NotBlank
     private String couriercompany;
 
-    private List<PhoneNumberRequest> phoneNumberRequestList;
+    private List<deliveryRequest> deliveryRequestList;
 
     @Getter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
-    public static class PhoneNumberRequest {
+    public static class deliveryRequest {
 
         @NotBlank
         @Pattern(regexp = "^010-+\\d{4}-+\\d{4}$")
