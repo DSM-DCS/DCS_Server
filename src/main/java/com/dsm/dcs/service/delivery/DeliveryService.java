@@ -81,6 +81,11 @@ public class DeliveryService {
             throw ForbiddenException.EXCEPTION;
         }
         return deliveryFacade.getDeliveryUserNullList(page);
+    private Boolean isAccount(Account account) {
+        if(account == null) {
+            return false;
+        }
+        return true;
     }
 
 }
