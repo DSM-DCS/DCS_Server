@@ -52,6 +52,13 @@ public class UserFacade {
         }
         return true;
     }
+
+    public void checkRoleUser() {
+        if(!isUser()){
+            throw ForbiddenException.EXCEPTION;
+        }
+    }
+
     public void checkRoleAdmin() {
         if(!isAdmin()){
             throw ForbiddenException.EXCEPTION;
