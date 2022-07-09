@@ -32,7 +32,7 @@ public class UserFacade {
         return getUserByAccountId(authentication.getName());
     }
 
-    public Boolean getRoleBoolean() {
+    public Boolean isUser() {
         if(getCurrentUser().getRole().name() != "ROLE_USER"){
             return false;
         }
