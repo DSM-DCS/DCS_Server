@@ -36,7 +36,7 @@ public class DeliveryController {
     @PatchMapping("/{deliveryId}/{userId}")
     public DeliveryIdListResponse.DeliveryIdResponse updateDeliveryUser(@PathVariable("deliveryId") Long deliveryId,
                                                                         @PathVariable("userId") Long userId) {
-        return deliveryService.updateDeliveryUser(deliveryId, userId);
+        return deliveryService.updateDeliveryUser(userId, deliveryId);
     }
 
     @GetMapping
