@@ -10,5 +10,5 @@ public interface DeliveryRepository extends CrudRepository<Delivery, Long> {
     List<Delivery> findAllByAccountNotNullOrderByCreatedDateDesc(Pageable page);
     List<Delivery> findAllByAccountOrderByCreatedDateDesc(Account account, Pageable page);
     List<Delivery> findAllByAccountNullOrderByCreatedDateDesc(Pageable page);
-
+    List<Delivery> findAllByOrderByCreatedDateDesc(Pageable page);
 }
