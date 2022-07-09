@@ -1,7 +1,7 @@
 package com.dsm.dcs.facade;
 
 import com.dsm.dcs.dto.response.DeliveryListResponse;
-import com.dsm.dcs.dto.response.DeliveryNullUserListResponse;
+import com.dsm.dcs.dto.response.DeliveryNotUserListResponse;
 import com.dsm.dcs.entity.account.Account;
 import com.dsm.dcs.entity.delivery.Delivery;
 import com.dsm.dcs.entity.delivery.DeliveryRepository;
@@ -34,14 +34,14 @@ public class DeliveryFacade {
                 .stream().map(this::getDelivery).collect(Collectors.toList()));
     }
 
-    public DeliveryListResponse getDeliveryUserNotNullList(Pageable page) {
+    public DeliveryListResponse getDeliveryList(Pageable page) {
         return new DeliveryListResponse(deliveryRepository.findAllByAccountNotNullOrderByCreatedDateDesc(page)
                 .stream().map(this::getDelivery).collect(Collectors.toList()));
     }
 
-    public DeliveryNullUserListResponse getDeliveryUserNullList(Pageable page) {
-        return new DeliveryNullUserListResponse(deliveryRepository.findAllByAccountOrderByCreatedDateDesc(null, page)
-                .stream().map(this::getUserNullDelivery).collect(Collectors.toList()));
+    public DeliveryNotUserListResponse getNotUserDeliveryList(Pageable page) {
+        return new DeliveryNotUserListResponse(deliveryRepository.findAllByAccountNullOrderByCreatedDateDesc(page)
+                .stream().map(this::getNotUserDelivery).collect(Collectors.toList()));
     }
 
     private DeliveryListResponse.DeliveryResponse getDelivery(Delivery delivery) {
@@ -49,15 +49,18 @@ public class DeliveryFacade {
                 .id(delivery.getId())
                 .courierCompany(delivery.getCourierCompany().name())
                 .name(delivery.getAccount().getName())
+                .phoneNumber(delivery.getPhoneNumber())
+                .products(delivery.getProducts())
                 .createdDate(delivery.getCreatedDate())
                 .build();
     }
 
-    private DeliveryNullUserListResponse.DeliveryNullUserResponse getUserNullDelivery(Delivery delivery) {
-        return DeliveryNullUserListResponse.DeliveryNullUserResponse.builder()
+    private DeliveryNotUserListResponse.DeliveryNullUserResponse getNotUserDelivery(Delivery delivery) {
+        return DeliveryNotUserListResponse.DeliveryNullUserResponse.builder()
                 .id(delivery.getId())
                 .courierCompany(delivery.getCourierCompany().name())
                 .phoneNumber(delivery.getPhoneNumber())
+                .products(delivery.getProducts())
                 .createdDate(delivery.getCreatedDate())
                 .build();
     }

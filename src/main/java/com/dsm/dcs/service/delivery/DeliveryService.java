@@ -3,25 +3,19 @@ package com.dsm.dcs.service.delivery;
 import com.dsm.dcs.dto.request.DeliveryListRequest;
 import com.dsm.dcs.dto.response.DeliveryIdListResponse;
 import com.dsm.dcs.dto.response.DeliveryListResponse;
-import com.dsm.dcs.dto.response.DeliveryNullUserListResponse;
-import com.dsm.dcs.dto.response.DeliveryResponse;
+import com.dsm.dcs.dto.response.DeliveryNotUserListResponse;
 import com.dsm.dcs.entity.CourierCompany;
 import com.dsm.dcs.entity.account.Account;
 import com.dsm.dcs.entity.delivery.Delivery;
 import com.dsm.dcs.entity.delivery.DeliveryRepository;
-import com.dsm.dcs.entity.deviceToken.DeviceToken;
-import com.dsm.dcs.exception.FireBaseException;
 import com.dsm.dcs.exception.ForbiddenException;
 import com.dsm.dcs.facade.DeliveryFacade;
 import com.dsm.dcs.facade.DeviceTokenFacade;
 import com.dsm.dcs.facade.UserFacade;
-import com.dsm.dcs.firebase.FireBaseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.io.IOException;
 
 @Transactional
 @RequiredArgsConstructor
@@ -29,7 +23,6 @@ import java.io.IOException;
 public class DeliveryService {
 
     private final DeliveryRepository deliveryRepository;
-    private final FireBaseService fireBaseService;
     private final DeliveryFacade deliveryFacade;
     private final DeviceTokenFacade deviceTokenFacade;
     private final UserFacade userFacade;
@@ -41,21 +34,16 @@ public class DeliveryService {
             deliveryRepository.save(
                     Delivery.builder()
                             .courierCompany(CourierCompany.valueOf(request.getCouriercompany()))
-                            .phoneNumber(account.getPhoneNumber())
+                            .phoneNumber(deliveryRequest.getPhoneNumber())
                             .products(deliveryRequest.getProducts())
                             .account(account)
                             .build()
             );
-            try {
-                DeviceToken deviceToken = deviceTokenFacade.findByDeviceToken(account.getAccountId());
-                if(deviceToken.getDeviceToken() != null) {
-                    fireBaseService.sendMessageTo(deviceToken.getDeviceToken(), "DCS", "택배가 기숙사로 배송이 완료되었습니다.");
-                }
-            } catch (IOException e) {
-                throw FireBaseException.EXCEPTION;
+
+            if(isAccount(account)) {
+                deviceTokenFacade.sendMessageTo(account.getAccountId());
             }
         }
-
     }
 
     public DeliveryIdListResponse.DeliveryIdResponse updateDeliveryUser(Long userId, Long deliveryId) {
@@ -80,29 +68,21 @@ public class DeliveryService {
 
     public DeliveryListResponse getDeliveryList(Pageable page) {
         userFacade.checkRoleAdmin();
-        return deliveryFacade.getDeliveryUserNotNullList(page);
+        return deliveryFacade.getDeliveryList(page);
     }
 
-    public DeliveryNullUserListResponse getDeliveryUserNullList(Pageable page) {
+    public DeliveryNotUserListResponse getNotUserDeliveryList(Pageable page) {
         if(!userFacade.isAdmin() && !userFacade.isUser()) {
             throw ForbiddenException.EXCEPTION;
         }
-        return deliveryFacade.getDeliveryUserNullList(page);
+        return deliveryFacade.getNotUserDeliveryList(page);
     }
 
-    public DeliveryResponse getDelivery(Long deliveryId) {
-        if(!userFacade.isAdmin() && !userFacade.isUser()) {
-            throw ForbiddenException.EXCEPTION;
+    private Boolean isAccount(Account account) {
+        if(account == null) {
+            return false;
         }
-        Delivery delivery = deliveryFacade.getDeliveryById(deliveryId);
-        return DeliveryResponse.builder()
-                .name(delivery.getAccount().getName())
-                .id(delivery.getId())
-                .createdDate(delivery.getCreatedDate())
-                .phoneNumber(delivery.getAccount().getPhoneNumber())
-                .products(delivery.getProducts())
-                .courierCompany(delivery.getCourierCompany().name())
-                .build();
+        return true;
     }
 
 }

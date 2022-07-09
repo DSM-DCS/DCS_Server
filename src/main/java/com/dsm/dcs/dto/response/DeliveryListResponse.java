@@ -19,13 +19,17 @@ public class DeliveryListResponse {
         private final Long id;
         private final String courierCompany;
         private final String name;
+        private final String phoneNumber;
+        private final String products;
         private final LocalDate createdDate;
 
         @Builder
-        public DeliveryResponse(Long id, String courierCompany, String name, LocalDate createdDate) {
+        public DeliveryResponse(Long id, String courierCompany, String name, String phoneNumber, String products, LocalDate createdDate) {
             this.id = id;
             this.courierCompany = courierCompany;
             this.name = name;
+            this.phoneNumber = phoneNumber;
+            this.products = products;
             this.createdDate = createdDate;
         }
 
