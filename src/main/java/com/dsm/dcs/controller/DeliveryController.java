@@ -4,7 +4,6 @@ import com.dsm.dcs.dto.request.DeliveryListRequest;
 import com.dsm.dcs.dto.response.DeliveryIdListResponse;
 import com.dsm.dcs.dto.response.DeliveryListResponse;
 import com.dsm.dcs.dto.response.DeliveryNullUserListResponse;
-import com.dsm.dcs.dto.response.DeliveryResponse;
 import com.dsm.dcs.service.delivery.DeliveryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -60,11 +59,6 @@ public class DeliveryController {
     @GetMapping("/user")
     public DeliveryListResponse myDeliveryList(Pageable page) {
         return deliveryService.getMyDeliveryList(page);
-    }
-
-    @GetMapping("/{id}")
-    public DeliveryResponse getDelivery(@PathVariable("delivery_id") Long deliveryId) {
-        return deliveryService.getDelivery(deliveryId);
     }
 
 }

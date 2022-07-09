@@ -90,19 +90,4 @@ public class DeliveryService {
         return deliveryFacade.getDeliveryUserNullList(page);
     }
 
-    public DeliveryResponse getDelivery(Long deliveryId) {
-        if(!userFacade.isAdmin() && !userFacade.isUser()) {
-            throw ForbiddenException.EXCEPTION;
-        }
-        Delivery delivery = deliveryFacade.getDeliveryById(deliveryId);
-        return DeliveryResponse.builder()
-                .name(delivery.getAccount().getName())
-                .id(delivery.getId())
-                .createdDate(delivery.getCreatedDate())
-                .phoneNumber(delivery.getAccount().getPhoneNumber())
-                .products(delivery.getProducts())
-                .courierCompany(delivery.getCourierCompany().name())
-                .build();
-    }
-
 }
