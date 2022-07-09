@@ -2,9 +2,9 @@ package com.dsm.dcs.facade;
 
 import com.dsm.dcs.dto.response.DeliveryListResponse;
 import com.dsm.dcs.dto.response.DeliveryNullUserListResponse;
+import com.dsm.dcs.entity.account.Account;
 import com.dsm.dcs.entity.delivery.Delivery;
 import com.dsm.dcs.entity.delivery.DeliveryRepository;
-import com.dsm.dcs.entity.user.User;
 import com.dsm.dcs.exception.DeliveryNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -29,18 +29,18 @@ public class DeliveryFacade {
         deliveryRepository.delete(delivery);
     }
 
-    public DeliveryListResponse getDeliveryList(User user, Pageable page) {
-        return new DeliveryListResponse(deliveryRepository.findAllByUserOrderByCreatedDateDesc(user, page)
+    public DeliveryListResponse getDeliveryList(Account account, Pageable page) {
+        return new DeliveryListResponse(deliveryRepository.findAllByAccountOrderByCreatedDateDesc(account, page)
                 .stream().map(this::getDelivery).collect(Collectors.toList()));
     }
 
     public DeliveryListResponse getDeliveryUserNotNullList(Pageable page) {
-        return new DeliveryListResponse(deliveryRepository.findAllByUserNotNullOrderByCreatedDateDesc(page)
+        return new DeliveryListResponse(deliveryRepository.findAllByAccountNotNullOrderByCreatedDateDesc(page)
                 .stream().map(this::getDelivery).collect(Collectors.toList()));
     }
 
     public DeliveryNullUserListResponse getDeliveryUserNullList(Pageable page) {
-        return new DeliveryNullUserListResponse(deliveryRepository.findAllByUserOrderByCreatedDateDesc(null, page)
+        return new DeliveryNullUserListResponse(deliveryRepository.findAllByAccountOrderByCreatedDateDesc(null, page)
                 .stream().map(this::getUserNullDelivery).collect(Collectors.toList()));
     }
 
@@ -48,7 +48,7 @@ public class DeliveryFacade {
         return DeliveryListResponse.DeliveryResponse.builder()
                 .id(delivery.getId())
                 .courierCompany(delivery.getCourierCompany().name())
-                .name(delivery.getUser().getName())
+                .name(delivery.getAccount().getName())
                 .createdDate(delivery.getCreatedDate())
                 .build();
     }

@@ -6,13 +6,12 @@ import com.dsm.dcs.dto.response.DeliveryListResponse;
 import com.dsm.dcs.dto.response.DeliveryNullUserListResponse;
 import com.dsm.dcs.dto.response.DeliveryResponse;
 import com.dsm.dcs.entity.CourierCompany;
+import com.dsm.dcs.entity.account.Account;
 import com.dsm.dcs.entity.delivery.Delivery;
 import com.dsm.dcs.entity.delivery.DeliveryRepository;
 import com.dsm.dcs.entity.deviceToken.DeviceToken;
-import com.dsm.dcs.entity.user.User;
 import com.dsm.dcs.exception.FireBaseException;
 import com.dsm.dcs.exception.ForbiddenException;
-import com.dsm.dcs.facade.AdminFacade;
 import com.dsm.dcs.facade.DeliveryFacade;
 import com.dsm.dcs.facade.DeviceTokenFacade;
 import com.dsm.dcs.facade.UserFacade;
@@ -34,21 +33,20 @@ public class DeliveryService {
     private final DeliveryFacade deliveryFacade;
     private final DeviceTokenFacade deviceTokenFacade;
     private final UserFacade userFacade;
-    private final AdminFacade adminFacade;
 
     public void saveDelivery(DeliveryListRequest request) {
-        adminFacade.getRoleCourier();
+        userFacade.checkRoleCourier();
         for (DeliveryListRequest.PhoneNumberRequest phoneNumberRequest : request.getPhoneNumberRequestList()) {
-            User user = userFacade.getUserByPhoneNumber(phoneNumberRequest.getPhoneNumber());
+            Account account = userFacade.getUserByPhoneNumber(phoneNumberRequest.getPhoneNumber());
             deliveryRepository.save(
                     Delivery.builder()
                             .courierCompany(CourierCompany.valueOf(request.getCouriercompany()))
                             .phoneNumber(phoneNumberRequest.getPhoneNumber())
-                            .user(user)
+                            .account(account)
                             .build()
             );
             try {
-                DeviceToken deviceToken = deviceTokenFacade.findByDeviceToken(user.getAccountId());
+                DeviceToken deviceToken = deviceTokenFacade.findByDeviceToken(account.getAccountId());
                 if(deviceToken.getDeviceToken() != null) {
                     fireBaseService.sendMessageTo(deviceToken.getDeviceToken(), "DCS", "택배가 기숙사로 배송이 완료되었습니다.");
                 }
@@ -60,47 +58,47 @@ public class DeliveryService {
     }
 
     public DeliveryIdListResponse.DeliveryIdResponse updateDeliveryUser(Long userId, Long deliveryId) {
-        adminFacade.getRoleTeacher();
-        User user = userFacade.getUserById(userId);
+        userFacade.checkRoleAdmin();
+        Account account = userFacade.getUserById(userId);
         Delivery delivery = deliveryFacade.getDeliveryById(deliveryId);
-        delivery.updateUser(user);
+        delivery.updateUser(account);
         deliveryRepository.save(delivery);
         return new DeliveryIdListResponse.DeliveryIdResponse(deliveryId);
 
     }
 
     public void deleteDelivery(Long deliveryId) {
-        adminFacade.getRoleTeacher();
+        userFacade.checkRoleAdmin();
         deliveryFacade.deleteDelivery(deliveryId);
     }
 
     public DeliveryListResponse getMyDeliveryList(Pageable page) {
-        userFacade.getRole();
+        userFacade.checkRoleUser();
         return deliveryFacade.getDeliveryList(userFacade.getCurrentUser(), page);
     }
 
     public DeliveryListResponse getDeliveryList(Pageable page) {
-        adminFacade.getRoleTeacher();
+        userFacade.checkRoleAdmin();
         return deliveryFacade.getDeliveryUserNotNullList(page);
     }
 
     public DeliveryNullUserListResponse getDeliveryUserNullList(Pageable page) {
-        if(!adminFacade.getRoleTeacherBoolean() && !userFacade.getRoleBoolean()) {
+        if(!userFacade.isAdmin() && !userFacade.isUser()) {
             throw ForbiddenException.EXCEPTION;
         }
         return deliveryFacade.getDeliveryUserNullList(page);
     }
 
     public DeliveryResponse getDelivery(Long deliveryId) {
-        if(!adminFacade.getRoleTeacherBoolean() && !userFacade.getRoleBoolean()) {
+        if(!userFacade.isAdmin() && !userFacade.isUser()) {
             throw ForbiddenException.EXCEPTION;
         }
         Delivery delivery = deliveryFacade.getDeliveryById(deliveryId);
         return DeliveryResponse.builder()
-                .name(delivery.getUser().getName())
+                .name(delivery.getAccount().getName())
                 .id(delivery.getId())
                 .createdDate(delivery.getCreatedDate())
-                .phoneNumber(delivery.getUser().getPhoneNumber())
+                .phoneNumber(delivery.getAccount().getPhoneNumber())
                 .courierCompany(delivery.getCourierCompany().name())
                 .build();
     }

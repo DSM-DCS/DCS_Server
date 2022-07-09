@@ -1,7 +1,6 @@
-package com.dsm.dcs.entity.user;
+package com.dsm.dcs.entity.account;
 
 import com.dsm.dcs.entity.BaseIdEntity;
-import com.dsm.dcs.entity.BaseTimeEntity;
 import com.dsm.dcs.entity.Role;
 import com.dsm.dcs.entity.delivery.Delivery;
 import lombok.AccessLevel;
@@ -19,7 +18,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class User extends BaseIdEntity {
+public class Account extends BaseIdEntity {
 
     @Column(nullable = false, unique = true, length = 20)
     private String accountId;
@@ -37,11 +36,11 @@ public class User extends BaseIdEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "account")
     private List<Delivery> deliveries;
 
     @Builder
-    public User(String accountId, String password, String name, String phoneNumber, Role role) {
+    public Account(String accountId, String password, String name, String phoneNumber, Role role) {
         this.accountId = accountId;
         this.password = password;
         this.name = name;
@@ -49,7 +48,7 @@ public class User extends BaseIdEntity {
         this.role = role;
     }
 
-    public User updatePassword(String password) {
+    public Account updatePassword(String password) {
         this.password = password;
         return this;
     }

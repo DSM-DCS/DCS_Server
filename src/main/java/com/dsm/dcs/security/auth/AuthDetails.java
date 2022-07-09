@@ -1,6 +1,6 @@
 package com.dsm.dcs.security.auth;
 
-import com.dsm.dcs.entity.user.User;
+import com.dsm.dcs.entity.account.Account;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,12 +15,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AuthDetails implements UserDetails {
 
-    private final User user;
+    private final Account account;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> roles = new ArrayList<>();
-        roles.add(new SimpleGrantedAuthority(user.getRole().name()));
+        roles.add(new SimpleGrantedAuthority(account.getRole().name()));
         return roles;
     }
 
@@ -31,7 +31,7 @@ public class AuthDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getAccountId();
+        return account.getAccountId();
     }
 
     @Override

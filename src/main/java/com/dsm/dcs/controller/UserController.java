@@ -1,26 +1,15 @@
 package com.dsm.dcs.controller;
 
-import com.dsm.dcs.dto.TokenDto;
-import com.dsm.dcs.dto.request.UserSignUpRequest;
-import com.dsm.dcs.dto.request.LoginRequest;
 import com.dsm.dcs.dto.response.UserListResponse;
 import com.dsm.dcs.dto.response.UserResponse;
-import com.dsm.dcs.service.user.UserAuthService;
 import com.dsm.dcs.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-
-import javax.validation.Valid;
 
 @RequestMapping("/users")
 @RequiredArgsConstructor
@@ -28,25 +17,7 @@ import javax.validation.Valid;
 @RestController
 public class UserController {
 
-    private final UserAuthService userAuthService;
     private final UserService userService;
-
-    @PostMapping("/token")
-    public TokenDto userSignIn(@RequestBody @Valid LoginRequest request) {
-        return userAuthService.signIn(request);
-    }
-
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public TokenDto userSignUp(@RequestBody @Valid UserSignUpRequest request) {
-        return userAuthService.signUp(request);
-    }
-
-    @DeleteMapping("/logout")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void logout() {
-        userAuthService.logout();
-    }
 
     @GetMapping("/search")
     public UserListResponse searchUser(@RequestParam(value = "name") String name, Pageable page) {

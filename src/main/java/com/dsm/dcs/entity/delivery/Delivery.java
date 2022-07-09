@@ -2,7 +2,7 @@ package com.dsm.dcs.entity.delivery;
 
 import com.dsm.dcs.entity.BaseTimeEntity;
 import com.dsm.dcs.entity.CourierCompany;
-import com.dsm.dcs.entity.user.User;
+import com.dsm.dcs.entity.account.Account;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,19 +29,19 @@ public class Delivery extends BaseTimeEntity {
     private String phoneNumber;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "account_id")
+    private Account account;
 
     @Builder
-    public Delivery(Long id, String phoneNumber, CourierCompany courierCompany, User user) {
+    public Delivery(Long id, String phoneNumber, CourierCompany courierCompany, Account account) {
         this.id = id;
         this.phoneNumber = phoneNumber;
         this.courierCompany = courierCompany;
-        this.user = user;
+        this.account = account;
     }
 
-    public void updateUser(User user) {
-        this.user = user;
+    public void updateUser(Account account) {
+        this.account = account;
     }
 
 }

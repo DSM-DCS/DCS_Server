@@ -1,8 +1,8 @@
 package com.dsm.dcs.facade;
 
 import com.dsm.dcs.dto.response.UserListResponse;
-import com.dsm.dcs.entity.user.User;
-import com.dsm.dcs.entity.user.UserRepository;
+import com.dsm.dcs.entity.account.Account;
+import com.dsm.dcs.entity.account.AccountRepository;
 import com.dsm.dcs.exception.ForbiddenException;
 import com.dsm.dcs.exception.InvalidJwtException;
 import com.dsm.dcs.exception.UserNotFoundException;
@@ -21,9 +21,9 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserFacade {
 
-    private final UserRepository userRepository;
+    private final AccountRepository accountRepository;
 
-    public User getCurrentUser() {
+    public Account getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null) {
             throw InvalidJwtException.EXCEPTION;
@@ -32,58 +32,85 @@ public class UserFacade {
         return getUserByAccountId(authentication.getName());
     }
 
-    public Boolean getRoleBoolean() {
+    public Boolean isUser() {
         if(getCurrentUser().getRole().name() != "ROLE_USER"){
             return false;
         }
         return true;
     }
 
-    public void getRole() {
-        if(!getRoleBoolean()){
+    public Boolean isAdmin() {
+        if(getCurrentUser().getRole().name() != "ROLE_ADMIN"){
+            return false;
+        }
+        return true;
+    }
+
+    public Boolean isCourier() {
+        if(getCurrentUser().getRole().name() != "ROLE_COURIER"){
+            return false;
+        }
+        return true;
+    }
+
+    public void checkRoleUser() {
+        if(!isUser()){
+            throw ForbiddenException.EXCEPTION;
+        }
+    }
+
+    public void checkRoleAdmin() {
+        if(!isAdmin()){
+            throw ForbiddenException.EXCEPTION;
+        }
+    }
+
+    public void checkRoleCourier() {
+        if(!isCourier()){
             throw ForbiddenException.EXCEPTION;
         }
     }
 
     public UserListResponse getUserList(Pageable page) {
-        return new UserListResponse(userRepository.findAllByOrderByIdDesc(page).stream()
+        return new UserListResponse(accountRepository.findAllByOrderByIdDesc(page).stream()
+                .filter(account -> account.getRole().name() == "ROLE_USER")
                 .map(this::getUser).collect(Collectors.toList()));
     }
 
-    public User getUserByAccountId(String accountId) {
-        return userRepository.findByAccountId(accountId)
+    public Account getUserByAccountId(String accountId) {
+        return accountRepository.findByAccountId(accountId)
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
     }
 
-    public User getUserByPhoneNumber(String phoneNumber) {
-        return userRepository.findByPhoneNumber(phoneNumber)
+    public Account getUserByPhoneNumber(String phoneNumber) {
+        return accountRepository.findByPhoneNumber(phoneNumber)
                 .orElse(null);
     }
 
     public UserListResponse getUserByName(String name, Pageable page) {
-        return new UserListResponse(userRepository.findAllByNameContaining(name, page).stream()
+        return new UserListResponse(accountRepository.findAllByNameContaining(name, page).stream()
                 .map(this::getUser).collect(Collectors.toList()));
     }
 
-    public User getUserById(Long userId) {
-        return userRepository.findById(userId)
+    public Account getUserById(Long userId) {
+        return accountRepository.findById(userId)
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
     }
 
     public void checkUserExists(String accountId) {
-        if (userRepository.findByAccountId(accountId).isPresent()) {
+        if (accountRepository.findByAccountId(accountId).isPresent()) {
             throw AccountIdExistsException.EXCEPTION;
         }
     }
 
     public void checkPhoneNumberExists(String phoneNumber) {
-        if (userRepository.findByPhoneNumber(phoneNumber).isPresent()) {
+        if (accountRepository.findByPhoneNumber(phoneNumber).isPresent()) {
             throw PhoneNumberExistsException.EXCEPTION;
         }
     }
 
-    private UserListResponse.UserResponse getUser(User user) {
-        return new UserListResponse.UserResponse(user.getName());
+    private UserListResponse.UserResponse getUser(Account account) {
+        return new UserListResponse.UserResponse(account.getName());
     }
 
 }
