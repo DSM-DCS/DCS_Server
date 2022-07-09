@@ -39,11 +39,12 @@ public class Delivery extends BaseTimeEntity {
     private Account account;
 
     @Builder
-    public Delivery(Long id, String phoneNumber, CourierCompany courierCompany, String products, Account account) {
+    public Delivery(Long id, String phoneNumber, CourierCompany courierCompany, String products,Boolean isReceipt, Account account) {
         this.id = id;
         this.phoneNumber = phoneNumber;
         this.courierCompany = courierCompany;
         this.products = products;
+        this.isReceipt = isReceipt;
         this.account = account;
     }
 

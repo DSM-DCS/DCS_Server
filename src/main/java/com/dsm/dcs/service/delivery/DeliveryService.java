@@ -37,6 +37,7 @@ public class DeliveryService {
                             .courierCompany(CourierCompany.valueOf(request.getCouriercompany()))
                             .phoneNumber(deliveryRequest.getPhoneNumber())
                             .products(deliveryRequest.getProducts())
+                            .isReceipt(false)
                             .account(account)
                             .build()
             );
