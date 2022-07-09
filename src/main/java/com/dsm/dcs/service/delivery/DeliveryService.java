@@ -9,8 +9,6 @@ import com.dsm.dcs.entity.CourierCompany;
 import com.dsm.dcs.entity.account.Account;
 import com.dsm.dcs.entity.delivery.Delivery;
 import com.dsm.dcs.entity.delivery.DeliveryRepository;
-import com.dsm.dcs.entity.deviceToken.DeviceToken;
-import com.dsm.dcs.exception.FireBaseException;
 import com.dsm.dcs.exception.ForbiddenException;
 import com.dsm.dcs.facade.DeliveryFacade;
 import com.dsm.dcs.facade.DeviceTokenFacade;
@@ -46,16 +44,11 @@ public class DeliveryService {
                             .account(account)
                             .build()
             );
-            try {
-                DeviceToken deviceToken = deviceTokenFacade.findByDeviceToken(account.getAccountId());
-                if(deviceToken.getDeviceToken() != null) {
-                    fireBaseService.sendMessageTo(deviceToken.getDeviceToken(), "DCS", "택배가 기숙사로 배송이 완료되었습니다.");
-                }
-            } catch (IOException e) {
-                throw FireBaseException.EXCEPTION;
+
+            if(isAccount(account)) {
+                deviceTokenFacade.sendMessageTo(account.getAccountId());
             }
         }
-
     }
 
     public DeliveryIdListResponse.DeliveryIdResponse updateDeliveryUser(Long userId, Long deliveryId) {
