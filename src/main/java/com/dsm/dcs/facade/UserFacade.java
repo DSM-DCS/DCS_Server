@@ -45,8 +45,21 @@ public class UserFacade {
         }
         return true;
     }
+
+    public Boolean isCourier() {
+        if(getCurrentUser().getRole().name() != "ROLE_COURIER"){
+            return false;
+        }
+        return true;
+    }
     public void checkRoleAdmin() {
         if(!isAdmin()){
+            throw ForbiddenException.EXCEPTION;
+        }
+    }
+
+    public void checkRoleCourier() {
+        if(!isCourier()){
             throw ForbiddenException.EXCEPTION;
         }
     }
