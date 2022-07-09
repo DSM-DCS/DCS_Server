@@ -13,14 +13,16 @@ public class DeliveryResponse {
     private final String name;
     private final LocalDate createdDate;
     private final String phoneNumber;
+    private final String products;
 
     @Builder
-    public DeliveryResponse(Long id, String courierCompany, String name, LocalDate createdDate, String phoneNumber) {
+    public DeliveryResponse(Long id, String courierCompany, String name, LocalDate createdDate, String phoneNumber, String products) {
         this.id = id;
         this.courierCompany = courierCompany;
         this.name = name;
         this.createdDate = createdDate;
         this.phoneNumber = phoneNumber;
+        this.products = products;
     }
 
 
