@@ -25,22 +25,22 @@ public class DeliveryFacade {
     }
 
     public DeliveryListResponse getDeliveryList(Account account, Pageable page) {
-        return new DeliveryListResponse(deliveryRepository.findAllByAccountOrderByCreatedDateDesc(account, page)
+        return new DeliveryListResponse(deliveryRepository.findAllByAccountAndIsReceiptFalseOrderByCreatedDateDesc(account, page)
                 .stream().map(this::getDelivery).collect(Collectors.toList()));
     }
 
     public DeliveryListResponse getDeliveryList(Pageable page) {
-        return new DeliveryListResponse(deliveryRepository.findAllByAccountNotNullOrderByCreatedDateDesc(page)
+        return new DeliveryListResponse(deliveryRepository.findAllByAccountNotNullAndIsReceiptFalseOrderByCreatedDateDesc(page)
                 .stream().map(this::getDelivery).collect(Collectors.toList()));
     }
 
     public DeliveryNotUserListResponse getNotUserDeliveryList(Pageable page) {
-        return new DeliveryNotUserListResponse(deliveryRepository.findAllByAccountNullOrderByCreatedDateDesc(page)
+        return new DeliveryNotUserListResponse(deliveryRepository.findAllByAccountNullAndIsReceiptFalseOrderByCreatedDateDesc(page)
                 .stream().map(this::getNotUserDelivery).collect(Collectors.toList()));
     }
 
     public DeliveryMainListResponse getMainDeliveryList(Pageable page) {
-        return new DeliveryMainListResponse(deliveryRepository.findAllByOrderByCreatedDateDesc(page)
+        return new DeliveryMainListResponse(deliveryRepository.findAllByIsReceiptFalseOrderByCreatedDateDesc(page)
                 .stream().map(this::getMainDelivery).collect(Collectors.toList()));
     }
 
