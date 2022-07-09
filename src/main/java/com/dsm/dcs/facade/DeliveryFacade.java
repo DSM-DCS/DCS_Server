@@ -30,17 +30,17 @@ public class DeliveryFacade {
     }
 
     public DeliveryListResponse getDeliveryList(Account account, Pageable page) {
-        return new DeliveryListResponse(deliveryRepository.findAllByUserOrderByCreatedDateDesc(account, page)
+        return new DeliveryListResponse(deliveryRepository.findAllByAccountOrderByCreatedDateDesc(account, page)
                 .stream().map(this::getDelivery).collect(Collectors.toList()));
     }
 
     public DeliveryListResponse getDeliveryUserNotNullList(Pageable page) {
-        return new DeliveryListResponse(deliveryRepository.findAllByUserNotNullOrderByCreatedDateDesc(page)
+        return new DeliveryListResponse(deliveryRepository.findAllByAccountNotNullOrderByCreatedDateDesc(page)
                 .stream().map(this::getDelivery).collect(Collectors.toList()));
     }
 
     public DeliveryNullUserListResponse getDeliveryUserNullList(Pageable page) {
-        return new DeliveryNullUserListResponse(deliveryRepository.findAllByUserOrderByCreatedDateDesc(null, page)
+        return new DeliveryNullUserListResponse(deliveryRepository.findAllByAccountOrderByCreatedDateDesc(null, page)
                 .stream().map(this::getUserNullDelivery).collect(Collectors.toList()));
     }
 
