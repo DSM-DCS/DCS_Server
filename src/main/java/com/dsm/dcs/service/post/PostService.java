@@ -7,7 +7,6 @@ import com.dsm.dcs.dto.response.PostResponse;
 import com.dsm.dcs.entity.post.Post;
 import com.dsm.dcs.entity.post.PostRepository;
 import com.dsm.dcs.exception.ForbiddenException;
-import com.dsm.dcs.facade.AdminFacade;
 import com.dsm.dcs.facade.PostFacade;
 import com.dsm.dcs.facade.UserFacade;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class PostService {
 
     private final PostFacade postFacade;
-    private final AdminFacade adminFacade;
     private final UserFacade userFacade;
     private final PostRepository postRepository;
 

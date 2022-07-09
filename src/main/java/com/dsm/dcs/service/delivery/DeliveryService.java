@@ -13,7 +13,6 @@ import com.dsm.dcs.entity.deviceToken.DeviceToken;
 import com.dsm.dcs.entity.user.User;
 import com.dsm.dcs.exception.FireBaseException;
 import com.dsm.dcs.exception.ForbiddenException;
-import com.dsm.dcs.facade.AdminFacade;
 import com.dsm.dcs.facade.DeliveryFacade;
 import com.dsm.dcs.facade.DeviceTokenFacade;
 import com.dsm.dcs.facade.UserFacade;
@@ -35,7 +34,6 @@ public class DeliveryService {
     private final DeliveryFacade deliveryFacade;
     private final DeviceTokenFacade deviceTokenFacade;
     private final UserFacade userFacade;
-    private final AdminFacade adminFacade;
 
     public void saveDelivery(DeliveryListRequest request) {
         adminFacade.getRoleCourier();
