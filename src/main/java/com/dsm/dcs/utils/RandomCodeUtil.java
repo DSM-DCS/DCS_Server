@@ -1,6 +1,6 @@
 package com.dsm.dcs.utils;
 
-import net.bytebuddy.utility.RandomString;
+import org.apache.commons.lang3.RandomStringUtils;
 
 public class RandomCodeUtil {
 
@@ -8,7 +8,23 @@ public class RandomCodeUtil {
         throw new IllegalStateException("Utility class");
     }
 
-    public static String make(Integer codeLength) {
-        return RandomString.make(codeLength);
+    /**
+     * RandomCodeUtil with length
+     *
+     * @return Random String & Integer code
+     **/
+    public static String generateRandomCode(Integer codeLength) {
+        return RandomStringUtils.randomAlphanumeric(codeLength);
+    }
+
+    /**
+     * RandomCodeUtil with length
+     *
+     * @return Random Integer code
+     **/
+    public static String generateRandomNumber(Integer codeLength) {
+        return RandomStringUtils.randomNumeric(codeLength);
+
     }
 }
+
