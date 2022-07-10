@@ -59,7 +59,7 @@ public class DeliveryController {
         return deliveryService.getMyDeliveryList(page);
     }
 
-    @GetMapping("received/user")
+    @GetMapping("/received/user")
     public DeliveryListResponse receivedDeliveryList(Pageable page) {
         return deliveryService.getReceivedDeliveryList(page);
     }
