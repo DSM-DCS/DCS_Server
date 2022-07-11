@@ -30,7 +30,7 @@ public class SmsService {
         UserAuthCode userAuthCode = userAuthCodeRepository.findById(request.getPhoneNumber())
                 .orElseThrow(() -> PhoneNumberNotFoundException.EXCEPTION);
         if (!userAuthCode.getCode().equals(request.getCode())) {
-            throw PhoneNumberNotMatchException.EXCEPTION;
+            throw AuthCodeNotMatchException.EXCEPTION;
         }
     }
 
