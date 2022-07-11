@@ -5,7 +5,7 @@ import com.dsm.dcs.dto.request.SmsRequest;
 import com.dsm.dcs.entity.authCode.UserAuthCode;
 import com.dsm.dcs.entity.authCode.UserAuthCodeRepository;
 import com.dsm.dcs.exception.PhoneNumberNotFoundException;
-import com.dsm.dcs.exception.PhoneNumberNotMatchException;
+import com.dsm.dcs.exception.AuthCodeNotMatchException;
 import com.dsm.dcs.sms.SmsMessageService;
 import com.dsm.dcs.utils.RandomCodeUtil;
 import lombok.RequiredArgsConstructor;
