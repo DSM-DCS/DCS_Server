@@ -12,7 +12,7 @@ import javax.validation.constraints.Pattern;
 public class SmsRequest {
 
     @NotBlank(message = "phone_number은 Null 또는 공백 또는 띄어쓰기를 허용하지 않습니다")
-    @Pattern(regexp = "^010\\d{8}$")
+    @Pattern(regexp = "^010-+\\d{4}-+\\d{4}$")
     private String phoneNumber;
 
     @NotBlank
