@@ -9,6 +9,7 @@ import com.dsm.dcs.dto.TokenDto;
 import com.dsm.dcs.dto.response.RoleResponse;
 import com.dsm.dcs.service.auth.AuthService;
 import com.dsm.dcs.service.auth.CheckExistsService;
+import com.dsm.dcs.service.auth.SmsService;
 import com.dsm.dcs.service.auth.VerificationPasswordService;
 import com.dsm.dcs.service.auth.TokenRefreshTokenService;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +38,7 @@ public class AuthController {
     private final CheckExistsService checkExistsService;
     private final VerificationPasswordService verificationPasswordService;
     private final AuthService authService;
+    private final SmsService smsService;
 
     @PostMapping("/sign-in")
     public TokenDto SignIn(@RequestBody @Valid LoginRequest request) {
