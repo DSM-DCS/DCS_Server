@@ -2,7 +2,6 @@ package com.dsm.dcs.sms;
 
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -29,14 +28,12 @@ public class SmsMessageService {
         params.put("from", fromPhoneNumber);
         params.put("type", "SMS");
         params.put("text", "[DCS] 인증번호(" + randomNumber + ")입니다.");
-        params.put("app_version", "test app 1.2"); // application name and version
+        params.put("app_version", "test app 1.2");
 
         try {
-            JSONObject obj = (JSONObject) coolsms.send(params);
-            System.out.println(obj.toString());
+            coolsms.send(params);
         } catch (CoolsmsException e) {
-            System.out.println(e.getMessage());
-            System.out.println(e.getCode());
+            e.getStackTrace();
         }
     }
 
