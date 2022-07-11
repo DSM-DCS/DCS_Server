@@ -29,7 +29,7 @@ public class SmsService {
     public void checkCoincideAuthCode(SmsRequest request) {
         UserAuthCode userAuthCode = userAuthCodeRepository.findById(request.getPhoneNumber())
                 .orElseThrow(() -> PhoneNumberNotFoundException.EXCEPTION);
-        if (userAuthCode.getCode().equals(request.getCode())) {
+        if (!userAuthCode.getCode().equals(request.getCode())) {
             throw PhoneNumberNotMatchException.EXCEPTION;
         }
     }
