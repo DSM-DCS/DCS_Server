@@ -33,7 +33,7 @@ public enum ErrorCode {
     PHONE_NUMBER_EXISTS(409,  "PhoneNumber Exists"),
     USER_AUTH_CODE_ALREADY_VERIFIED(409,  "Auth Code already exists"),
     FIREBASE_EXCEPTION(409,  "알림을 성공적으로 전송하지 못함"),
-    PHONE_NUMBER_NOTMATCH(409, "인증번호가 일치하지 않습니다."),
+    AUTH_CODE_NOT_MATCH(409, "인증번호가 일치하지 않습니다."),
     // 429
     AUTH_CODE_REQUEST_OVER_LIMIT(429,  "Auth Code Request Over Limit"),
 
