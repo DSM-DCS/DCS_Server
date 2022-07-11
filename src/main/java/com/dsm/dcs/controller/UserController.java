@@ -1,5 +1,6 @@
 package com.dsm.dcs.controller;
 
+import com.dsm.dcs.dto.request.PasswordRequest;
 import com.dsm.dcs.dto.request.PhoneNumberRequest;
 import com.dsm.dcs.dto.response.UserListResponse;
 import com.dsm.dcs.dto.response.UserResponse;
@@ -47,4 +48,11 @@ public class UserController {
     public void changePhoneNumber(@RequestBody @Valid PhoneNumberRequest request) {
         userService.changePhoneNumber(request);
     }
+
+    @PatchMapping("/password")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void changePassword(@RequestBody @Valid PasswordRequest request) {
+        userService.changePassword(request);
+    }
+
 }
