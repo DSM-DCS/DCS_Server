@@ -30,6 +30,6 @@ app :
   firebase-file : ${FIREBASE_FILE}
 
 sms :
-  apikey : ${API_KEY}
-  secret : ${SECRET_KEY}
-  phoneNumber : ${FROM_PHONE_NUMBER}
+  apikey : ${SMS_API_KEY}
+  secret : ${SMS_SECRET_KEY}
+  phoneNumber : ${SMS_FROM_PHONE_NUMBER}
