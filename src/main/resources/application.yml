@@ -28,3 +28,8 @@ jwt:
 app :
   firebase-url : ${FIREBASE_URL}
   firebase-file : ${FIREBASE_FILE}
+
+sms :
+  apikey : ${API_KEY}
+  secret : ${SECRET_KEY}
+  phoneNumber : ${FROM_PHONE_NUMBER}

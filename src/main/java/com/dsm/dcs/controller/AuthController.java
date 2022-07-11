@@ -1,12 +1,15 @@
 package com.dsm.dcs.controller;
 
 import com.dsm.dcs.dto.request.LoginRequest;
+import com.dsm.dcs.dto.request.PhoneNumberRequest;
+import com.dsm.dcs.dto.request.SmsRequest;
 import com.dsm.dcs.dto.request.UserSignUpRequest;
 import com.dsm.dcs.dto.request.VerificationPasswordRequest;
 import com.dsm.dcs.dto.TokenDto;
 import com.dsm.dcs.dto.response.RoleResponse;
 import com.dsm.dcs.service.auth.AuthService;
 import com.dsm.dcs.service.auth.CheckExistsService;
+import com.dsm.dcs.service.auth.SmsService;
 import com.dsm.dcs.service.auth.VerificationPasswordService;
 import com.dsm.dcs.service.auth.TokenRefreshTokenService;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +38,7 @@ public class AuthController {
     private final CheckExistsService checkExistsService;
     private final VerificationPasswordService verificationPasswordService;
     private final AuthService authService;
+    private final SmsService smsService;
 
     @PostMapping("/sign-in")
     public TokenDto SignIn(@RequestBody @Valid LoginRequest request) {
@@ -58,6 +62,15 @@ public class AuthController {
         return tokenRefreshTokenService.execute(tokenDto);
     }
 
+    @PostMapping("/sms/send")
+    public void sendMessageAuthCode(@RequestBody @Valid PhoneNumberRequest request) {
+        smsService.sendMessageAuthCode(request);
+    }
+
+    @PostMapping("/sms/check")
+    public void checkCoincideAuthCode(@RequestBody @Valid SmsRequest request) {
+        smsService.checkCoincideAuthCode(request);
+    }
     @RequestMapping(value = "/account-id", method = RequestMethod.HEAD)
     public void CheckUserExists(@NotBlank @RequestParam(name = "accountId") String accountId) {
         checkExistsService.checkAccountIdExists(accountId);

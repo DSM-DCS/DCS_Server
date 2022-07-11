@@ -27,12 +27,13 @@ public enum ErrorCode {
     DELIVERY_NOT_FOUND(404,  "Delivery Not Found"),
     POST_NOT_FOUND(404,  "Post Not Found"),
     RECIPIENT_NOT_FOUND(404, "택배를 수령 받을 user 정보가 없습니다"),
+    PHONE_NUMBER_NOTFOUND(404, "Phone Number Not Found"),
     // 409
     ACCOUNT_ID_EXISTS(409,  "AccountId Exists"),
     PHONE_NUMBER_EXISTS(409,  "PhoneNumber Exists"),
     USER_AUTH_CODE_ALREADY_VERIFIED(409,  "Auth Code already exists"),
     FIREBASE_EXCEPTION(409,  "알림을 성공적으로 전송하지 못함"),
-
+    PHONE_NUMBER_NOTMATCH(409, "인증번호가 일치하지 않습니다."),
     // 429
     AUTH_CODE_REQUEST_OVER_LIMIT(429,  "Auth Code Request Over Limit"),
 
