@@ -71,6 +71,7 @@ public class AuthController {
     public void checkCoincideAuthCode(@RequestBody @Valid SmsRequest request) {
         smsService.checkCoincideAuthCode(request);
     }
+
     @RequestMapping(value = "/account-id", method = RequestMethod.HEAD)
     public void CheckUserExists(@NotBlank @RequestParam(name = "accountId") String accountId) {
         checkExistsService.checkAccountIdExists(accountId);

@@ -53,4 +53,9 @@ public class Account extends BaseIdEntity {
         return this;
     }
 
+    public Account updatePhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+        return this;
+    }
+
 }
