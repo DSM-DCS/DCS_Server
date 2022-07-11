@@ -4,22 +4,20 @@ ARG DB_URL
 ARG DB_USER
 ARG DB_PWD
 ARG JWT_SECRET
-ARG AWS_SES_ACCESS
-ARG AWS_SES_SECRET
-ARG AWS_SES_REGION
-ARG SENDER_EMAIL
 ARG FIREBASE_URL
 ARG FIREBASE_FILE
+ARG SMS_API_KEY
+ARG SMS_SECRET_KEY
+ARG SMS_FROM_PHONE_NUMBER
 
 ENV DB_URL=${DB_URL}
 ENV DB_USER=${DB_USER}
 ENV DB_PASSWORD=${DB_PWD}
 ENV JWT_SECRET=${JWT_SECRET}
-ENV AWS_SES_ACCESS=${AWS_SES_ACCESS}
-ENV AWS_SES_SECRET=${AWS_SES_SECRET}
-ENV AWS_SES_REGION=${AWS_SES_REGION}
-ENV SENDER_EMAIL=${SENDER_EMAIL}
 ENV FIREBASE_URL=${FIREBASE_URL}
 ENV FIREBASE_FILE=${FIREBASE_FILE}
+ENV SMS_API_KEY=${SMS_API_KEY}
+ENV SMS_SECRET_KEY=${SMS_SECRET_KEY}
+ENV SMS_FROM_PHONE_NUMBER=${SMS_FROM_PHONE_NUMBER}
 
-ENTRYPOINT ["java","-jar","-Dspring.datasource.url=${DB_URL}","-Dspring.datasource.username=${DB_USER}", "-Dspring.jwt.secret-key=${JWT_SECRET}", "-Dspring.datasource.password=${DB_PASSWORD}", "-Dspring.aws.ses.access-key=${AWS_SES_ACCESS}", "-Dspring.aws.ses.secret-key=${AWS_SES_SECRET}", "-Dspring.aws.ses.region=${AWS_SES_REGION}", "-Dspring.aws.ses.email=${SENDER_EMAIL}", "/app.jar"]
+ENTRYPOINT ["java","-jar","-Dspring.datasource.url=${DB_URL}","-Dspring.datasource.username=${DB_USER}", "-Dspring.jwt.secret-key=${JWT_SECRET}", "-Dspring.datasource.password=${DB_PASSWORD}",  "-Dspring.sms.apikey=${SMS_API_KEY}", "-Dspring.sms.secret=${SMS_SECRET_KEY}", "-Dspring.sms.phoneNumber=${SMS_FROM_PHONE_NUMBER}", "/app.jar"]
